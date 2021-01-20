@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import styled from 'styled-components';
 
 export interface MenuProps {
@@ -9,7 +10,7 @@ export interface OptionMenuProps {
   isFocused?: boolean;
 }
 
-export const Container = styled.div<MenuProps>`
+export const Container = styled(Grid)<MenuProps>`
   display: flex;
   align-items: center;
   justify-content: space-evenly;

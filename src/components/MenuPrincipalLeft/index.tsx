@@ -23,7 +23,7 @@ const MenuPrincipalLeft: React.FC<MenuProps> = ({
   //   console.log('teste');
   // }, []);
   return (
-    <Container>
+    <Container container sm={1}>
       <img src={logo} alt="logo-menu-principal" />
       <OptionMenu>
         <ul>
