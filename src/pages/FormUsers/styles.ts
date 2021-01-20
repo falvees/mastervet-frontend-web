@@ -10,11 +10,11 @@ export const ButtonLogin = styled(Button)`
 `;
 
 export const Container = styled(Grid)`
-  display: flex;
-  align-items: center;
-  flex: 1;
-  height: 100vh;
-  width: 100%;
+  /* display: flex; */
+  /* align-items: center; */
+  /* flex: 1; */
+  /* height: 100vh; */
+  /* width: 100%; */
   overflow-x: hidden;
 `;
 export const Content = styled.div`
@@ -24,7 +24,6 @@ export const Content = styled.div`
   flex-direction: column;
   flex: 1;
   padding: 50px;
-  height: 100vh;
   width: 100%;
   /* background-color: red; */
 `;

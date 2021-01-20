@@ -58,11 +58,10 @@ const Input: React.FC<InputProps> = ({
           <Icon color={iconColor || '#bfbfbf'} />
         </ButtonIcon>
       )}
-
-      {/* <label>Nome de Usuário</label> */}
-      {/* <input type="text" placeholder=" " required /> */}
+      <label className="noselect" htmlFor={name}>
+        {placeholder}
+      </label>
       <InputMask mask={mask} ref={register} {...rest} id={name} name={name} />
-      <label>{placeholder}</label>
     </Container>
   );
 };

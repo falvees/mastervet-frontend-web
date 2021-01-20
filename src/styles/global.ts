@@ -26,7 +26,17 @@ const GlobalStyle = createGlobalStyle`
             user-select: none;
 
 }
-
+.required-form {
+  span {
+    font-weight: 600;
+    font-size:14px
+  }
+    font-size: 12px;
+    color: #d60000;
+    margin: 0 0 0 10px;
+    padding: 0;
+    font-weight: 500;
+}
 
 `;
 export default GlobalStyle;

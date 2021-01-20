@@ -8,66 +8,62 @@ type inputProps = TextFieldProps & {
   isIcon?: boolean;
 };
 export const Container = styled.div<inputProps>`
-  position: relative;
+  background: transparent;
   border-radius: 10px;
   border: 2px solid #bfbfbf;
-  margin: 5px;
+  /* width: 100%; */
   color: #bfbfbf;
+  font-size: 14px;
+  margin: 5px;
+
   display: flex;
-  & input {
-    color: #9d9d9c;
-    background: transparent;
-    width: 100%;
-    border: 0;
-    border-radius: 5px;
-    outline: none;
-    min-width: 250px;
-    padding: ${props => (props.isIcon ? `15px 15px 15px 0` : `15px`)};
-    font-size: 16px;
-    transition: all 0.1s linear;
-    -webkit-transition: all 0.1s linear;
-    -moz-transition: all 0.1s linear;
-    -webkit-appearance: none;
-    &::placeholder {
-      color: transparent;
+  align-items: center;
+
+  &:hover {
+    border-color: #17a0ae;
+    & svg {
+      color: #17a0ae !important;
     }
   }
 
-  & label {
-    pointer-events: none;
-    position: absolute;
-    top: calc(50% - 10px);
-    transform: ${props =>
-      props.isIcon
-        ? `translate(35px, 0px) scale(1)`
-        : `translate(5x, 0px) scale(1)`};
-    transform-origin: left;
-    transition: all 0.2s linear;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    background-color: transparent;
-    padding: 0 5px;
-    box-sizing: border-box;
+  & + div {
+    margin-top: 8px;
+  }
+  input {
+    width: 100%;
+    color: #9d9d9c;
+    background: transparent;
+    flex: 1;
+    border: 0;
+    padding: ${props =>
+      props.isIcon ? ` 16px 16px 16px 0px` : ` 16px 16px 16px 12px`};
+    &::placeholder {
+      color: #bfbfbf;
+    }
   }
   svg {
     font-size: 20px;
     margin: 5px;
   }
 
-  /* & input:focus + label,
-  & input:not(:placeholder-shown) + & label {
-    font-size: 13px;
-    top: -8px;
-    color: #9d9d9c;
-  } */
+  & label {
+    transform-origin: left;
+    transition: all 0.3s;
+    position: absolute;
+    transform: ${props =>
+      props.isIcon
+        ? `translate(44px, 0px) scale(1)`
+        : `translate(10px, 0px) scale(1)`};
+  }
 
   ${props =>
     props.isFocused &&
     css`
       & label {
-        background-color: white;
+        padding: 0 10px;
+        background: white;
         color: #9d9d9c;
-        transform: translate(10px, -25px) scale(0.8);
+        transform: translate(5px, -26px) scale(0.8);
       }
       & svg {
         color: #17a0ae !important;
@@ -81,9 +77,10 @@ export const Container = styled.div<inputProps>`
     props.isFilled &&
     css`
       & label {
-        background-color: white;
+        padding: 0 10px;
+        background: white;
         color: #9d9d9c;
-        transform: translate(10px, -25px) scale(0.8);
+        transform: translate(5px, -26px) scale(0.8);
         font-size: 500;
       }
       & svg {
