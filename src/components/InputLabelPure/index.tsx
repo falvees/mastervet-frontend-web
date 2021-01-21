@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <Container
-      className="input"
+      className="input-root"
       colorPlaceholder={colorPlaceholder}
       backgroundColor={backgroundColor}
       isIcon={!!Icon}

@@ -1,8 +1,12 @@
 import http from '../http-common';
 
 const getAll = () => {
-  return http.get('/animals').then(response => response.data);
+  return http.get('/client').then(response => response.data);
 };
+const create = data => {
+  return http.post('/client', data);
+};
+
 // const getAll = () => {
 //   return http.get('/client');
 // };
@@ -25,4 +29,5 @@ const getAll = () => {
 
 export default {
   getAll,
+  create,
 };

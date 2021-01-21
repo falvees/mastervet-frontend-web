@@ -5,7 +5,7 @@ import { ButtonHTMLAttributes } from 'react';
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   background: string;
 }
-const backgroundColors = { Primary: '#17a0ae', Secondary: '#b4cd36' };
+const backgroundColors = { primary: '#17a0ae', secondary: '#b4cd36' };
 
 export const Container = styled.button<ButtonProps>`
   background-color: ${props => backgroundColors[props.background]};
@@ -16,7 +16,6 @@ export const Container = styled.button<ButtonProps>`
   color: #fff;
   width: 100%;
   font-weight: 500;
-  margin-top: 16px;
   transition: background-color 0.2s;
   &:hover {
     background-color: ${props =>

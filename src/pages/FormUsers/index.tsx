@@ -8,8 +8,10 @@ import { useForm } from 'react-hook-form';
 import Button from '../../components/Button';
 import Input from '../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../components/MenuPrincipalLeft';
+
 import Select from '../../components/Select';
 import { Container, Content } from './styles';
+import PeopleApi from '../../services/PeopleApi';
 
 const FormUsers: React.FC = () => {
   const {
@@ -19,9 +21,33 @@ const FormUsers: React.FC = () => {
     control,
     errors,
     getValues,
+    setValue,
+    formState,
   } = useForm();
 
-  const onSubmit = data => console.log(data);
+  // function teste(a) {
+  //   data.map(item => console.log(item));
+  // }
+
+  const onSubmit = data => {
+    // const e = new FormData(data);
+    // console.log(data);
+    // console.log(e);
+    // Object.keys(data).forEach(function (item) {
+    //   if (typeof data[item] === 'object' && data[item] !== null) {
+    //     setValue(`${data[item]}`, data[item].value);
+    //   }
+    // });
+    // console.log(data);
+    PeopleApi.create(data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const kindPeople = [
     { value: '1', label: 'Física' },
     { value: '2', label: 'Jurídica' },
@@ -40,9 +66,25 @@ const FormUsers: React.FC = () => {
     <Container container>
       <MenuPrincipalLeft pages={['all']} />
       <Content>
-        {/* <Grid item sm={12}>
-          <p>Criar Novo Cliente</p>
-        </Grid> */}
+        <Grid
+          container
+          sm={12}
+          alignItems="center"
+          justify="center"
+          direction="column"
+        >
+          <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+            Criar Novo Cliente
+          </p>
+          <hr
+            style={{
+              border: 0,
+              borderBottom: '2px solid #17a0ae',
+              width: 130,
+              marginTop: 5,
+            }}
+          />
+        </Grid>
         <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Grid container>
             <Grid item xs={12} sm={6} md={6}>
@@ -234,7 +276,7 @@ const FormUsers: React.FC = () => {
               />
             </Grid>
           </Grid>
-          <Button type="submit" background="Primary">
+          <Button type="submit" background="primary">
             Cadastrar
           </Button>
         </Form>

@@ -13,22 +13,23 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { AiOutlineUser } from 'react-icons/ai';
-
 import { Grid } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { blue } from '@material-ui/core/colors';
+import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch } from './styles';
 import peopleApi from '../../../services/PeopleApi';
 import api from '../../../http-common';
 import Input from '../../../components/InputLabelPure';
+import { ButtonIcon } from '../../../components/InputLabelPure/styles';
 
 interface arrayList {
-  type_id: string;
-  description: string;
+  user_id: string;
+  name: string;
 }
+
 const People: React.FC = () => {
   const { getValues, register } = useForm();
   const [isListUsers, setListUsers] = useState<arrayList[]>([]);
@@ -87,50 +88,17 @@ const People: React.FC = () => {
     },
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // useEffect(async () => {
-  //   const response = await listDreams();
-  //   const array = [];
-  //   response.forEach(item => {
-  //     array.push({ value: item, label: item });
-  //   });
-  //   setItems(array);
-  // }, []);
-
   const listPeoples = () => {
     const array: arrayList[] = [];
-
     peopleApi
       .getAll()
-      .then(response => {
-        // console.log(response);
-        response.forEach(item => {
-          setListUsers(response);
-          // array.push({ descricao: item.description, id: item.type_id });
-        });
+      .then(result => {
+        setListUsers(result.response);
       })
       .catch(e => {
         console.log(e);
       });
-    setListUsers(array);
-    console.log(isListUsers);
   };
-  // const listPeoples = () => {
-  //   // const response = await getAll();
-  //   // peopleApi().then(response => {
-  //   //   console.log(response);
-  //   // });
-  //   // console.log(await peopleApi());
-  //   const array = [];
-  //   api
-  //     .get('/animals')
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
 
   useEffect(() => {
     listPeoples();
@@ -155,18 +123,33 @@ const People: React.FC = () => {
             <FiArrowLeft />
             Voltar
           </Link>
-
-          <Input
-            style={{ flex: 1, color: '#fff' }}
-            className="teste"
-            name="search_user"
-            placeholder="Digite aqui..."
-            colorPlaceholder="#03818f"
-            backgroundColor="#17a0ae"
-            // label="teste"
-            getValues={getValues}
-            register={register}
-          />
+          <Grid
+            item
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <Input
+              style={{ flex: 1, color: '#fff' }}
+              name="search_user"
+              placeholder="Digite aqui..."
+              colorPlaceholder="#03818f"
+              backgroundColor="#17a0ae"
+              // label="teste"
+              getValues={getValues}
+              register={register}
+            />
+            <ButtonIcon className="button-search">
+              <FiSearch color="#17a0ae" />
+            </ButtonIcon>
+          </Grid>
+          <Link to="/cadastro_usuario" className="add-user">
+            <Button background="primary" style={{ width: 180 }}>
+              Adicionar Cliente
+            </Button>
+          </Link>
         </GridHeaderSearch>
         <Paper
           elevation={5}
@@ -190,9 +173,9 @@ const People: React.FC = () => {
                   isListUsers.map(row => {
                     // console.log(row.type_id);
                     return (
-                      <StyledTableRow key={row.type_id}>
+                      <StyledTableRow key={row.user_id}>
                         <StyledTableCell component="th" scope="row">
-                          {row.description}
+                          {row.name}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           128.235.756-50

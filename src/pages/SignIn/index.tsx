@@ -49,7 +49,7 @@ const SignIn: React.FC = () => {
               register={register}
               getValues={getValues}
             />
-            <Button type="submit" background="Primary">
+            <Button type="submit" background="primary">
               Entrar
             </Button>
           </Form>

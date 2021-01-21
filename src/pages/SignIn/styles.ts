@@ -39,6 +39,11 @@ export const Content = styled.div`
   /* width: 100%; */
   min-width: 500px;
   max-width: 700px;
+  & .button-root,
+  & .input-root {
+    margin: 0;
+    margin-top: 15px;
+  }
   img {
     width: 30px;
   }

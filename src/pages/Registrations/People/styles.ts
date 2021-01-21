@@ -21,10 +21,19 @@ export const Container = styled(Grid)`
 export const GridHeaderSearch = styled(Grid)`
   position: relative;
 
-  > .input {
+  & .button-search {
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    &:hover svg {
+      transition: color 0.2s;
+      color: ${shade(0.2, '#17a0ae')} !important;
+    }
+  }
+  div > .input-root {
     border-color: #17a0ae;
   }
-  a {
+  a:first-child {
     position: absolute;
     text-decoration: none;
     left: 0;
@@ -40,6 +49,16 @@ export const GridHeaderSearch = styled(Grid)`
       font-size: 20px;
       margin-right: 10px;
     }
+  }
+  & > .add-user {
+    position: absolute;
+    text-decoration: none;
+    right: 0;
+    display: flex;
+    align-items: center;
+    color: #9d9d9c;
+    transition: color 0.2s;
+    font-weight: 500;
   }
 `;
 export const Content = styled.div`
