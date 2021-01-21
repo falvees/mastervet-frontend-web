@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { RiArrowRightSLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
+import { HiOutlineLogout } from 'react-icons/hi';
 import { Container, OptionMenu } from './styles';
 import logo from '../../assets/logo.png';
 import client from '../../assets/profiles.png';
@@ -69,6 +71,10 @@ const MenuPrincipalLeft: React.FC<MenuProps> = ({
         <p>Gestão</p>
       </div> */}
       </OptionMenu>
+      <Link to="/" className="logout">
+        <HiOutlineLogout />
+        Voltar
+      </Link>
     </Container>
   );
 };

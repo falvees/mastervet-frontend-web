@@ -1,4 +1,5 @@
 import { Grid } from '@material-ui/core';
+import { shade } from 'polished';
 import styled from 'styled-components';
 
 export interface MenuProps {
@@ -13,20 +14,37 @@ export interface OptionMenuProps {
 export const Container = styled(Grid)<MenuProps>`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-direction: column;
   background: #17a0ae;
   border-radius: 0 20px 20px 0;
   border: 0;
-  padding: 20px 0;
+  padding: 2% 0;
   color: #bfbfbf;
   width: 150px;
   min-width: 150px;
   height: 100vh;
   fill: red;
+  min-height: 600px;
 
   & img {
     width: 80px;
+  }
+
+  & .logout {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    transition: color 0.2s;
+    font-weight: 500;
+    &:hover {
+      color: ${shade(0.2, '#17a0ae')};
+    }
+    svg {
+      font-size: 20px;
+      margin-right: 10px;
+    }
   }
 `;
 

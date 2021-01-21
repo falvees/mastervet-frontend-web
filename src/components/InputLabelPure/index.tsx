@@ -18,6 +18,9 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   icon?: React.ComponentType<IconBaseProps>;
   id?: string;
   placeholder?: string;
+  colorPlaceholder?: string;
+  backgroundColor?: string;
+  label?: string;
   iconColor?: string;
   mask?: string;
   register: any;
@@ -32,6 +35,9 @@ const Input: React.FC<InputProps> = ({
   icon: Icon,
   iconColor,
   placeholder,
+  colorPlaceholder,
+  backgroundColor,
+  label,
   ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -47,6 +53,9 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <Container
+      className="input"
+      colorPlaceholder={colorPlaceholder}
+      backgroundColor={backgroundColor}
       isIcon={!!Icon}
       isFilled={isFilled}
       isFocused={isFocused}
@@ -58,11 +67,15 @@ const Input: React.FC<InputProps> = ({
           <Icon color={iconColor || '#bfbfbf'} />
         </ButtonIcon>
       )}
-
-      {/* <label>Nome de Usuário</label> */}
-      {/* <input type="text" placeholder=" " required /> */}
-      <InputMask mask={mask} ref={register} {...rest} id={name} name={name} />
-      <label>{placeholder}</label>
+      <InputMask
+        mask={mask}
+        ref={register}
+        {...rest}
+        id={name}
+        name={name}
+        placeholder={placeholder}
+      />
+      <label>{label}</label>
     </Container>
   );
 };

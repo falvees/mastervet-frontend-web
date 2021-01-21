@@ -1,8 +1,11 @@
 import http from '../http-common';
 
 const getAll = () => {
-  return http.get('/').then(response => response.data);
+  return http.get('/animals').then(response => response.data);
 };
+// const getAll = () => {
+//   return http.get('/client');
+// };
 // const getAll = () => {
 //   return http
 //     .get('/client')

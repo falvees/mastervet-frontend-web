@@ -1,4 +1,5 @@
 import { Button, Grid } from '@material-ui/core';
+import { shade } from 'polished';
 import styled from 'styled-components';
 
 export const ButtonLogin = styled(Button)`
@@ -16,6 +17,30 @@ export const Container = styled(Grid)`
   /* height: 100vh; */
   /* width: 100%; */
   overflow-x: hidden;
+`;
+export const GridHeaderSearch = styled(Grid)`
+  position: relative;
+
+  > .input {
+    border-color: #17a0ae;
+  }
+  a {
+    position: absolute;
+    text-decoration: none;
+    left: 0;
+    display: flex;
+    align-items: center;
+    color: #9d9d9c;
+    transition: color 0.2s;
+    font-weight: 500;
+    &:hover {
+      color: ${shade(0.2, '#9d9d9c')};
+    }
+    svg {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  }
 `;
 export const Content = styled.div`
   display: flex;
