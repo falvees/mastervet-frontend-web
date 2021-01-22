@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React from 'react';
 import { Grid, Hidden } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
@@ -10,15 +11,6 @@ import Button from '../../components/Button';
 import { Background, Container, Content } from './styles';
 import logo from '../../assets/logo.png';
 import pata from '../../assets/pata.png';
-// export const Button: React.FC<ButtonProps> = () => {
-//   return (
-//     <Link to="/cadastro_usuario">
-//       <ButtonLogin variant="contained" size="large" className="button-sign-in">
-//         Entrar
-//       </ButtonLogin>
-//     </Link>
-//   );
-// };
 
 const SignIn: React.FC = () => {
   const { register, handleSubmit, unregister, getValues } = useForm();
@@ -49,9 +41,11 @@ const SignIn: React.FC = () => {
               register={register}
               getValues={getValues}
             />
-            <Button type="submit" background="primary">
-              Entrar
-            </Button>
+            <Link to="/usuario">
+              <Button type="submit" background="primary">
+                Entrar
+              </Button>
+            </Link>
           </Form>
         </Content>
       </Container>

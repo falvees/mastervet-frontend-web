@@ -23,22 +23,16 @@ const FormUsers: React.FC = () => {
     getValues,
     setValue,
     formState,
-  } = useForm();
-
-  // function teste(a) {
-  //   data.map(item => console.log(item));
-  // }
+  } = useForm({ shouldUnregister: false });
 
   const onSubmit = data => {
-    // const e = new FormData(data);
-    // console.log(data);
-    // console.log(e);
-    // Object.keys(data).forEach(function (item) {
-    //   if (typeof data[item] === 'object' && data[item] !== null) {
-    //     setValue(`${data[item]}`, data[item].value);
-    //   }
-    // });
-    // console.log(data);
+    Object.keys(data).forEach(function (key, item) {
+      if (typeof data[key] === 'object' && data[key] !== null) {
+        // eslint-disable-next-line no-param-reassign
+        data[key] = data[key].value;
+      }
+    });
+
     PeopleApi.create(data)
       .then(function (response) {
         console.log(response);
@@ -53,8 +47,8 @@ const FormUsers: React.FC = () => {
     { value: '2', label: 'Jurídica' },
   ];
   const genders = [
-    { value: '1', label: 'Masculino' },
-    { value: '2', label: 'Feminino' },
+    { value: 'M', label: 'Masculino' },
+    { value: 'F', label: 'Feminino' },
   ];
   const plans = [
     { value: '1', label: 'Master Light' },
@@ -98,6 +92,13 @@ const FormUsers: React.FC = () => {
             </Grid>
             <Grid item xs={4} sm={6} md={2}>
               <Select
+                // transform={{
+                //   input: value => (value === 0 ? '' : value.toString()),
+                //   output: e => {
+                //     const output = parseInt(e.target.value, 10);
+                //     return output ? 0 : output;
+                //   },
+                // }}
                 name="gender"
                 placeholder="Sexo"
                 options={genders}

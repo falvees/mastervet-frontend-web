@@ -95,7 +95,6 @@ const Select: React.FC<SelectProps> = ({
             {...props}
           />
         )}
-        onChange={([, data]) => data}
         defaultValue={null}
         name={name}
         control={control}
