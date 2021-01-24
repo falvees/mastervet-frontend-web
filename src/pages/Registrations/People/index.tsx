@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState } from 'react';
 import {
   withStyles,
@@ -16,7 +17,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { Grid } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch } from './styles';
@@ -105,6 +106,7 @@ const People: React.FC = () => {
   }, []);
 
   const classes = useStyles();
+  const history = useHistory();
   return (
     <Container container sm={12} style={{ width: '100%' }}>
       <MenuPrincipalLeft pages={['all']} />
@@ -119,10 +121,11 @@ const People: React.FC = () => {
           justify="center"
           alignItems="center"
         >
-          <Link to="/">
+          <button type="button" onClick={() => history.goBack()} />
+          {/* <Link to="" onClick={() => history.goBack()}>
             <FiArrowLeft />
             Voltar
-          </Link>
+          </Link> */}
           <Grid
             item
             style={{
