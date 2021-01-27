@@ -7,10 +7,12 @@ interface SelectProps {
 export const Container = styled(Autocomplete)<SelectProps>`
   & .MuiForm-filled {
   }
+  padding-right: 0;
   display: flex;
   color: red;
   margin: 5.5px;
   & .MuiInputBase-input {
+    height: 12px !important;
     font: 400 16px Ubuntu, sans-serif;
   }
   & fieldset {
@@ -20,7 +22,7 @@ export const Container = styled(Autocomplete)<SelectProps>`
     border-color: #bfbfbf !important;
   }
   & label {
-    transform: translate(10px, 18px) scale(1);
+    transform: translate(10px, 15px) scale(1);
     color: #bfbfbf;
   }
   & fieldset .PrivateNotchedOutline-legendLabelled-9 {
@@ -45,9 +47,18 @@ export const Container = styled(Autocomplete)<SelectProps>`
     `}
 
   .MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'] {
-    padding: 7px;
+    padding: 7px !important;
+    padding-right: 25px !important;
   }
-
+  .MuiAutocomplete-clearIndicator {
+    /* top: -10px;*/
+    left: 10px;
+  }
+  @media (max-width: 600px) {
+    & label {
+      font-size: 14px !important;
+    }
+  }
   /* & .MuiAutocomplete-inputFocused .MuiFocused {
 border-color: red !important;
 } */

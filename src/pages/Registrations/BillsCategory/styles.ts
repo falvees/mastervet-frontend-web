@@ -22,8 +22,7 @@ export const GridHeaderSearch = styled(Grid)`
   position: relative;
 
   & .button-search {
-    height: 40px;
-    width: 40px;
+    height: 100%;
     position: absolute;
     left: 100%;
     &:hover svg {
@@ -34,7 +33,7 @@ export const GridHeaderSearch = styled(Grid)`
   div > .input-root {
     border-color: #17a0ae;
   }
-  > a:first-child {
+  a:first-child {
     position: absolute;
     text-decoration: none;
     left: 0;

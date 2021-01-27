@@ -73,6 +73,7 @@ const Select: React.FC<SelectProps> = ({
             getOptionLabel={(option: any) => option.label}
             renderInput={params => (
               <TextField
+                autoComplete="new-password"
                 onBlur={HandleInputBlur}
                 onFocus={HandleInputFocus}
                 {...params}
@@ -81,7 +82,10 @@ const Select: React.FC<SelectProps> = ({
                 variant="outlined"
                 inputProps={{
                   ...params.inputProps,
-                  autoComplete: 'new-password',
+                  autocomplete: 'new-password',
+                  form: {
+                    autocomplete: 'new-password',
+                  },
                 }}
                 InputLabelProps={{
                   classes: {

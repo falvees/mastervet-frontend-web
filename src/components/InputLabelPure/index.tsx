@@ -63,7 +63,7 @@ const Input: React.FC<InputProps> = ({
       onBlur={HandleInputBlur}
     >
       {Icon && (
-        <ButtonIcon>
+        <ButtonIcon tabIndex="-1">
           <Icon color={iconColor || '#bfbfbf'} />
         </ButtonIcon>
       )}

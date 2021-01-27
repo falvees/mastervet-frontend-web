@@ -42,7 +42,11 @@ const SignIn: React.FC = () => {
               getValues={getValues}
             />
             <Link to="/usuario">
-              <Button type="submit" background="primary">
+              <Button
+                type="submit"
+                background="primary"
+                style={{ width: '100%' }}
+              >
                 Entrar
               </Button>
             </Link>

@@ -29,7 +29,7 @@ export const Container = styled.div<inputProps>`
     border-radius: 5px;
     outline: none;
     min-width: 250px;
-    padding: ${props => (props.isIcon ? `15px 15px 15px 0` : `15px`)};
+    padding: ${props => (props.isIcon ? `12px 12px 12px 0` : `12px`)};
     font-size: 16px;
     transition: all 0.1s linear;
     -webkit-transition: all 0.1s linear;
@@ -112,6 +112,12 @@ export const Container = styled.div<inputProps>`
         border-color: #17a0ae;
       }
     `}
+
+    @media (max-width: 600px) {
+    & input {
+      font-size: 13px;
+    }
+  }
 `;
 
 export const ButtonIcon = styled(IconButton)`

@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body, input, button, textarea {
-    font: 400 16px Ubuntu, sans-serif;
+    font: 400 1em Ubuntu, sans-serif;
   }
   button {
     cursor: pointer;
@@ -29,14 +29,20 @@ const GlobalStyle = createGlobalStyle`
 .required-form {
   span {
     font-weight: 600;
-    font-size:14px
+    font-size:1em
   }
-    font-size: 12px;
+    font-size: 1em;
     color: #d60000;
     margin: 0 0 0 10px;
     padding: 0;
     font-weight: 500;
 }
 
+
+@media only screen and (max-width: 960px) {
+   button {
+     /* font-size: 12px; */
+   }
+}
 `;
 export default GlobalStyle;

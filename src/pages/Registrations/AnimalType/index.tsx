@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState } from 'react';
 import {
   withStyles,
@@ -17,23 +16,23 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { Grid } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch } from './styles';
-import peopleApi from '../../../services/PeopleApi';
-
+import api from '../../../http-common';
 import Input from '../../../components/InputLabelPure';
 import { ButtonIcon } from '../../../components/InputLabelPure/styles';
+import AnimalTypeApi from '../../../services/AnimalTypeApi';
 
 interface arrayList {
-  user_id: string;
-  name: string;
+  type_id: string;
+  description: string;
 }
 
-const People: React.FC = () => {
+const AnimalType: React.FC = () => {
   const { getValues, register } = useForm();
-  const [isListUsers, setListUsers] = useState<arrayList[]>([]);
+  const [isListAnimaType, setListAnimalType] = useState<arrayList[]>([]);
   const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
       head: {
@@ -71,12 +70,12 @@ const People: React.FC = () => {
     },
   });
 
-  const listPeoples = () => {
+  const listAnimalType = () => {
     const array: arrayList[] = [];
-    peopleApi
-      .getAll()
+    AnimalTypeApi.getAll()
       .then(result => {
-        setListUsers(result.response);
+        setListAnimalType(result.response);
+        console.log(result.response);
       })
       .catch(e => {
         console.log(e);
@@ -84,11 +83,10 @@ const People: React.FC = () => {
   };
 
   useEffect(() => {
-    listPeoples();
+    listAnimalType();
   }, []);
 
   const classes = useStyles();
-  const history = useHistory();
   return (
     <Container container sm={12} style={{ width: '100%' }}>
       <MenuPrincipalLeft pages={['all']} />
@@ -129,9 +127,9 @@ const People: React.FC = () => {
               <FiSearch color="#17a0ae" />
             </ButtonIcon>
           </Grid>
-          <Link to="/cadastro_usuario" className="add-user">
+          <Link to="/cadastro_animal_tipo" className="add-user">
             <Button background="primary" style={{ width: 180 }}>
-              Adicionar Cliente
+              Adicionar Tipo
             </Button>
           </Link>
         </GridHeaderSearch>
@@ -144,34 +142,22 @@ const People: React.FC = () => {
             <Table className={classes.table} aria-label="customized table">
               <TableHead>
                 <TableRow hover>
-                  <StyledTableCell width="40%">Nome</StyledTableCell>
-                  <StyledTableCell align="center">CPF</StyledTableCell>
-                  <StyledTableCell align="center">Plano</StyledTableCell>
-                  <StyledTableCell align="center">Contato</StyledTableCell>
-                  <StyledTableCell align="center">Situação</StyledTableCell>
+                  <StyledTableCell width="10%">Id</StyledTableCell>
+                  <StyledTableCell width="50%">Descricao</StyledTableCell>
                   <StyledTableCell align="center">Ações</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {isListUsers &&
-                  isListUsers.map(row => {
+                {isListAnimaType &&
+                  isListAnimaType.map(row => {
                     // console.log(row.type_id);
                     return (
-                      <StyledTableRow key={row.user_id}>
+                      <StyledTableRow key={row.type_id}>
                         <StyledTableCell component="th" scope="row">
-                          {row.name}
+                          {row.type_id}
                         </StyledTableCell>
-                        <StyledTableCell align="center">
-                          128.235.756-50
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          Master Premium
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          (34) 99120-1229
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          Ativado
+                        <StyledTableCell component="th" scope="row">
+                          {row.description}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           ver, editar, apagar
@@ -188,4 +174,4 @@ const People: React.FC = () => {
   );
 };
 
-export default People;
+export default AnimalType;

@@ -1,78 +1,90 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useEffect, useState } from 'react';
 import {
+  createStyles,
+  Grid,
+  Hidden,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
   withStyles,
   Theme,
-  createStyles,
+  TableCell,
   makeStyles,
-} from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { AiOutlineUser } from 'react-icons/ai';
-import { Grid } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
-import { FiArrowLeft, FiSearch } from 'react-icons/fi';
-import { Link, useHistory } from 'react-router-dom';
-import Button from '../../../components/Button';
-import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
-import { Container, GridHeaderSearch } from './styles';
-import peopleApi from '../../../services/PeopleApi';
+} from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 
-import Input from '../../../components/InputLabelPure';
-import { ButtonIcon } from '../../../components/InputLabelPure/styles';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { FiArrowLeft, FiSearch } from 'react-icons/fi';
+import Button from '../../components/Button';
+import Input from '../../components/InputLabelPure';
+import MenuPrincipalLeft from '../../components/MenuPrincipalLeft';
+
+import peopleApi from '../../services/PeopleApi';
+
+import { Container, GridHeaderSearch, Content } from './styles';
+import MenuMobile from '../../components/MenuMobile/Navbar';
+// import MenuMobile from '../../components/Menu/Sidebar';
 
 interface arrayList {
   user_id: string;
   name: string;
 }
 
-const People: React.FC = () => {
-  const { getValues, register } = useForm();
+const StyledTableCell = withStyles((theme: Theme) =>
+  createStyles({
+    head: {
+      // backgroundColor: '#bfbfbf',
+      color: '#000',
+      fontWeight: 600,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }),
+)(TableCell);
+
+const StyledTableRow = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }),
+)(TableRow);
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+    height: '100%',
+  },
+  paper: {
+    marginTop: 20,
+    '&.MuiPaper-elevation5': {
+      boxShadow:
+        '-5px -5px 5px 4px rgba(0,0,0,0.05), 3px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
+    },
+  },
+});
+
+const FormUsers: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    unregister,
+    control,
+    errors,
+    getValues,
+    setValue,
+    formState,
+  } = useForm({ shouldUnregister: false });
   const [isListUsers, setListUsers] = useState<arrayList[]>([]);
-  const StyledTableCell = withStyles((theme: Theme) =>
-    createStyles({
-      head: {
-        // backgroundColor: '#bfbfbf',
-        color: '#000',
-        fontWeight: 600,
-      },
-      body: {
-        fontSize: 14,
-      },
-    }),
-  )(TableCell);
-
-  const StyledTableRow = withStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        '&:nth-of-type(odd)': {
-          backgroundColor: theme.palette.action.hover,
-        },
-      },
-    }),
-  )(TableRow);
-
-  const useStyles = makeStyles({
-    table: {
-      minWidth: 700,
-      height: '100%',
-    },
-    paper: {
-      marginTop: 20,
-      '&.MuiPaper-elevation5': {
-        boxShadow:
-          '-5px -5px 5px 4px rgba(0,0,0,0.05), 3px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
-      },
-    },
-  });
 
   const listPeoples = () => {
-    const array: arrayList[] = [];
     peopleApi
       .getAll()
       .then(result => {
@@ -82,31 +94,55 @@ const People: React.FC = () => {
         console.log(e);
       });
   };
-
+  const arrayTeste = [
+    { user_id: '1', name: 'teste' },
+    { user_id: '1', name: 'teste' },
+    { user_id: '1', name: 'teste' },
+    { user_id: '1', name: 'teste' },
+    { user_id: '1', name: 'teste' },
+    { user_id: '1', name: 'teste' },
+    { user_id: '1', name: 'teste' },
+  ];
   useEffect(() => {
     listPeoples();
   }, []);
 
   const classes = useStyles();
-  const history = useHistory();
+
   return (
-    <Container container sm={12} style={{ width: '100%' }}>
-      <MenuPrincipalLeft pages={['all']} />
-      <Grid container sm style={{ padding: '20px 40px', height: '100%' }}>
-        <Grid container sm={12} alignItems="center" justify="center">
-          <p style={{ fontWeight: 500, color: '#9d9d9c' }}>Buscar Cliente</p>
-        </Grid>
+    <Container container sm={12} style={{ width: '100%', flex: 1 }}>
+      <Hidden xsDown>
+        <MenuPrincipalLeft pages={['all']} />
+      </Hidden>
+      <Content>
         <GridHeaderSearch
           container
-          sm={12}
           direction="row"
           justify="center"
           alignItems="center"
         >
-          <Link to="/">
-            <FiArrowLeft />
-            Voltar
-          </Link>
+          <Hidden only={['xs', 'sm']}>
+            <Link to="/">
+              <FiArrowLeft color="red" />
+              Voltar
+            </Link>
+          </Hidden>
+
+          <MenuMobile name="Listando Usuários" />
+
+          <Hidden only={['xs', 'sm']}>
+            <Grid
+              container
+              sm={12}
+              alignItems="center"
+              justify="center"
+              direction="column"
+            >
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                Listando Usuários
+              </p>
+            </Grid>
+          </Hidden>
           <Grid
             item
             style={{
@@ -125,9 +161,9 @@ const People: React.FC = () => {
               getValues={getValues}
               register={register}
             />
-            <ButtonIcon className="button-search">
+            <IconButton className="button-search">
               <FiSearch color="#17a0ae" />
-            </ButtonIcon>
+            </IconButton>
           </Grid>
           <Link to="/cadastro_usuario" className="add-user">
             <Button background="primary" style={{ width: 180 }}>
@@ -153,8 +189,8 @@ const People: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {isListUsers &&
-                  isListUsers.map(row => {
+                {arrayTeste &&
+                  arrayTeste.map(row => {
                     // console.log(row.type_id);
                     return (
                       <StyledTableRow key={row.user_id}>
@@ -183,9 +219,8 @@ const People: React.FC = () => {
             </Table>
           </TableContainer>
         </Paper>
-      </Grid>
+      </Content>
     </Container>
   );
 };
-
-export default People;
+export default FormUsers;
