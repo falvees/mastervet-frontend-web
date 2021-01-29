@@ -93,7 +93,6 @@ export const Content = styled(Grid)`
   flex: 1;
   padding: 40px;
   width: 100%;
-  /* background-color: red; */
   @media only screen and (max-width: 600px) {
     padding: 60px 15px 15px 15px;
   }

@@ -50,8 +50,6 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, label, ...rest }) => {
     <ThemeProvider
       options={{
         primary: '#8C8C8C',
-        secondary: 'red',
-        onPrimary: 'red',
         textPrimaryOnBackground: '#8C8C8C',
       }}
     >

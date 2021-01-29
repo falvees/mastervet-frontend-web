@@ -9,7 +9,6 @@ export const Container = styled(Autocomplete)<SelectProps>`
   }
   padding-right: 0;
   display: flex;
-  color: red;
   margin: 5.5px;
   & .MuiInputBase-input {
     height: 12px !important;

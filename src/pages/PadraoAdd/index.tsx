@@ -1,5 +1,5 @@
 import { Grid, Hidden } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+
 import { Form } from '@unform/web';
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -14,8 +14,7 @@ import MenuPrincipalLeft from '../../components/MenuPrincipalLeft';
 import Select from '../../components/Select';
 import PeopleApi from '../../services/PeopleApi';
 import { Container, GridHeaderSearch, Content } from './styles';
-import MenuMobile from '../../components/MenuMobile/Navbar';
-// import MenuMobile from '../../components/Menu/Sidebar';
+import Navbar from '../../components/MenuMobile/Navbar';
 
 const FormUsers: React.FC = () => {
   const {
@@ -65,16 +64,16 @@ const FormUsers: React.FC = () => {
           justify="center"
           alignItems="center"
         >
-          <Hidden only={['xs', 'sm']}>
+          <Hidden only={['xs']}>
             <Link to="/">
-              <FiArrowLeft color="red" />
+              <FiArrowLeft />
               Voltar
             </Link>
           </Hidden>
 
-          <MenuMobile name="Cadastrando Usuários" />
+          <Navbar name="Cadastrando Usuários" />
 
-          <Hidden only={['xs', 'sm']}>
+          <Hidden only={['xs']}>
             <Grid
               container
               sm={12}

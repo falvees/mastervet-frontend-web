@@ -41,7 +41,7 @@ const SignIn: React.FC = () => {
               register={register}
               getValues={getValues}
             />
-            <Link to="/usuario">
+            <Link to="/users">
               <Button
                 type="submit"
                 background="primary"

@@ -19,6 +19,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
+import ResponsiveTable from 'material-ui-next-responsive-table';
 import Button from '../../components/Button';
 import Input from '../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../components/MenuPrincipalLeft';
@@ -26,8 +27,7 @@ import MenuPrincipalLeft from '../../components/MenuPrincipalLeft';
 import peopleApi from '../../services/PeopleApi';
 
 import { Container, GridHeaderSearch, Content } from './styles';
-import MenuMobile from '../../components/MenuMobile/Navbar';
-// import MenuMobile from '../../components/Menu/Sidebar';
+import Navbar from '../../components/MenuMobile/Navbar';
 
 interface arrayList {
   user_id: string;
@@ -123,12 +123,12 @@ const FormUsers: React.FC = () => {
         >
           <Hidden only={['xs', 'sm']}>
             <Link to="/">
-              <FiArrowLeft color="red" />
+              <FiArrowLeft />
               Voltar
             </Link>
           </Hidden>
 
-          <MenuMobile name="Listando Usuários" />
+          <Navbar name="Listando Usuários" />
 
           <Hidden only={['xs', 'sm']}>
             <Grid
@@ -165,7 +165,7 @@ const FormUsers: React.FC = () => {
               <FiSearch color="#17a0ae" />
             </IconButton>
           </Grid>
-          <Link to="/cadastro_usuario" className="add-user">
+          <Link to="/register_user" className="add-user">
             <Button background="primary" style={{ width: 180 }}>
               Adicionar Cliente
             </Button>
@@ -176,7 +176,7 @@ const FormUsers: React.FC = () => {
           style={{ width: '100%' }}
           className={classes.paper}
         >
-          <TableContainer style={{ flex: 1 }}>
+          <TableContainer style={{ flex: 1, overflowWrap: 'break-word' }}>
             <Table className={classes.table} aria-label="customized table">
               <TableHead>
                 <TableRow hover>
@@ -198,13 +198,13 @@ const FormUsers: React.FC = () => {
                           {row.name}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                          128.235.756-50
+                          122.299.999-50
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           Master Premium
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                          (34) 99120-1229
+                          (99) 99166-1629
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           Ativado

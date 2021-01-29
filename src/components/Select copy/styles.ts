@@ -7,8 +7,6 @@ interface SelectProps {
 export const Container = styled(Autocomplete)<SelectProps>`
   & .MuiForm-filled {
   }
-
-  color: red;
   margin: 5px;
 
   & fieldset {

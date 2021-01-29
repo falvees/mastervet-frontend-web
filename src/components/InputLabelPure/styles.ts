@@ -122,7 +122,6 @@ export const Container = styled.div<inputProps>`
 
 export const ButtonIcon = styled(IconButton)`
   & {
-    border-color: red !important;
     left: 2px;
     padding: 5px !important;
   }

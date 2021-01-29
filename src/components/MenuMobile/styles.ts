@@ -10,7 +10,7 @@ export const StyledBurger = styled.div<StyledBurgerProps>`
   width: 1.5rem;
   height: 1.5rem;
   position: absolute;
-  top: 18px;
+  top: 14px;
   left: 20px;
   z-index: 20;
   display: flex;
@@ -71,7 +71,6 @@ export const SidebarWrap = styled.div`
 
 export const Container = styled.div`
   z-index: 10;
-  padding-top: 20px;
   top: 0;
   position: fixed;
   display: none;
@@ -80,9 +79,11 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  height: 40px;
-  @media (max-width: 600px) {
+  height: 50px;
+  visibility: hidden;
+  @media (max-width: 700px) {
     display: flex;
+    visibility: visible;
   }
 `;
 export const NameNav = styled.div`

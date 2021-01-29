@@ -12,7 +12,7 @@ export interface OptionMenuProps {
 }
 
 export const Container = styled(Grid)<MenuProps>`
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
@@ -24,9 +24,9 @@ export const Container = styled(Grid)<MenuProps>`
   width: 150px;
   min-width: 150px;
   height: 100vh;
-  fill: red;
   min-height: 600px;
-
+  opacity: 0;
+  visibility: hidden;
   & img {
     width: 80px;
   }
@@ -45,6 +45,11 @@ export const Container = styled(Grid)<MenuProps>`
       font-size: 20px;
       margin-right: 10px;
     }
+  }
+  @media (min-width: 700px) {
+    opacity: 1;
+    display: flex;
+    visibility: visible;
   }
 `;
 
@@ -74,10 +79,19 @@ export const OptionMenu = styled.nav<OptionMenuProps>`
     filter: contrast(100%) brightness(50%);
   }
   .submenu {
+    top: -15px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     width: 180px;
     background-color: #fff;
+    z-index: 10;
+    -webkit-box-shadow: 8px 0px 8px 0px rgb(50 50 50 / 25%);
+    -moz-box-shadow: 8px 0px 8px 0px rgb(50 50 50 / 25%);
+    box-shadow: 8px 0px 8px 0px rgb(50 50 50 / 25%);
+
+    & svg {
+      margin-right: 5px;
+    }
   }
   .submenu a {
     width: 100%;
@@ -123,6 +137,9 @@ export const OptionMenu = styled.nav<OptionMenuProps>`
   }
   .title-menu:hover {
     background-color: #fff;
+    -webkit-box-shadow: 1px 0px 10px 0px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow: 1px 0px 10px 0px rgba(50, 50, 50, 0.3);
+    box-shadow: 1px 0px 10px 0px rgba(50, 50, 50, 0.3);
   }
   li {
     position: relative; /* Necessário para flutuar os submenus */

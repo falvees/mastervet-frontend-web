@@ -87,13 +87,11 @@ export const GridHeaderSearch = styled(Grid)`
 `;
 export const Content = styled(Grid)`
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   flex: 1;
   padding: 40px;
   width: 100%;
-  /* background-color: red; */
   @media only screen and (max-width: 600px) {
     padding: 60px 15px 15px 15px;
   }
