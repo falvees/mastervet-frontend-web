@@ -53,7 +53,7 @@ const FormUsers: React.FC = () => {
     { value: 'F', label: 'Feminino' },
   ];
   return (
-    <Container container sm={12} style={{ width: '100%', flex: 1 }}>
+    <Container container item sm={12} style={{ width: '100%', flex: 1 }}>
       <Hidden xsDown>
         <MenuPrincipalLeft pages={['all']} />
       </Hidden>
@@ -76,6 +76,7 @@ const FormUsers: React.FC = () => {
           <Hidden only={['xs']}>
             <Grid
               container
+              item
               sm={12}
               alignItems="center"
               justify="center"
@@ -112,8 +113,8 @@ const FormUsers: React.FC = () => {
                 name="name"
                 placeholder="Nome Completo"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
+                // register={register}
+                // getValues={getValues}
               />
             </Grid>
             <Grid item xs={6} sm={6} md={2}>
@@ -121,8 +122,8 @@ const FormUsers: React.FC = () => {
                 name="gender"
                 placeholder="Sexo"
                 options={genders}
-                control={control}
-                getValues={getValues}
+
+                // getValues={getValues}
               />
               {errors.gender && (
                 <p className="required-form">
@@ -136,8 +137,8 @@ const FormUsers: React.FC = () => {
                 name="date_birth"
                 placeholder="Nascimento"
                 mask="99/99/9999"
-                register={register}
-                getValues={getValues}
+                // register={register}
+                // getValues={getValues}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={2}>
@@ -145,8 +146,8 @@ const FormUsers: React.FC = () => {
                 name="kind_people"
                 placeholder="Tipo Pessoa"
                 options={kindPeople}
-                control={control}
-                getValues={getValues}
+
+                // getValues={getValues}
               />
               {errors.kind_people && (
                 <p className="required-form">

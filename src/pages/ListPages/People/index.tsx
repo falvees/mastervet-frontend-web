@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import { AiOutlineUser } from 'react-icons/ai';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
-import { FiArrowLeft, FiSearch } from 'react-icons/fi';
+import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
@@ -26,9 +26,10 @@ import peopleApi from '../../../services/PeopleApi';
 import Input from '../../../components/InputLabelPure';
 import { ButtonIcon } from '../../../components/InputLabelPure/styles';
 import Navbar from '../../../components/MenuMobile/Navbar';
+import ButtonUtil from '../../../components/ButtonUtil';
 
 interface arrayList {
-  user_id: string;
+  people_id: string;
   name: string;
 }
 
@@ -77,6 +78,7 @@ const People: React.FC = () => {
     peopleApi
       .getAll()
       .then(result => {
+        console.log(result.response);
         setListUsers(result.response);
       })
       .catch(e => {
@@ -96,7 +98,7 @@ const People: React.FC = () => {
       <Navbar name="Listando Usuários" />
       <Content>
         <Hidden only={['xs', 'sm']}>
-          <Grid justify="center">
+          <Grid container justify="center">
             <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
               Listando Usuários
             </p>
@@ -125,8 +127,8 @@ const People: React.FC = () => {
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
               // label="teste"
-              getValues={getValues}
-              register={register}
+              // getValues={getValues}
+              // register={register}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />
@@ -158,9 +160,9 @@ const People: React.FC = () => {
               <TableBody>
                 {isListUsers &&
                   isListUsers.map(row => {
-                    // console.log(row.type_id);
+                    console.log(row.people_id);
                     return (
-                      <StyledTableRow key={row.user_id}>
+                      <StyledTableRow key={row.people_id}>
                         <StyledTableCell component="th" scope="row">
                           {row.name}
                         </StyledTableCell>
@@ -176,8 +178,19 @@ const People: React.FC = () => {
                         <StyledTableCell align="center">
                           Ativado
                         </StyledTableCell>
-                        <StyledTableCell align="center">
-                          ver, editar, apagar
+                        <StyledTableCell
+                          align="center"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <ButtonUtil icon={FiSearch} background="primary" />
+                          <Link to={`/edit_user/${row.people_id}`}>
+                            <ButtonUtil icon={FiEdit} background="primary" />
+                          </Link>
+                          <ButtonUtil icon={FiTrash2} background="primary" />
                         </StyledTableCell>
                       </StyledTableRow>
                     );

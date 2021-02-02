@@ -78,6 +78,7 @@ const FormHealthPlans: React.FC = () => {
           <Hidden only={['xs']}>
             <Grid
               container
+              item
               sm={12}
               alignItems="center"
               justify="center"
@@ -104,8 +105,8 @@ const FormHealthPlans: React.FC = () => {
                 name="description"
                 placeholder="Descrição"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
+                // register={register}
+                // getValues={getValues}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
@@ -113,8 +114,8 @@ const FormHealthPlans: React.FC = () => {
                 name="status"
                 placeholder="Ativo/Inativo"
                 options={Status}
-                control={control}
-                getValues={getValues}
+
+                // getValues={getValues}
               />
             </Grid>
           </Grid>

@@ -94,6 +94,7 @@ const FormPetProcedure: React.FC = () => {
           <Hidden only={['xs']}>
             <Grid
               container
+              item
               sm={12}
               alignItems="center"
               justify="center"
@@ -120,8 +121,8 @@ const FormPetProcedure: React.FC = () => {
                 name="description"
                 placeholder="Descrição do Procedimento"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
+                // register={register}
+                // getValues={getValues}
               />
             </Grid>
             <Grid item xs={6} sm={6} md={6}>
@@ -129,8 +130,8 @@ const FormPetProcedure: React.FC = () => {
                 name="modality_id"
                 placeholder="Modalidade"
                 options={isListModalities}
-                control={control}
-                getValues={getValues}
+
+                // getValues={getValues}
               />
               {errors.animal_size && (
                 <p className="required-form">

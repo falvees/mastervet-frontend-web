@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
 import ResponsiveTable from 'material-ui-next-responsive-table';
+import { Form } from '@unform/web';
 import Button from '../../components/Button';
 import Input from '../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../components/MenuPrincipalLeft';
@@ -110,7 +111,7 @@ const FormUsers: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Container container sm={12} style={{ width: '100%', flex: 1 }}>
+    <Container container item sm={12} style={{ width: '100%', flex: 1 }}>
       <Hidden xsDown>
         <MenuPrincipalLeft pages={['all']} />
       </Hidden>
@@ -133,6 +134,7 @@ const FormUsers: React.FC = () => {
           <Hidden only={['xs', 'sm']}>
             <Grid
               container
+              item
               sm={12}
               alignItems="center"
               justify="center"
@@ -158,8 +160,8 @@ const FormUsers: React.FC = () => {
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
               // label="teste"
-              getValues={getValues}
-              register={register}
+              // getValues={getValues}
+              // register={register}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />
@@ -171,6 +173,14 @@ const FormUsers: React.FC = () => {
             </Button>
           </Link>
         </GridHeaderSearch>
+        <Form
+          initialData={{ email: 'test@example.com' }}
+          onSubmit={() => {
+            console.log('a');
+          }}
+        >
+          <input name="email" />
+        </Form>
         <Paper
           elevation={5}
           style={{ width: '100%' }}

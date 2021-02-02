@@ -123,8 +123,8 @@ const Benefits: React.FC = () => {
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
               // label="teste"
-              getValues={getValues}
-              register={register}
+              // getValues={getValues}
+              // register={register}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

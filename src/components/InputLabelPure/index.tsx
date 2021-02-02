@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { useField } from '@unform/core';
 import React, {
   InputHTMLAttributes,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import { IconBaseProps } from 'react-icons';
 import InputMask from 'react-input-mask';
+import { useFormContext } from 'react-hook-form';
+import StyledContentLoader from 'styled-content-loader';
 import { ButtonIcon, Container } from './styles';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -23,14 +23,12 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   iconColor?: string;
   mask?: string;
-  register: any;
-  getValues: any;
+  isLoading?: Boolean;
 };
 
 const Input: React.FC<InputProps> = ({
   name,
-  register,
-  getValues,
+  isLoading,
   mask,
   icon: Icon,
   iconColor,
@@ -40,6 +38,8 @@ const Input: React.FC<InputProps> = ({
   label,
   ...rest
 }) => {
+  const { getValues, register, watch } = useFormContext();
+
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -49,34 +49,43 @@ const Input: React.FC<InputProps> = ({
   const HandleInputBlur = useCallback(() => {
     setIsFocused(false);
     setIsFilled(!!getValues(name));
-  }, []);
+  }, [getValues, name]);
+
+  useEffect(() => {
+    watch(name, setIsFilled(!!watch(name)));
+  }, [name, watch]);
+
+  console.log('3', isLoading);
 
   return (
-    <Container
-      className="input-root"
-      colorPlaceholder={colorPlaceholder}
-      backgroundColor={backgroundColor}
-      isIcon={!!Icon}
-      isFilled={isFilled}
-      isFocused={isFocused}
-      onFocus={HandleInputFocus}
-      onBlur={HandleInputBlur}
-    >
-      {Icon && (
-        <ButtonIcon tabIndex="-1">
-          <Icon color={iconColor || '#bfbfbf'} />
-        </ButtonIcon>
-      )}
-      <InputMask
-        mask={mask}
-        ref={register}
-        {...rest}
-        id={name}
-        name={name}
-        placeholder={placeholder}
-      />
-      <label>{label}</label>
-    </Container>
+    <StyledContentLoader isLoading={!!isLoading}>
+      <Container
+        isLoading={!!isLoading}
+        className="input-root"
+        colorPlaceholder={colorPlaceholder}
+        backgroundColor={backgroundColor}
+        isIcon={!!Icon}
+        isFilled={isFilled}
+        isFocused={isFocused}
+        onFocus={HandleInputFocus}
+        onBlur={HandleInputBlur}
+      >
+        {Icon && (
+          <ButtonIcon tabIndex="-1">
+            <Icon color={iconColor || '#bfbfbf'} />
+          </ButtonIcon>
+        )}
+        <InputMask
+          mask={mask}
+          ref={register}
+          {...rest}
+          id={name}
+          name={name}
+          placeholder={placeholder}
+        />
+        <label>{label}</label>
+      </Container>
+    </StyledContentLoader>
   );
 };
 export default Input;

@@ -8,7 +8,17 @@ const create = data => {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
+const put = data => {
+  return http.put('/client', data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+const get = id => {
+  return http.get(`/client/${id}`);
+};
 export default {
   getAll,
   create,
+  get,
+  put,
 };

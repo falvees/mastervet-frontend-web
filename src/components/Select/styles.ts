@@ -10,6 +10,7 @@ export const Container = styled(Autocomplete)<SelectProps>`
   padding-right: 0;
   display: flex;
   margin: 5.5px;
+  border-radius: 10px;
   & .MuiInputBase-input {
     height: 12px !important;
     font: 400 16px Ubuntu, sans-serif;

@@ -137,14 +137,14 @@ const MenuPrincipalLeft: React.FC<MenuProps> = ({
         <ul>
           {SidebarData.map((item, index) => {
             return (
-              <li className="title-menu">
+              <li className="title-menu" key={item.title}>
                 {item.icon}
                 <Link to={`${item.path}`}>{item.title}</Link>
                 <ul className="submenu">
                   {item.subNav &&
                     item.subNav.map((itemSub, indexSub) => {
                       return (
-                        <li>
+                        <li key={itemSub.title}>
                           {itemSub.icon}
                           <Link to={`${itemSub.path}`}>{itemSub.title}</Link>
                         </li>

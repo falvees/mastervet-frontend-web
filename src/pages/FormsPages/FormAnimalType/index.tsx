@@ -6,6 +6,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
+import Swal from 'sweetalert2';
 import Button from '../../../components/Button';
 import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
@@ -38,7 +39,7 @@ const FormAnimalType: React.FC = () => {
       .then(function (response) {
         console.log(response);
         if (response.status === 201) {
-          alert('Registro Gravado');
+          Swal.fire('Registro Gravado!');
           window.location.href = '/animaltype';
         }
       })
@@ -71,6 +72,7 @@ const FormAnimalType: React.FC = () => {
           <Hidden only={['xs']}>
             <Grid
               container
+              item
               sm={12}
               alignItems="center"
               justify="center"
@@ -98,8 +100,8 @@ const FormAnimalType: React.FC = () => {
                 name="description"
                 placeholder="Descrição"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
+                // register={register}
+                // getValues={getValues}
               />
             </Grid>
           </Grid>

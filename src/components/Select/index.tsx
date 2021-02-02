@@ -1,10 +1,19 @@
 import { TextField } from '@material-ui/core';
-import { Controller } from 'react-hook-form';
-import React, { InputHTMLAttributes, useCallback, useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import React, {
+  InputHTMLAttributes,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { IconBaseProps } from 'react-icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from './styles';
 
+interface PropsS {
+  value: string;
+  label: string;
+}
 interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   icon?: React.ComponentType<IconBaseProps>;
@@ -13,23 +22,20 @@ interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
   iconColor?: string;
   mask?: string;
   options: Array<{ value: string; label: string }>;
-  control: any;
-  getValues: any;
 }
 
 const Select: React.FC<SelectProps> = ({
   name,
-  control,
-  getValues,
   mask,
   icon: Icon,
   iconColor,
   placeholder,
   options,
 }) => {
-  // const { getValues } = useForm();
+  const { getValues, setValue, register, control } = useFormContext();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
+
   const useStyles = makeStyles({
     inputRoot: {
       fontSize: 16,
@@ -55,7 +61,27 @@ const Select: React.FC<SelectProps> = ({
   const HandleInputBlur = useCallback(() => {
     setIsFocused(false);
     setIsFilled(!!getValues(name));
+  }, [getValues, name]);
+
+  const Pos = useCallback(val => {
+    if (!val || typeof val === 'object') {
+      return null;
+    }
+
+    const valueDef =
+      options[options.findIndex(e => e.value === `${val}`)]?.value;
+    const labelDef =
+      options[options.findIndex(e => e.value === `${val}`)]?.label;
+
+    const obj = { value: valueDef, label: labelDef };
+    setIsFilled(!!getValues(name));
+    setValue(name, obj);
+    return obj;
   }, []);
+
+  useEffect(() => {
+    Pos(getValues(name));
+  });
 
   return (
     <>
@@ -66,11 +92,12 @@ const Select: React.FC<SelectProps> = ({
             className="select-custom"
             id={name}
             options={options}
+            // onInputChange={(value: any) => console.log(value)}
             getOptionSelected={
               (option: any, value: any) => value.value === option.value
               // eslint-disable-next-line react/jsx-curly-newline
             }
-            getOptionLabel={(option: any) => option.label}
+            getOptionLabel={(option: any) => (option.label ? option.label : '')}
             renderInput={params => (
               <TextField
                 autoComplete="new-password"
@@ -82,9 +109,9 @@ const Select: React.FC<SelectProps> = ({
                 variant="outlined"
                 inputProps={{
                   ...params.inputProps,
-                  autocomplete: 'new-password',
+                  autoComplete: 'new-password',
                   form: {
-                    autocomplete: 'new-password',
+                    autoComplete: 'new-password',
                   },
                 }}
                 InputLabelProps={{
@@ -95,13 +122,12 @@ const Select: React.FC<SelectProps> = ({
                 }}
               />
             )}
-            onChange={(e, data) => onChange(data)}
+            onChange={(e, data: any) => onChange(data)}
             {...props}
           />
         )}
         defaultValue={null}
         name={name}
-        control={control}
         rules={{ required: true }}
       />
     </>

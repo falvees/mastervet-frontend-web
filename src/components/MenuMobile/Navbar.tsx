@@ -27,7 +27,7 @@ const Navbar = ({ name }) => {
         <SidebarNav open={open}>
           <SidebarWrap>
             {SidebarData.map((item, index) => {
-              return <SubMenu item={item} />;
+              return <SubMenu item={item} key={item.title} />;
             })}
           </SidebarWrap>
         </SidebarNav>

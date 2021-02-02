@@ -31,15 +31,15 @@ const SignIn: React.FC = () => {
               name="user"
               icon={AiOutlineUser}
               placeholder="Usuário"
-              register={register}
-              getValues={getValues}
+              // register={register}
+              // getValues={getValues}
             />
             <Input
               name="password"
               icon={FiLock}
               placeholder="Senha"
-              register={register}
-              getValues={getValues}
+              // register={register}
+              // getValues={getValues}
             />
             <Link to="/users">
               <Button

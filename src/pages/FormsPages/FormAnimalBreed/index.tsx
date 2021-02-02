@@ -106,6 +106,7 @@ const FormAnimalBreed: React.FC = () => {
           <Hidden only={['xs']}>
             <Grid
               container
+              item
               sm={12}
               alignItems="center"
               justify="center"
@@ -132,8 +133,8 @@ const FormAnimalBreed: React.FC = () => {
                 name="breed_name"
                 placeholder="Nome da Raça"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
+                // register={register}
+                // getValues={getValues}
               />
             </Grid>
             <Grid item xs={6} sm={6} md={6}>
@@ -141,8 +142,8 @@ const FormAnimalBreed: React.FC = () => {
                 name="type_id"
                 placeholder="Tipo de Animal"
                 options={isAnimalType}
-                control={control}
-                getValues={getValues}
+
+                // getValues={getValues}
               />
               {errors.type_id && (
                 <p className="required-form">
@@ -156,8 +157,8 @@ const FormAnimalBreed: React.FC = () => {
                 name="animal_size"
                 placeholder="Porte do Animal"
                 options={sizes}
-                control={control}
-                getValues={getValues}
+
+                // getValues={getValues}
               />
               {errors.animal_size && (
                 <p className="required-form">

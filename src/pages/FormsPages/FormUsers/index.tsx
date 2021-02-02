@@ -1,11 +1,13 @@
 import { Grid, Hidden } from '@material-ui/core';
+import { Link, useParams } from 'react-router-dom';
 
-import { Form } from '@unform/web';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { useForm, FormProvider } from 'react-hook-form';
+
 import { FiArrowLeft } from 'react-icons/fi';
+import StyledContentLoader from 'styled-content-loader';
+
 import Button from '../../../components/Button';
 import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
@@ -14,35 +16,69 @@ import Select from '../../../components/Select';
 import { Container, Content, GridHeaderSearch } from './styles';
 import PeopleApi from '../../../services/PeopleApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
+import { Loader } from './scripts';
+
+interface RouteParams {
+  id: string;
+}
 
 const FormUsers: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    unregister,
-    control,
-    errors,
-    getValues,
-    setValue,
-    formState,
-  } = useForm({ shouldUnregister: false });
+  const { id } = useParams<RouteParams>();
+
+  const methods = useForm({
+    shouldUnregister: false,
+    defaultValues: {},
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const onSubmit = data => {
-    Object.keys(data).forEach(function (key, item) {
+    console.log(data);
+
+    Object.keys(data).forEach(key => {
       if (typeof data[key] === 'object' && data[key] !== null) {
         // eslint-disable-next-line no-param-reassign
         data[key] = data[key].value;
       }
     });
 
-    PeopleApi.create(data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (!id) {
+      PeopleApi.create(data)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      PeopleApi.put(data)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
+  useEffect(() => {
+    const listPeoples = () => {
+      console.log('teste1');
+      PeopleApi.get(id)
+        .then(result => {
+          methods.reset(result.data.response[0]);
+          // setTimeout(() => {
+          //   setIsLoading(false);
+          // }, 300);
+          // console.log('2', isLoading);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    };
+    if (id) {
+      listPeoples();
+    }
+  }, []);
 
   const kindPeople = [
     { value: '1', label: 'Física' },
@@ -77,18 +113,19 @@ const FormUsers: React.FC = () => {
             </Link>
           </Hidden>
 
-          <Navbar name=" Criar Novo Cliente" />
+          <Navbar name={id ? 'Editar Cliente' : 'Criar Novo Cliente'} />
 
           <Hidden only={['xs']}>
             <Grid
               container
+              item
               sm={12}
               alignItems="center"
               justify="center"
               direction="column"
             >
               <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-                Criar Novo Cliente
+                {id ? 'Editar Cliente' : 'Criar Novo Cliente'}
               </p>
               <hr
                 style={{
@@ -101,201 +138,138 @@ const FormUsers: React.FC = () => {
             </Grid>
           </Hidden>
         </GridHeaderSearch>
-        <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-          <Grid container>
-            <Grid item xs={12} sm={6} md={6}>
-              <Input
-                name="name"
-                placeholder="Nome Completo"
-                icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Select
-                name="gender"
-                placeholder="Sexo"
-                options={genders}
-                control={control}
-                getValues={getValues}
-              />
-              {errors.gender && (
+
+        <FormProvider {...methods}>
+          <form
+            noValidate
+            onSubmit={methods.handleSubmit(onSubmit)}
+            style={{ width: '100%' }}
+          >
+            <Grid container>
+              <Grid item xs={12} sm={6} md={6}>
+                <Input
+                  name="name"
+                  label="Nome Completo"
+                  icon={AiOutlineUser}
+                />
+              </Grid>
+
+              <Grid item xs={4} sm={6} md={2}>
+                <Select name="gender" placeholder="Sexo" options={genders} />
+                {/* {errors.gender && (
                 <p className="required-form">
                   <span>* </span>
                   Este campo é obrigatório.
                 </p>
-              )}
-            </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Input
-                name="date_birth"
-                placeholder="Nascimento"
-                mask="99/99/9999"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Select
-                name="kind_people"
-                placeholder="Tipo Pessoa"
-                options={kindPeople}
-                control={control}
-                getValues={getValues}
-              />
-              {errors.kind_people && (
+              )} */}
+              </Grid>
+              <Grid item xs={4} sm={6} md={2}>
+                <Input
+                  name="date_birth"
+                  label="Nascimento"
+                  mask="99/99/9999"
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={2}>
+                <Select
+                  name="kind_people"
+                  placeholder="Tipo Pessoa"
+                  options={kindPeople}
+                />
+                {/* {errors.kind_people && (
                 <p className="required-form">
                   <span>* </span>
                   Este campo é obrigatório.
                 </p>
-              )}
-            </Grid>
+              )} */}
+              </Grid>
 
-            <Grid item xs={12} sm={12} md={6}>
-              <Input
-                name="cpf_cgc"
-                placeholder="CPF / CNPJ"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={4}>
-              <Input
-                name="identity_document"
-                placeholder="RG"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={2}>
-              <Input
-                name="issuing_entity"
-                placeholder="Orgão Emissor"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input
+                  name="cpf_cgc"
+                  label="CPF / CNPJ"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={4}>
+                <Input
+                  name="identity_document"
+                  label="RG"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2}>
+                <Input
+                  name="issuing_entity"
+                  label="Orgão Emissor"
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={6} md={6}>
-              <Select
-                name="plan"
-                placeholder="Plano Contratado"
-                options={plans}
-                control={control}
-                getValues={getValues}
-              />
-              {errors.plan && (
-                <p className="required-form">
-                  <span>* </span>
-                  Este campo é obrigatório.
-                </p>
-              )}
-            </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Input
-                name="telephone01"
-                placeholder="Telefone"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Input
-                name="telephone02"
-                placeholder="Celular"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Input
-                name="telephone03"
-                placeholder="Celular"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input name="email" label="Emai />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input
+                  name="observations"
+                  label="Observações"
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={12} md={6}>
-              <Input
-                name="email"
-                placeholder="Email"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={8} sm={8} md={4}>
-              <Input
-                name="observations"
-                placeholder="Observações"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={4} sm={4} md={2}>
-              <Input
-                name="cep"
-                placeholder="Cep"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input
+                  name="telephone01"
+                  label="Telefone"
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input
+                  name="telephone02"
+                  label="Celular"
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input
+                  name="telephone03"
+                  label="Celular"
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={12} md={6}>
-              <Input
-                name="address"
-                placeholder="Endereço"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={8} sm={8} md={4}>
-              <Input
-                name="neighborhood"
-                placeholder="Bairro"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={4} sm={4} md={2}>
-              <Input
-                name="number_address"
-                placeholder="Número"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
+              <Grid item xs={4} sm={4} md={3}>
+                <Input name="cep" label="Ce />
+              </Grid>
 
-            <Grid item xs={12} sm={8} md={6}>
-              <Input
-                name="city"
-                placeholder="Cidade"
-                register={register}
-                getValues={getValues}
-              />
+              <Grid item xs={12} sm={12} md={6}>
+                <Input name="address" label="Endereç />
+              </Grid>
+              <Grid item xs={8} sm={8} md={4}>
+                <Input
+                  name="neighborhood"
+                  label="Bairro"
+                />
+              </Grid>
+              <Grid item xs={4} sm={4} md={2}>
+                <Input
+                  name="number_address"
+                  label="Número"
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={8} md={6}>
+                <Input name="city" label="Cidad />
+              </Grid>
+              <Grid item xs={4} sm={4} md={2}>
+                <Input name="state" label="U />
+              </Grid>
+              <Grid item xs={8} sm={12} md={4}>
+                <Input
+                  name="address_complement"
+                  label="Complemento"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={4} sm={4} md={2}>
-              <Input
-                name="state"
-                placeholder="UF"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-            <Grid item xs={8} sm={12} md={4}>
-              <Input
-                name="address_complement"
-                placeholder="Complemento"
-                register={register}
-                getValues={getValues}
-              />
-            </Grid>
-          </Grid>
-          <Button type="submit" background="primary">
-            Cadastrar
-          </Button>
-        </Form>
+            <Button type="submit" background="primary">
+              {id ? 'Atualizar' : 'Cadastar'}
+            </Button>
+          </form>
+        </FormProvider>
       </Content>
     </Container>
 

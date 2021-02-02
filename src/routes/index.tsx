@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, match } from 'react-router-dom';
 
 import SingIn from '../pages/SignIn';
 import FormUsers from '../pages/FormsPages/FormUsers';
@@ -25,6 +25,7 @@ const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SingIn} />
     <Route path="/register_user" component={FormUsers} />
+    <Route path="/edit_user/:id" component={FormUsers} />
     <Route path="/register_animal_type" component={FormAnimalType} />
     <Route path="/register_animal_breed" component={FormAnimalBreed} />
     <Route path="/register_modalities" component={FormModalities} />

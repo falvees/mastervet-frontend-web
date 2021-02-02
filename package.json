@@ -26,6 +26,7 @@
     "polished": "^4.0.5",
     "react": "^17.0.1",
     "react-collapsing-table-ssr": "^1.0.4",
+    "react-content-loader": "^6.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.14.2",
     "react-icons": "^4.1.0",
@@ -34,6 +35,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "styled-components": "^5.2.1",
+    "styled-content-loader": "^1.2.2",
+    "sweetalert2": "^10.14.0",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
   },

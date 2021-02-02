@@ -9901,6 +9901,11 @@
   "resolved" "https://registry.npmjs.org/react-collapsing-table-ssr/-/react-collapsing-table-ssr-1.0.4.tgz"
   "version" "1.0.4"
 
+"react-content-loader@^6.0.1":
+  "integrity" "sha512-djJUgGNze7YdWzJA1kYO1eKXAMpP+Z4sMulmEuTVi6vEXzfuQCJs6yD8hhgWj23vvJPZL5b8NyabxteyF8Hq/g=="
+  "resolved" "https://registry.npmjs.org/react-content-loader/-/react-content-loader-6.0.1.tgz"
+  "version" "6.0.1"
+
 "react-dev-utils@^11.0.1":
   "integrity" "sha512-rlgpCupaW6qQqvu0hvv2FDv40QG427fjghV56XyPcP5aKtOAPzNAhQ7bHqk1YdS2vpW1W7aSV3JobedxuPlBAA=="
   "resolved" "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-11.0.1.tgz"
@@ -10090,7 +10095,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^16.7.0", "react@^16.x.x", "react@^17.0.1":
+"react@^16.7.0", "react@^16.x.x", "react@^17.0.1", "react@>= 16.0.0", "react@>=16.0.0":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
@@ -11459,7 +11464,7 @@
     "loader-utils" "^2.0.0"
     "schema-utils" "^2.7.0"
 
-"styled-components@^5.2.1":
+"styled-components@^5.2.1", "styled-components@>= 4.0.0":
   "integrity" "sha512-sBdgLWrCFTKtmZm/9x7jkIabjFNVzCUeKfoQsM6R3saImkUnjx0QYdLwJHBjY9ifEcmjDamJDVfknWm1yxZPxQ=="
   "resolved" "https://registry.npmjs.org/styled-components/-/styled-components-5.2.1.tgz"
   "version" "5.2.1"
@@ -11474,6 +11479,13 @@
     "hoist-non-react-statics" "^3.0.0"
     "shallowequal" "^1.1.0"
     "supports-color" "^5.5.0"
+
+"styled-content-loader@^1.2.2":
+  "integrity" "sha512-7siDUOKewEFOydNuHUWmZLsISM/VMziyealF76TPT6Q03s3aDAXVHQUuH1N6gDqcfd3SCesd21BcKJtFrx3Pbw=="
+  "resolved" "https://registry.npmjs.org/styled-content-loader/-/styled-content-loader-1.2.2.tgz"
+  "version" "1.2.2"
+  dependencies:
+    "prop-types" "^15.7.2"
 
 "stylehacks@^4.0.0":
   "integrity" "sha512-7GlLk9JwlElY4Y6a/rmbH2MhVlTyVmiJd1PfTCqFaIBEGMYNsrO/v3SeGTdhBThLg4Z+NbOk/qFMwCa+J+3p/g=="
@@ -11543,6 +11555,11 @@
     "stable" "^0.1.8"
     "unquote" "~1.1.1"
     "util.promisify" "~1.0.0"
+
+"sweetalert2@^10.14.0":
+  "integrity" "sha512-EBUh4k9qyRRsttm9X9j7WUhLExetvTJpcbp1VTMJCpuI2UwHLesXMIw9M+UeuqBywv0UjNMR5PKH7Qnv65m8rw=="
+  "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.14.0.tgz"
+  "version" "10.14.0"
 
 "symbol-observable@1.2.0":
   "integrity" "sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ=="

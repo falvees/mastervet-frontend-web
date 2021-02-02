@@ -121,7 +121,7 @@ const Select: React.FC<SelectProps> = ({
     //   )}
     //   onChange={([, data]) => data}
     //   name="country"
-    //   control={control}
+    //
     //   defaultValue={{ code: "AF", label: "Afghanistan", phone: "93" }}
     // />
     <Container
