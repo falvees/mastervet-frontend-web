@@ -22,9 +22,15 @@ interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
   iconColor?: string;
   mask?: string;
   options: Array<{ value: string; label: string }>;
+  setValue?: any;
+  watch?: any;
+  register?: any;
 }
 
 const Select: React.FC<SelectProps> = ({
+  setValue,
+  watch,
+  register,
   name,
   mask,
   icon: Icon,
@@ -32,7 +38,6 @@ const Select: React.FC<SelectProps> = ({
   placeholder,
   options,
 }) => {
-  const { getValues, setValue, register, control } = useFormContext();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -60,8 +65,8 @@ const Select: React.FC<SelectProps> = ({
   }, []);
   const HandleInputBlur = useCallback(() => {
     setIsFocused(false);
-    setIsFilled(!!getValues(name));
-  }, [getValues, name]);
+    setIsFilled(!!watch(name));
+  }, [watch, name]);
 
   const Pos = useCallback(val => {
     if (!val || typeof val === 'object') {
@@ -74,13 +79,13 @@ const Select: React.FC<SelectProps> = ({
       options[options.findIndex(e => e.value === `${val}`)]?.label;
 
     const obj = { value: valueDef, label: labelDef };
-    setIsFilled(!!getValues(name));
+    setIsFilled(!!watch(name));
     setValue(name, obj);
     return obj;
   }, []);
 
   useEffect(() => {
-    Pos(getValues(name));
+    Pos(watch(name));
   });
 
   return (

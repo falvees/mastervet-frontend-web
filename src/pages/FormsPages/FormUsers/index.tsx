@@ -140,11 +140,24 @@ const FormUsers: React.FC = () => {
           >
             <Grid container>
               <Grid item xs={12} sm={6} md={6}>
-                <Input name="name" label="Nome Completo" icon={AiOutlineUser} />
+                <Input
+                  name="name"
+                  label="Nome Completo"
+                  icon={AiOutlineUser}
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
 
               <Grid item xs={4} sm={6} md={2}>
-                <Select name="gender" placeholder="Sexo" options={genders} />
+                <Select
+                  name="gender"
+                  placeholder="Sexo"
+                  options={genders}
+                  register={methods.register}
+                  watch={methods.watch}
+                  setValue={methods.setValue}
+                />
                 {/* {errors.gender && (
                 <p className="required-form">
                   <span>* </span>
@@ -153,13 +166,22 @@ const FormUsers: React.FC = () => {
               )} */}
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
-                <Input name="date_birth" label="Nascimento" mask="99/99/9999" />
+                <Input
+                  name="date_birth"
+                  label="Nascimento"
+                  mask="99/99/9999"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
                 <Select
                   name="kind_people"
                   placeholder="Tipo Pessoa"
                   options={kindPeople}
+                  register={methods.register}
+                  watch={methods.watch}
+                  setValue={methods.setValue}
                 />
                 {/* {errors.kind_people && (
                 <p className="required-form">
@@ -170,54 +192,129 @@ const FormUsers: React.FC = () => {
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <Input name="cpf_cgc" label="CPF / CNPJ" />
+                <Input
+                  name="cpf_cgc"
+                  label="CPF / CNPJ"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={6} sm={6} md={4}>
-                <Input name="identity_document" label="RG" />
+                <Input
+                  name="identity_document"
+                  label="RG"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={6} sm={6} md={2}>
-                <Input name="issuing_entity" label="Orgão Emissor" />
+                <Input
+                  name="issuing_entity"
+                  label="Orgão Emissor"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <Input name="email" label="Email" />
+                <Input
+                  name="email"
+                  label="Email"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
-                <Input name="observations" label="Observações" />
+                <Input
+                  name="observations"
+                  label="Observações"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
 
               <Grid item xs={4} sm={6} md={3}>
-                <Input name="telephone01" label="Telefone" />
+                <Input
+                  name="telephone01"
+                  label="Telefone"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={4} sm={6} md={3}>
-                <Input name="telephone02" label="Celular" />
+                <Input
+                  name="telephone02"
+                  label="Celular"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={4} sm={6} md={3}>
-                <Input name="telephone03" label="Celular" />
+                <Input
+                  name="telephone03"
+                  label="Celular"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
 
               <Grid item xs={4} sm={4} md={3}>
-                <Input name="cep" label="Cep" />
+                <Input
+                  name="cep"
+                  label="Cep"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <Input name="address" label="Endereço" />
+                <Input
+                  name="address"
+                  label="Endereço"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={8} sm={8} md={4}>
-                <Input name="neighborhood" label="Bairro" />
+                <Input
+                  name="neighborhood"
+                  label="Bairro"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={4} sm={4} md={2}>
-                <Input name="number_address" label="Número" />
+                <Input
+                  name="number_address"
+                  label="Número"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
 
               <Grid item xs={12} sm={8} md={6}>
-                <Input name="city" label="Cidade" />
+                <Input
+                  name="city"
+                  label="Cidade"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={4} sm={4} md={2}>
-                <Input name="state" label="UF" />
+                <Input
+                  name="state"
+                  label="UF"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
               <Grid item xs={8} sm={12} md={4}>
-                <Input name="address_complement" label="Complemento" />
+                <Input
+                  name="address_complement"
+                  label="Complemento"
+                  register={methods.register}
+                  watch={methods.watch}
+                />
               </Grid>
             </Grid>
             <Button type="submit" background="primary">

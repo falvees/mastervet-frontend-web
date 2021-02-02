@@ -34,7 +34,8 @@ interface arrayList {
 }
 
 const People: React.FC = () => {
-  const { getValues, register } = useForm();
+  const methods = useForm();
+
   const [isListUsers, setListUsers] = useState<arrayList[]>([]);
   const StyledTableCell = withStyles((theme: Theme) =>
     createStyles({
@@ -126,9 +127,8 @@ const People: React.FC = () => {
               placeholder="Digite aqui..."
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
-              // label="teste"
-              // getValues={getValues}
-              // register={register}
+              register={methods.register}
+              watch={methods.watch}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

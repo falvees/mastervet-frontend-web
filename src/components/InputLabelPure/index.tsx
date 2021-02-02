@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 import { IconBaseProps } from 'react-icons';
 import InputMask from 'react-input-mask';
-import { useFormContext } from 'react-hook-form';
 import { ButtonIcon, Container } from './styles';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -22,9 +21,15 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   iconColor?: string;
   mask?: string;
+  setValue?: any;
+  watch?: any;
+  register?: any;
 };
 
 const Input: React.FC<InputProps> = ({
+  setValue,
+  watch,
+  register,
   name,
   mask,
   icon: Icon,
@@ -35,8 +40,6 @@ const Input: React.FC<InputProps> = ({
   label,
   ...rest
 }) => {
-  const { getValues, register, watch } = useFormContext();
-
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -45,8 +48,8 @@ const Input: React.FC<InputProps> = ({
   }, []);
   const HandleInputBlur = useCallback(() => {
     setIsFocused(false);
-    setIsFilled(!!getValues(name));
-  }, [getValues, name]);
+    setIsFilled(!!watch(name));
+  }, [watch, name]);
 
   useEffect(() => {
     watch(name, setIsFilled(!!watch(name)));
