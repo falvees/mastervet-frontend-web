@@ -10,7 +10,6 @@ import React, {
 import { IconBaseProps } from 'react-icons';
 import InputMask from 'react-input-mask';
 import { useFormContext } from 'react-hook-form';
-import StyledContentLoader from 'styled-content-loader';
 import { ButtonIcon, Container } from './styles';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -23,12 +22,10 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   iconColor?: string;
   mask?: string;
-  isLoading?: Boolean;
 };
 
 const Input: React.FC<InputProps> = ({
   name,
-  isLoading,
   mask,
   icon: Icon,
   iconColor,
@@ -55,37 +52,34 @@ const Input: React.FC<InputProps> = ({
     watch(name, setIsFilled(!!watch(name)));
   }, [name, watch]);
 
-  console.log('3', isLoading);
+  // console.log("teste")
 
   return (
-    <StyledContentLoader isLoading={!!isLoading}>
-      <Container
-        isLoading={!!isLoading}
-        className="input-root"
-        colorPlaceholder={colorPlaceholder}
-        backgroundColor={backgroundColor}
-        isIcon={!!Icon}
-        isFilled={isFilled}
-        isFocused={isFocused}
-        onFocus={HandleInputFocus}
-        onBlur={HandleInputBlur}
-      >
-        {Icon && (
-          <ButtonIcon tabIndex="-1">
-            <Icon color={iconColor || '#bfbfbf'} />
-          </ButtonIcon>
-        )}
-        <InputMask
-          mask={mask}
-          ref={register}
-          {...rest}
-          id={name}
-          name={name}
-          placeholder={placeholder}
-        />
-        <label>{label}</label>
-      </Container>
-    </StyledContentLoader>
+    <Container
+      className="input-root"
+      colorPlaceholder={colorPlaceholder}
+      backgroundColor={backgroundColor}
+      isIcon={!!Icon}
+      isFilled={isFilled}
+      isFocused={isFocused}
+      onFocus={HandleInputFocus}
+      onBlur={HandleInputBlur}
+    >
+      {Icon && (
+        <ButtonIcon tabIndex="-1">
+          <Icon color={iconColor || '#bfbfbf'} />
+        </ButtonIcon>
+      )}
+      <InputMask
+        mask={mask}
+        ref={register}
+        {...rest}
+        id={name}
+        name={name}
+        placeholder={placeholder}
+      />
+      <label>{label}</label>
+    </Container>
   );
 };
 export default Input;

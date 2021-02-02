@@ -8,12 +8,12 @@ type inputProps = TextFieldProps & {
   isIcon?: boolean;
   colorPlaceholder?: string;
   backgroundColor?: string;
-  isLoading?: Boolean;
+  // isLoading?: Boolean;
 };
 export const Container = styled.div<inputProps>`
   position: relative;
   border-radius: 10px;
-  border: ${props => (props.isLoading ? `0` : `2px solid #bfbfbf`)};
+  border: 2px solid #bfbfbf;
   margin: 5px;
   color: #bfbfbf;
   display: flex;

@@ -6,7 +6,6 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import { FiArrowLeft } from 'react-icons/fi';
-import StyledContentLoader from 'styled-content-loader';
 
 import Button from '../../../components/Button';
 import Input from '../../../components/InputLabelPure';
@@ -16,7 +15,6 @@ import Select from '../../../components/Select';
 import { Container, Content, GridHeaderSearch } from './styles';
 import PeopleApi from '../../../services/PeopleApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
-import { Loader } from './scripts';
 
 interface RouteParams {
   id: string;
@@ -31,7 +29,6 @@ const FormUsers: React.FC = () => {
   });
 
   const [isLoading, setIsLoading] = useState(true);
-
   const onSubmit = data => {
     console.log(data);
 
@@ -66,10 +63,6 @@ const FormUsers: React.FC = () => {
       PeopleApi.get(id)
         .then(result => {
           methods.reset(result.data.response[0]);
-          // setTimeout(() => {
-          //   setIsLoading(false);
-          // }, 300);
-          // console.log('2', isLoading);
         })
         .catch(e => {
           console.log(e);
@@ -147,11 +140,7 @@ const FormUsers: React.FC = () => {
           >
             <Grid container>
               <Grid item xs={12} sm={6} md={6}>
-                <Input
-                  name="name"
-                  label="Nome Completo"
-                  icon={AiOutlineUser}
-                />
+                <Input name="name" label="Nome Completo" icon={AiOutlineUser} />
               </Grid>
 
               <Grid item xs={4} sm={6} md={2}>
@@ -164,11 +153,7 @@ const FormUsers: React.FC = () => {
               )} */}
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
-                <Input
-                  name="date_birth"
-                  label="Nascimento"
-                  mask="99/99/9999"
-                />
+                <Input name="date_birth" label="Nascimento" mask="99/99/9999" />
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
                 <Select
@@ -185,84 +170,54 @@ const FormUsers: React.FC = () => {
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <Input
-                  name="cpf_cgc"
-                  label="CPF / CNPJ"
-                />
+                <Input name="cpf_cgc" label="CPF / CNPJ" />
               </Grid>
               <Grid item xs={6} sm={6} md={4}>
-                <Input
-                  name="identity_document"
-                  label="RG"
-                />
+                <Input name="identity_document" label="RG" />
               </Grid>
               <Grid item xs={6} sm={6} md={2}>
-                <Input
-                  name="issuing_entity"
-                  label="Orgão Emissor"
-                />
+                <Input name="issuing_entity" label="Orgão Emissor" />
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <Input name="email" label="Emai />
+                <Input name="email" label="Email" />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
-                <Input
-                  name="observations"
-                  label="Observações"
-                />
+                <Input name="observations" label="Observações" />
               </Grid>
 
               <Grid item xs={4} sm={6} md={3}>
-                <Input
-                  name="telephone01"
-                  label="Telefone"
-                />
+                <Input name="telephone01" label="Telefone" />
               </Grid>
               <Grid item xs={4} sm={6} md={3}>
-                <Input
-                  name="telephone02"
-                  label="Celular"
-                />
+                <Input name="telephone02" label="Celular" />
               </Grid>
               <Grid item xs={4} sm={6} md={3}>
-                <Input
-                  name="telephone03"
-                  label="Celular"
-                />
+                <Input name="telephone03" label="Celular" />
               </Grid>
 
               <Grid item xs={4} sm={4} md={3}>
-                <Input name="cep" label="Ce />
+                <Input name="cep" label="Cep" />
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <Input name="address" label="Endereç />
+                <Input name="address" label="Endereço" />
               </Grid>
               <Grid item xs={8} sm={8} md={4}>
-                <Input
-                  name="neighborhood"
-                  label="Bairro"
-                />
+                <Input name="neighborhood" label="Bairro" />
               </Grid>
               <Grid item xs={4} sm={4} md={2}>
-                <Input
-                  name="number_address"
-                  label="Número"
-                />
+                <Input name="number_address" label="Número" />
               </Grid>
 
               <Grid item xs={12} sm={8} md={6}>
-                <Input name="city" label="Cidad />
+                <Input name="city" label="Cidade" />
               </Grid>
               <Grid item xs={4} sm={4} md={2}>
-                <Input name="state" label="U />
+                <Input name="state" label="UF" />
               </Grid>
               <Grid item xs={8} sm={12} md={4}>
-                <Input
-                  name="address_complement"
-                  label="Complemento"
-                />
+                <Input name="address_complement" label="Complemento" />
               </Grid>
             </Grid>
             <Button type="submit" background="primary">
