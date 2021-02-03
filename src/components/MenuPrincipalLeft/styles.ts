@@ -12,7 +12,7 @@ export interface OptionMenuProps {
 }
 
 export const Container = styled(Grid)<MenuProps>`
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
@@ -25,8 +25,8 @@ export const Container = styled(Grid)<MenuProps>`
   min-width: 150px;
   height: 100vh;
   min-height: 600px;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
   & img {
     width: 80px;
   }
@@ -46,10 +46,10 @@ export const Container = styled(Grid)<MenuProps>`
       margin-right: 10px;
     }
   }
-  @media (min-width: 700px) {
-    opacity: 1;
-    display: flex;
-    visibility: visible;
+  @media (max-width: 700px) {
+    opacity: 0;
+    display: none !important;
+    visibility: hidden;
   }
 `;
 

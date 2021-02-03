@@ -25,12 +25,14 @@ interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
   setValue?: any;
   watch?: any;
   register?: any;
+  control?: any;
 }
 
 const Select: React.FC<SelectProps> = ({
   setValue,
   watch,
   register,
+  control,
   name,
   mask,
   icon: Icon,
@@ -131,6 +133,7 @@ const Select: React.FC<SelectProps> = ({
             {...props}
           />
         )}
+        control={control}
         defaultValue={null}
         name={name}
         rules={{ required: true }}

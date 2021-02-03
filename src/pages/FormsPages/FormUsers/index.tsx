@@ -1,9 +1,9 @@
-import { Grid, Hidden } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom';
 
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -12,7 +12,7 @@ import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 
 import Select from '../../../components/Select';
-import { Container, Content, GridHeaderSearch } from './styles';
+import { Container, Content, GridHeaderSearch, Form } from './styles';
 import PeopleApi from '../../../services/PeopleApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 
@@ -23,12 +23,20 @@ interface RouteParams {
 const FormUsers: React.FC = () => {
   const { id } = useParams<RouteParams>();
 
-  const methods = useForm({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    control,
+    errors,
+  } = useForm({
     shouldUnregister: false,
-    defaultValues: {},
+    defaultValues: { gender: '', kind_people: '' },
   });
 
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const onSubmit = data => {
     console.log(data);
 
@@ -41,18 +49,18 @@ const FormUsers: React.FC = () => {
 
     if (!id) {
       PeopleApi.create(data)
-        .then(function (response) {
+        .then(response => {
           console.log(response);
         })
-        .catch(function (error) {
+        .catch(error => {
           console.log(error);
         });
     } else {
       PeopleApi.put(data)
-        .then(function (response) {
+        .then(response => {
           console.log(response);
         })
-        .catch(function (error) {
+        .catch(error => {
           console.log(error);
         });
     }
@@ -62,7 +70,7 @@ const FormUsers: React.FC = () => {
       console.log('teste1');
       PeopleApi.get(id)
         .then(result => {
-          methods.reset(result.data.response[0]);
+          reset(result.data.response[0]);
         })
         .catch(e => {
           console.log(e);
@@ -89,9 +97,8 @@ const FormUsers: React.FC = () => {
 
   return (
     <Container container>
-      <Hidden xsDown>
-        <MenuPrincipalLeft pages={['all']} />
-      </Hidden>
+      <MenuPrincipalLeft pages={['all']} />
+
       <Content>
         <GridHeaderSearch
           container
@@ -99,229 +106,217 @@ const FormUsers: React.FC = () => {
           justify="center"
           alignItems="center"
         >
-          <Hidden only={['xs']}>
-            <Link to="/">
-              <FiArrowLeft />
-              Voltar
-            </Link>
-          </Hidden>
+          <Link to="/">
+            <FiArrowLeft />
+            Voltar
+          </Link>
 
           <Navbar name={id ? 'Editar Cliente' : 'Criar Novo Cliente'} />
 
-          <Hidden only={['xs']}>
-            <Grid
-              container
-              item
-              sm={12}
-              alignItems="center"
-              justify="center"
-              direction="column"
-            >
-              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-                {id ? 'Editar Cliente' : 'Criar Novo Cliente'}
-              </p>
-              <hr
-                style={{
-                  border: 0,
-                  borderBottom: '2px solid #17a0ae',
-                  width: 130,
-                  marginTop: 5,
-                }}
-              />
-            </Grid>
-          </Hidden>
+          <Grid
+            className="title-header"
+            container
+            item
+            sm={12}
+            alignItems="center"
+            justify="center"
+            direction="column"
+          >
+            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+              {id ? 'Editar Cliente' : 'Criar Novo Cliente'}
+            </p>
+            <hr
+              style={{
+                border: 0,
+                borderBottom: '2px solid #17a0ae',
+                width: 130,
+                marginTop: 5,
+              }}
+            />
+          </Grid>
         </GridHeaderSearch>
 
-        <FormProvider {...methods}>
-          <form
-            noValidate
-            onSubmit={methods.handleSubmit(onSubmit)}
-            style={{ width: '100%' }}
-          >
-            <Grid container>
-              <Grid item xs={12} sm={6} md={6}>
-                <Input
-                  name="name"
-                  label="Nome Completo"
-                  icon={AiOutlineUser}
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-
-              <Grid item xs={4} sm={6} md={2}>
-                <Select
-                  name="gender"
-                  placeholder="Sexo"
-                  options={genders}
-                  register={methods.register}
-                  watch={methods.watch}
-                  setValue={methods.setValue}
-                />
-                {/* {errors.gender && (
-                <p className="required-form">
-                  <span>* </span>
-                  Este campo é obrigatório.
-                </p>
-              )} */}
-              </Grid>
-              <Grid item xs={4} sm={6} md={2}>
-                <Input
-                  name="date_birth"
-                  label="Nascimento"
-                  mask="99/99/9999"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={4} sm={6} md={2}>
-                <Select
-                  name="kind_people"
-                  placeholder="Tipo Pessoa"
-                  options={kindPeople}
-                  register={methods.register}
-                  watch={methods.watch}
-                  setValue={methods.setValue}
-                />
-                {/* {errors.kind_people && (
-                <p className="required-form">
-                  <span>* </span>
-                  Este campo é obrigatório.
-                </p>
-              )} */}
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <Input
-                  name="cpf_cgc"
-                  label="CPF / CNPJ"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6} md={4}>
-                <Input
-                  name="identity_document"
-                  label="RG"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6} md={2}>
-                <Input
-                  name="issuing_entity"
-                  label="Orgão Emissor"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <Input
-                  name="email"
-                  label="Email"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} md={6}>
-                <Input
-                  name="observations"
-                  label="Observações"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-
-              <Grid item xs={4} sm={6} md={3}>
-                <Input
-                  name="telephone01"
-                  label="Telefone"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={4} sm={6} md={3}>
-                <Input
-                  name="telephone02"
-                  label="Celular"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={4} sm={6} md={3}>
-                <Input
-                  name="telephone03"
-                  label="Celular"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-
-              <Grid item xs={4} sm={4} md={3}>
-                <Input
-                  name="cep"
-                  label="Cep"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <Input
-                  name="address"
-                  label="Endereço"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={8} sm={8} md={4}>
-                <Input
-                  name="neighborhood"
-                  label="Bairro"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={4} sm={4} md={2}>
-                <Input
-                  name="number_address"
-                  label="Número"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={8} md={6}>
-                <Input
-                  name="city"
-                  label="Cidade"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={4} sm={4} md={2}>
-                <Input
-                  name="state"
-                  label="UF"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
-              <Grid item xs={8} sm={12} md={4}>
-                <Input
-                  name="address_complement"
-                  label="Complemento"
-                  register={methods.register}
-                  watch={methods.watch}
-                />
-              </Grid>
+        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <Grid container>
+            <Grid item xs={12} sm={6} md={6}>
+              <Input
+                name="name"
+                label="Nome Completo"
+                icon={AiOutlineUser}
+                register={register}
+                watch={watch}
+              />
             </Grid>
-            <Button type="submit" background="primary">
-              {id ? 'Atualizar' : 'Cadastar'}
-            </Button>
-          </form>
-        </FormProvider>
+
+            <Grid item xs={4} sm={6} md={2}>
+              <Select
+                name="gender"
+                placeholder="Sexo"
+                options={genders}
+                register={register}
+                watch={watch}
+                setValue={setValue}
+                control={control}
+              />
+              {errors.gender && (
+                <p className="required-form">
+                  <span>* </span>
+                  Este campo é obrigatório.
+                </p>
+              )}
+            </Grid>
+            <Grid item xs={4} sm={6} md={2}>
+              <Input
+                name="date_birth"
+                label="Nascimento"
+                mask="99/99/9999"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={4} sm={6} md={2}>
+              <Select
+                name="kind_people"
+                placeholder="Tipo Pessoa"
+                options={kindPeople}
+                register={register}
+                watch={watch}
+                setValue={setValue}
+                control={control}
+              />
+              {errors.kind_people && (
+                <p className="required-form">
+                  <span>* </span>
+                  Este campo é obrigatório.
+                </p>
+              )}
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <Input
+                name="cpf_cgc"
+                label="CPF / CNPJ"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6} md={4}>
+              <Input
+                name="identity_document"
+                label="RG"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6} md={2}>
+              <Input
+                name="issuing_entity"
+                label="Orgão Emissor"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <Input
+                name="email"
+                label="Email"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <Input
+                name="observations"
+                label="Observações"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+
+            <Grid item xs={4} sm={6} md={3}>
+              <Input
+                name="telephone01"
+                label="Telefone"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={4} sm={6} md={3}>
+              <Input
+                name="telephone02"
+                label="Celular"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={4} sm={6} md={3}>
+              <Input
+                name="telephone03"
+                label="Celular"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+
+            <Grid item xs={4} sm={4} md={3}>
+              <Input name="cep" label="Cep" register={register} watch={watch} />
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <Input
+                name="address"
+                label="Endereço"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={8} sm={8} md={4}>
+              <Input
+                name="neighborhood"
+                label="Bairro"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={4} sm={4} md={2}>
+              <Input
+                name="number_address"
+                label="Número"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={8} md={6}>
+              <Input
+                name="city"
+                label="Cidade"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={4} sm={4} md={2}>
+              <Input
+                name="state"
+                label="UF"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+            <Grid item xs={8} sm={12} md={4}>
+              <Input
+                name="address_complement"
+                label="Complemento"
+                register={register}
+                watch={watch}
+              />
+            </Grid>
+          </Grid>
+          <Button type="submit" background="primary" style={{ marginTop: 15 }}>
+            {id ? 'Atualizar' : 'Cadastar'}
+          </Button>
+        </Form>
       </Content>
     </Container>
 

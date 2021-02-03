@@ -1,10 +1,9 @@
-import { Grid, Hidden, TextField } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Grid } from '@material-ui/core';
+
 import { Form } from '@unform/web';
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-// import { AiOutlineUser } from 'react-icons/ai';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
 import Button from '../../../components/Button';
@@ -16,20 +15,24 @@ import HealthPlansApi from '../../../services/HealthPlansApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import { GridHeaderSearch } from '../FormUsers/styles';
 
+interface RouteParams {
+  id: string;
+}
 const FormHealthPlans: React.FC = () => {
+  const { id } = useParams<RouteParams>();
+
   const {
     register,
     handleSubmit,
-    unregister,
+    watch,
+    setValue,
+    reset,
     control,
     errors,
-    getValues,
-    setValue,
-    formState,
   } = useForm({ shouldUnregister: false });
 
   const onSubmit = data => {
-    Object.keys(data).forEach(function (key, item) {
+    Object.keys(data).forEach(key => {
       if (typeof data[key] === 'object' && data[key] !== null) {
         // eslint-disable-next-line no-param-reassign
         data[key] = data[key].value;
@@ -37,14 +40,14 @@ const FormHealthPlans: React.FC = () => {
     });
     console.log(data);
     HealthPlansApi.create(data)
-      .then(function (response) {
+      .then(response => {
         console.log(response);
         if (response.status === 201) {
           alert('Registro Gravado');
           window.location.href = '/plans';
         }
       })
-      .catch(function (error) {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -56,9 +59,8 @@ const FormHealthPlans: React.FC = () => {
 
   return (
     <Container container>
-      <Hidden xsDown>
-        <MenuPrincipalLeft pages={['all']} />
-      </Hidden>
+      <MenuPrincipalLeft pages={['all']} />
+
       <Content>
         <GridHeaderSearch
           container
@@ -66,37 +68,36 @@ const FormHealthPlans: React.FC = () => {
           justify="center"
           alignItems="center"
         >
-          <Hidden only={['xs']}>
-            <Link to="/">
-              <FiArrowLeft />
-              Voltar
-            </Link>
-          </Hidden>
+          <Link to="/">
+            <FiArrowLeft />
+            Voltar
+          </Link>
 
-          <Navbar name="Criar Novo Plano de Saúde" />
+          <Navbar
+            name={id ? 'Editar Plano de Saúde' : 'Criar Novo Plano de Saúde'}
+          />
 
-          <Hidden only={['xs']}>
-            <Grid
-              container
-              item
-              sm={12}
-              alignItems="center"
-              justify="center"
-              direction="column"
-            >
-              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-                Criar Novo Plano de Saúde
-              </p>
-              <hr
-                style={{
-                  border: 0,
-                  borderBottom: '2px solid #17a0ae',
-                  width: 130,
-                  marginTop: 5,
-                }}
-              />
-            </Grid>
-          </Hidden>
+          <Grid
+            className="title-header"
+            container
+            item
+            sm={12}
+            alignItems="center"
+            justify="center"
+            direction="column"
+          >
+            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+              {id ? 'Editar Plano de Saúde' : 'Criar Novo Plano de Saúde'}
+            </p>
+            <hr
+              style={{
+                border: 0,
+                borderBottom: '2px solid #17a0ae',
+                width: 130,
+                marginTop: 5,
+              }}
+            />
+          </Grid>
         </GridHeaderSearch>
         <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Grid container>
@@ -105,8 +106,8 @@ const FormHealthPlans: React.FC = () => {
                 name="description"
                 placeholder="Descrição"
                 icon={AiOutlineUser}
-                // register={register}
-                // getValues={getValues}
+                register={register}
+                watch={watch}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
@@ -114,8 +115,10 @@ const FormHealthPlans: React.FC = () => {
                 name="status"
                 placeholder="Ativo/Inativo"
                 options={Status}
-
-                // getValues={getValues}
+                register={register}
+                watch={watch}
+                setValue={setValue}
+                control={control}
               />
             </Grid>
           </Grid>
@@ -124,7 +127,7 @@ const FormHealthPlans: React.FC = () => {
             background="primary"
             style={{ marginLeft: 5, marginTop: 15, width: '97.5%' }}
           >
-            Cadastrar
+            {id ? 'Atualizar' : 'Cadastar'}
           </Button>
         </Form>
       </Content>

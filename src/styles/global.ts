@@ -31,11 +31,12 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 600;
     font-size:1em
   }
-    font-size: 1em;
+    font-size: .8em;
     color: #d60000;
     margin: 0 0 0 10px;
     padding: 0;
     font-weight: 500;
+    float: left;
 }
 
 

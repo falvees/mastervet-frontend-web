@@ -71,7 +71,10 @@ const SubMenu = ({ item: data }) => {
 
   return (
     <>
-      <SidebarLink to={data.path} onClick={data.subNav && showSubnav}>
+      <SidebarLink
+        to={data.subNav ? '#' : data.path}
+        onClick={data.subNav && showSubnav}
+      >
         <div>
           {data.icon}
           <SidebarLabel>{data.title}</SidebarLabel>

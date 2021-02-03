@@ -56,13 +56,16 @@ export const SidebarNav = styled.nav<StyledBurgerProps>`
   background: #17a0ae;
   width: 100vw;
   height: 100vh;
-  display: flex;
+  display: ${props => (props.open ? 'flex' : 'none')};
   justify-content: center;
   position: fixed;
   top: 0;
   left: ${props => (props.open ? '0' : '-100%')};
   transition: 350ms;
   z-index: 15;
+  & img {
+    width: 40px;
+  }
 `;
 
 export const SidebarWrap = styled.div`

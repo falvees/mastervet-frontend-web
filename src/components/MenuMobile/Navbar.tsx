@@ -10,7 +10,7 @@ import {
   SidebarWrap,
   StyledBurger,
 } from './styles';
-import { SidebarData } from './SiderbarData';
+import { MenuData } from '../MenuPrincipalLeft/MenuData';
 import SubMenu from './SubMenu';
 
 const Navbar = ({ name }) => {
@@ -26,7 +26,7 @@ const Navbar = ({ name }) => {
 
         <SidebarNav open={open}>
           <SidebarWrap>
-            {SidebarData.map((item, index) => {
+            {MenuData.map((item, index) => {
               return <SubMenu item={item} key={item.title} />;
             })}
           </SidebarWrap>

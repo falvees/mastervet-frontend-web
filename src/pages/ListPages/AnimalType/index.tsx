@@ -12,7 +12,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { AiOutlineUser } from 'react-icons/ai';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { FiArrowLeft, FiSearch, FiEdit, FiTrash2 } from 'react-icons/fi';
@@ -21,9 +20,7 @@ import Swal from 'sweetalert2';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, Content, GridHeaderSearch } from './styles';
-import api from '../../../http-common';
 import Input from '../../../components/InputLabelPure';
-import { ButtonIcon } from '../../../components/InputLabelPure/styles';
 import AnimalTypeApi from '../../../services/AnimalTypeApi';
 import ButtonUtil from '../../../components/ButtonUtil';
 import Navbar from '../../../components/MenuMobile/Navbar';
@@ -34,9 +31,9 @@ interface arrayList {
 }
 
 const AnimalType: React.FC = () => {
-  const { getValues, register } = useForm();
+  const { register, watch } = useForm();
   const [isListAnimaType, setListAnimalType] = useState<arrayList[]>([]);
-  const StyledTableCell = withStyles((theme: Theme) =>
+  const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
         // backgroundColor: '#bfbfbf',
@@ -74,7 +71,6 @@ const AnimalType: React.FC = () => {
   });
 
   const listAnimalType = () => {
-    const array: arrayList[] = [];
     AnimalTypeApi.getAll()
       .then(result => {
         setListAnimalType(result.response);
@@ -124,9 +120,8 @@ const AnimalType: React.FC = () => {
               placeholder="Digite aqui..."
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
-              // label="teste"
-              // getValues={getValues}
-              // register={register}
+              register={register}
+              watch={watch}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

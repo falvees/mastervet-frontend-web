@@ -1,9 +1,9 @@
-import { Grid, Hidden } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import { Form } from '@unform/web';
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
 import Swal from 'sweetalert2';
@@ -15,20 +15,18 @@ import { Container, Content, GridHeaderSearch } from './styles';
 import AnimalTypeApi from '../../../services/AnimalTypeApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 
+interface RouteParams {
+  id: string;
+}
+
 const FormAnimalType: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    unregister,
-    control,
-    errors,
-    getValues,
-    setValue,
-    formState,
-  } = useForm({ shouldUnregister: false });
+  const { id } = useParams<RouteParams>();
+  const { register, handleSubmit, watch } = useForm({
+    shouldUnregister: false,
+  });
 
   const onSubmit = data => {
-    Object.keys(data).forEach(function (key, item) {
+    Object.keys(data).forEach(key => {
       if (typeof data[key] === 'object' && data[key] !== null) {
         // eslint-disable-next-line no-param-reassign
         data[key] = data[key].value;
@@ -36,23 +34,22 @@ const FormAnimalType: React.FC = () => {
     });
     console.log(data);
     AnimalTypeApi.create(data)
-      .then(function (response) {
+      .then(response => {
         console.log(response);
         if (response.status === 201) {
           Swal.fire('Registro Gravado!');
           window.location.href = '/animaltype';
         }
       })
-      .catch(function (error) {
+      .catch(error => {
         console.log(error);
       });
   };
 
   return (
     <Container container>
-      <Hidden xsDown>
-        <MenuPrincipalLeft pages={['all']} />
-      </Hidden>
+      <MenuPrincipalLeft pages={['all']} />
+
       <Content>
         <GridHeaderSearch
           container
@@ -60,37 +57,34 @@ const FormAnimalType: React.FC = () => {
           justify="center"
           alignItems="center"
         >
-          <Hidden only={['xs']}>
-            <Link to="/">
-              <FiArrowLeft />
-              Voltar
-            </Link>
-          </Hidden>
+          <Link to="/">
+            <FiArrowLeft />
+            Voltar
+          </Link>
 
-          <Navbar name="Criar Novo Tipo de Animal" />
+          <Navbar name={id ? 'Editar Tipo Animal' : 'Criar Novo Tipo Animal'} />
 
-          <Hidden only={['xs']}>
-            <Grid
-              container
-              item
-              sm={12}
-              alignItems="center"
-              justify="center"
-              direction="column"
-            >
-              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-                Criar Novo Tipo de Animal
-              </p>
-              <hr
-                style={{
-                  border: 0,
-                  borderBottom: '2px solid #17a0ae',
-                  width: 130,
-                  marginTop: 5,
-                }}
-              />
-            </Grid>
-          </Hidden>
+          <Grid
+            className="title-header"
+            container
+            item
+            sm={12}
+            alignItems="center"
+            justify="center"
+            direction="column"
+          >
+            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+              {id ? 'Editar Tipo Animal' : 'Criar Novo Tipo Animal'}
+            </p>
+            <hr
+              style={{
+                border: 0,
+                borderBottom: '2px solid #17a0ae',
+                width: 130,
+                marginTop: 5,
+              }}
+            />
+          </Grid>
         </GridHeaderSearch>
 
         <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -100,8 +94,8 @@ const FormAnimalType: React.FC = () => {
                 name="description"
                 placeholder="Descrição"
                 icon={AiOutlineUser}
-                // register={register}
-                // getValues={getValues}
+                register={register}
+                watch={watch}
               />
             </Grid>
           </Grid>
@@ -110,7 +104,7 @@ const FormAnimalType: React.FC = () => {
             background="primary"
             style={{ marginTop: 15, width: '98%' }}
           >
-            Cadastrar
+            {id ? 'Atualizar' : 'Cadastar'}
           </Button>
         </Form>
       </Content>

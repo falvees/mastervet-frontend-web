@@ -20,7 +20,6 @@ import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
 import Input from '../../../components/InputLabelPure';
-import { ButtonIcon } from '../../../components/InputLabelPure/styles';
 import AnimalBreedApi from '../../../services/AnimalBreedApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 
@@ -30,9 +29,9 @@ interface arrayList {
 }
 
 const AnimalBreed: React.FC = () => {
-  const { getValues, register } = useForm();
+  const { register, watch } = useForm();
   const [isListAnimalBreed, setListAnimalBreed] = useState<arrayList[]>([]);
-  const StyledTableCell = withStyles((theme: Theme) =>
+  const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
         // backgroundColor: '#bfbfbf',
@@ -70,7 +69,6 @@ const AnimalBreed: React.FC = () => {
   });
 
   const listAnimalBreed = () => {
-    const array: arrayList[] = [];
     AnimalBreedApi.getAll()
       .then(result => {
         setListAnimalBreed(result.response);
@@ -120,9 +118,8 @@ const AnimalBreed: React.FC = () => {
               placeholder="Digite aqui..."
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
-              // label="teste"
-              // getValues={getValues}
-              // register={register}
+              register={register}
+              watch={watch}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

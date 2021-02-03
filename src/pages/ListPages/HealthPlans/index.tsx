@@ -12,7 +12,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { AiOutlineUser } from 'react-icons/ai';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
@@ -20,9 +19,7 @@ import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
-import api from '../../../http-common';
 import Input from '../../../components/InputLabelPure';
-import { ButtonIcon } from '../../../components/InputLabelPure/styles';
 import HealthPlansApi from '../../../services/HealthPlansApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 
@@ -33,9 +30,9 @@ interface arrayList {
 }
 
 const HealthPlans: React.FC = () => {
-  const { getValues, register } = useForm();
+  const { register, watch } = useForm();
   const [isListHealthPlans, setListHealthPlans] = useState<arrayList[]>([]);
-  const StyledTableCell = withStyles((theme: Theme) =>
+  const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
         // backgroundColor: '#bfbfbf',
@@ -73,7 +70,6 @@ const HealthPlans: React.FC = () => {
   });
 
   const listHealthPlans = () => {
-    const array: arrayList[] = [];
     HealthPlansApi.getAll()
       .then(result => {
         setListHealthPlans(result.response);
@@ -123,9 +119,8 @@ const HealthPlans: React.FC = () => {
               placeholder="Digite aqui..."
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
-              // label="teste"
-              // getValues={getValues}
-              // register={register}
+              register={register}
+              watch={watch}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

@@ -73,8 +73,12 @@ export const GridHeaderSearch = styled(Grid)`
       width: 130px;
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     margin-bottom: 0;
+    .title-header,
+    > a:first-child {
+      display: none;
+    }
     & > .add-user {
       & button {
         width: 100%;
@@ -92,11 +96,15 @@ export const Content = styled(Grid)`
   padding: 40px;
   width: 100%;
 
-  & form {
-    text-align: center;
-  }
-
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     padding: 60px 15px 15px 15px;
+  }
+`;
+
+export const Form = styled.form`
+  text-align: center;
+  width: 60%;
+  @media only screen and (max-width: 700px) {
+    width: 100%;
   }
 `;
