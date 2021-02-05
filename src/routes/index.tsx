@@ -20,12 +20,13 @@ import FormPetProcedure from '../pages/FormsPages/FormPetProcedures';
 import HealthPlans from '../pages/ListPages/HealthPlans';
 import FormHealthPlans from '../pages/FormsPages/FormHealthPlans';
 import PetProcedures from '../pages/ListPages/PetProcedures';
-import Loading from '../components/Loading';
+import FormFinancial from '../pages/ListPages/Financial';
 
 const Routes: React.FC = () => (
   <Switch>
-    <Route path="/" exact component={Loading} />
+    <Route path="/" exact component={SingIn} />
     <Route path="/register_user" component={FormUsers} />
+    <Route path="/register_financial" component={FormFinancial} />
     <Route path="/edit_user/:id" component={FormUsers} />
     <Route path="/register_animal_type" component={FormAnimalType} />
     <Route path="/register_animal_breed" component={FormAnimalBreed} />

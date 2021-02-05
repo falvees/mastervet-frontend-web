@@ -1,5 +1,8 @@
 import styled, { css } from 'styled-components';
 
+export interface LoadingProps {
+  isLoading: Boolean;
+}
 export function createCSS() {
   let styles = '';
 
@@ -15,15 +18,16 @@ export function createCSS() {
   `;
 }
 
-export const Container = styled.div`
-  display: flex;
+export const Container = styled.div<LoadingProps>`
+  display: ${props => (props.isLoading ? 'flex' : 'none')};
   align-items: center;
   background-color: #fafafa;
   height: 100vh;
   justify-content: center;
   width: 100vw;
   flex-direction: column;
-  position: relative;
+  position: absolute;
+  z-index: 20;
   .loading-container {
     position: relative;
     & > img {
@@ -37,6 +41,7 @@ export const Container = styled.div`
   #sparkles > path {
     animation: sparklyBits 1000ms infinite;
     position: absolute;
+    fill: #17a0ae;
   }
 
   #message {

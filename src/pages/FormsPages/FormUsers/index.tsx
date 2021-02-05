@@ -15,6 +15,7 @@ import Select from '../../../components/Select';
 import { Container, Content, GridHeaderSearch, Form } from './styles';
 import PeopleApi from '../../../services/PeopleApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
+import Loading from '../../../components/Loading';
 
 interface RouteParams {
   id: string;
@@ -36,7 +37,7 @@ const FormUsers: React.FC = () => {
     defaultValues: { gender: '', kind_people: '' },
   });
 
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const onSubmit = data => {
     console.log(data);
 
@@ -67,10 +68,13 @@ const FormUsers: React.FC = () => {
   };
   useEffect(() => {
     const listPeoples = () => {
-      console.log('teste1');
+      setIsLoading(true);
       PeopleApi.get(id)
         .then(result => {
           reset(result.data.response[0]);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1000);
         })
         .catch(e => {
           console.log(e);
@@ -96,233 +100,240 @@ const FormUsers: React.FC = () => {
   ];
 
   return (
-    <Container container>
-      <MenuPrincipalLeft pages={['all']} />
+    <>
+      <Loading isLoading={isLoading} />
+      <Container container>
+        <MenuPrincipalLeft pages={['all']} />
 
-      <Content>
-        <GridHeaderSearch
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          <Link to="/">
-            <FiArrowLeft />
-            Voltar
-          </Link>
-
-          <Navbar name={id ? 'Editar Cliente' : 'Criar Novo Cliente'} />
-
-          <Grid
-            className="title-header"
+        <Content>
+          <GridHeaderSearch
             container
-            item
-            sm={12}
-            alignItems="center"
+            direction="row"
             justify="center"
-            direction="column"
+            alignItems="center"
           >
-            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              {id ? 'Editar Cliente' : 'Criar Novo Cliente'}
-            </p>
-            <hr
-              style={{
-                border: 0,
-                borderBottom: '2px solid #17a0ae',
-                width: 130,
-                marginTop: 5,
-              }}
-            />
-          </Grid>
-        </GridHeaderSearch>
+            <Link to="/">
+              <FiArrowLeft />
+              Voltar
+            </Link>
 
-        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Grid container>
-            <Grid item xs={12} sm={6} md={6}>
-              <Input
-                name="name"
-                label="Nome Completo"
-                icon={AiOutlineUser}
-                register={register}
-                watch={watch}
-              />
-            </Grid>
+            <Navbar name={id ? 'Editar Cliente' : 'Criar Novo Cliente'} />
 
-            <Grid item xs={4} sm={6} md={2}>
-              <Select
-                name="gender"
-                placeholder="Sexo"
-                options={genders}
-                register={register}
-                watch={watch}
-                setValue={setValue}
-                control={control}
-              />
-              {errors.gender && (
-                <p className="required-form">
-                  <span>* </span>
-                  Este campo é obrigatório.
-                </p>
-              )}
-            </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Input
-                name="date_birth"
-                label="Nascimento"
-                mask="99/99/9999"
-                register={register}
-                watch={watch}
+            <Grid
+              className="title-header"
+              container
+              item
+              sm={12}
+              alignItems="center"
+              justify="center"
+              direction="column"
+            >
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                {id ? 'Editar Cliente' : 'Criar Novo Cliente'}
+              </p>
+              <hr
+                style={{
+                  border: 0,
+                  borderBottom: '2px solid #17a0ae',
+                  width: 130,
+                  marginTop: 5,
+                }}
               />
             </Grid>
-            <Grid item xs={4} sm={6} md={2}>
-              <Select
-                name="kind_people"
-                placeholder="Tipo Pessoa"
-                options={kindPeople}
-                register={register}
-                watch={watch}
-                setValue={setValue}
-                control={control}
-              />
-              {errors.kind_people && (
-                <p className="required-form">
-                  <span>* </span>
-                  Este campo é obrigatório.
-                </p>
-              )}
-            </Grid>
+          </GridHeaderSearch>
 
-            <Grid item xs={12} sm={12} md={6}>
-              <Input
-                name="cpf_cgc"
-                label="CPF / CNPJ"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={4}>
-              <Input
-                name="identity_document"
-                label="RG"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={6} sm={6} md={2}>
-              <Input
-                name="issuing_entity"
-                label="Orgão Emissor"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
+          <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <Grid container>
+              <Grid item xs={12} sm={6} md={6}>
+                <Input
+                  name="name"
+                  label="Nome Completo"
+                  icon={AiOutlineUser}
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={2}>
+                <Select
+                  name="gender"
+                  placeholder="Sexo"
+                  options={genders}
+                  register={register}
+                  watch={watch}
+                  setValue={setValue}
+                  control={control}
+                />
+                {errors.gender && (
+                  <p className="required-form">
+                    <span>* </span>
+                    Este campo é obrigatório.
+                  </p>
+                )}
+              </Grid>
+              <Grid item xs={4} sm={6} md={2}>
+                <Input
+                  name="date_birth"
+                  label="Nascimento"
+                  mask="99/99/9999"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={2}>
+                <Select
+                  name="kind_people"
+                  placeholder="Tipo Pessoa"
+                  options={kindPeople}
+                  register={register}
+                  watch={watch}
+                  setValue={setValue}
+                  control={control}
+                />
+                {errors.kind_people && (
+                  <p className="required-form">
+                    <span>* </span>
+                    Este campo é obrigatório.
+                  </p>
+                )}
+              </Grid>
 
-            <Grid item xs={12} sm={12} md={6}>
-              <Input
-                name="email"
-                label="Email"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <Input
-                name="observations"
-                label="Observações"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input
+                  name="cpf_cgc"
+                  label="CPF / CNPJ"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={4}>
+                <Input
+                  name="identity_document"
+                  label="RG"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2}>
+                <Input
+                  name="issuing_entity"
+                  label="Orgão Emissor"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
 
-            <Grid item xs={4} sm={6} md={3}>
-              <Input
-                name="telephone01"
-                label="Telefone"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={4} sm={6} md={3}>
-              <Input
-                name="telephone02"
-                label="Celular"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={4} sm={6} md={3}>
-              <Input
-                name="telephone03"
-                label="Celular"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input
+                  name="email"
+                  label="Email"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input
+                  name="observations"
+                  label="Observações"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
 
-            <Grid item xs={4} sm={4} md={3}>
-              <Input name="cep" label="Cep" register={register} watch={watch} />
-            </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input
+                  name="telephone01"
+                  label="Telefone"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input
+                  name="telephone02"
+                  label="Celular"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input
+                  name="telephone03"
+                  label="Celular"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={12} md={6}>
-              <Input
-                name="address"
-                label="Endereço"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={8} sm={8} md={4}>
-              <Input
-                name="neighborhood"
-                label="Bairro"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={4} sm={4} md={2}>
-              <Input
-                name="number_address"
-                label="Número"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
+              <Grid item xs={4} sm={4} md={3}>
+                <Input
+                  name="cep"
+                  label="Cep"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={8} md={6}>
-              <Input
-                name="city"
-                label="Cidade"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={4} sm={4} md={2}>
-              <Input
-                name="state"
-                label="UF"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-            <Grid item xs={8} sm={12} md={4}>
-              <Input
-                name="address_complement"
-                label="Complemento"
-                register={register}
-                watch={watch}
-              />
-            </Grid>
-          </Grid>
-          <Button type="submit" background="primary" style={{ marginTop: 15 }}>
-            {id ? 'Atualizar' : 'Cadastar'}
-          </Button>
-        </Form>
-      </Content>
-    </Container>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input
+                  name="address"
+                  label="Endereço"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={8} sm={8} md={4}>
+                <Input
+                  name="neighborhood"
+                  label="Bairro"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={4} sm={4} md={2}>
+                <Input
+                  name="number_address"
+                  label="Número"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
 
-    // <Grid sm={12}>
-    //   <p>CADASTRO PETS</p>
-    // </Grid>
+              <Grid item xs={12} sm={8} md={6}>
+                <Input
+                  name="city"
+                  label="Cidade"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={4} sm={4} md={2}>
+                <Input
+                  name="state"
+                  label="UF"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+              <Grid item xs={8} sm={12} md={4}>
+                <Input
+                  name="address_complement"
+                  label="Complemento"
+                  register={register}
+                  watch={watch}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              background="primary"
+              style={{ marginTop: 15 }}
+            >
+              {id ? 'Atualizar' : 'Cadastar'}
+            </Button>
+          </Form>
+        </Content>
+      </Container>
+    </>
   );
 };
 

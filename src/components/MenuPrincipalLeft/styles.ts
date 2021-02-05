@@ -11,7 +11,23 @@ export interface OptionMenuProps {
   isFocused?: boolean;
 }
 
-export const Container = styled(Grid)<MenuProps>`
+export const Container = styled(Grid)`
+  display: flex;
+  align-items: center;
+  width: 150px;
+  min-width: 150px;
+  height: 100vh;
+  min-height: 600px;
+  opacity: 1;
+  visibility: visible;
+  @media (max-width: 700px) {
+    opacity: 0;
+    display: none !important;
+    visibility: hidden;
+  }
+`;
+
+export const Content = styled(Grid)<MenuProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,8 +41,8 @@ export const Container = styled(Grid)<MenuProps>`
   min-width: 150px;
   height: 100vh;
   min-height: 600px;
-  opacity: 1;
-  visibility: visible;
+
+  position: fixed;
   & img {
     width: 80px;
   }
@@ -45,11 +61,6 @@ export const Container = styled(Grid)<MenuProps>`
       font-size: 20px;
       margin-right: 10px;
     }
-  }
-  @media (max-width: 700px) {
-    opacity: 0;
-    display: none !important;
-    visibility: hidden;
   }
 `;
 

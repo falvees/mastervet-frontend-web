@@ -25,6 +25,7 @@ import peopleApi from '../../../services/PeopleApi';
 import Input from '../../../components/InputLabelPure';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import ButtonUtil from '../../../components/ButtonUtil';
+import Loading from '../../../components/Loading';
 
 interface arrayList {
   people_id: string;
@@ -33,6 +34,7 @@ interface arrayList {
 
 const People: React.FC = () => {
   const { register, watch } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isListUsers, setListUsers] = useState<arrayList[]>([]);
   const StyledTableCell = withStyles(() =>
@@ -73,13 +75,20 @@ const People: React.FC = () => {
   });
 
   const listPeoples = () => {
+    setIsLoading(true);
     peopleApi
       .getAll()
       .then(result => {
         setListUsers(result.response);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 700);
       })
       .catch(e => {
         console.log(e);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 700);
       });
   };
 
@@ -89,113 +98,116 @@ const People: React.FC = () => {
 
   const classes = useStyles();
   return (
-    <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
-      <MenuPrincipalLeft pages={['all']} />
-      <Navbar name="Listando Usuários" />
-      <Content>
-        <Hidden only={['xs', 'sm']}>
-          <Grid container justify="center">
-            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              Listando Usuários
-            </p>
-          </Grid>
-        </Hidden>
-        <GridHeaderSearch container>
+    <>
+      <Loading isLoading={isLoading} />
+      <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
+        <MenuPrincipalLeft pages={['all']} />
+        <Navbar name="Listando Usuários" />
+        <Content>
           <Hidden only={['xs', 'sm']}>
-            <Link to="/">
-              <FiArrowLeft />
-              Voltar
-            </Link>
+            <Grid container justify="center">
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                Listando Usuários
+              </p>
+            </Grid>
           </Hidden>
+          <GridHeaderSearch container>
+            <Hidden only={['xs', 'sm']}>
+              <Link to="/">
+                <FiArrowLeft />
+                Voltar
+              </Link>
+            </Hidden>
 
-          <Grid
-            item
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-            }}
+            <Grid
+              item
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                position: 'relative',
+              }}
+            >
+              <Input
+                style={{ flex: 1, color: '#fff' }}
+                name="search_user"
+                placeholder="Digite aqui..."
+                colorPlaceholder="#03818f"
+                backgroundColor="#17a0ae"
+                register={register}
+                watch={watch}
+              />
+              <IconButton className="button-search">
+                <FiSearch color="#17a0ae" />
+              </IconButton>
+            </Grid>
+            <Link to="/register_user" className="add-user">
+              <Button background="primary" style={{ width: 180 }}>
+                Adicionar Cliente
+              </Button>
+            </Link>
+          </GridHeaderSearch>
+          <Paper
+            elevation={2}
+            style={{ width: '100%' }}
+            className={classes.paper}
           >
-            <Input
-              style={{ flex: 1, color: '#fff' }}
-              name="search_user"
-              placeholder="Digite aqui..."
-              colorPlaceholder="#03818f"
-              backgroundColor="#17a0ae"
-              register={register}
-              watch={watch}
-            />
-            <IconButton className="button-search">
-              <FiSearch color="#17a0ae" />
-            </IconButton>
-          </Grid>
-          <Link to="/register_user" className="add-user">
-            <Button background="primary" style={{ width: 180 }}>
-              Adicionar Cliente
-            </Button>
-          </Link>
-        </GridHeaderSearch>
-        <Paper
-          elevation={2}
-          style={{ width: '100%' }}
-          className={classes.paper}
-        >
-          <TableContainer style={{ flex: 1 }}>
-            <Table className={classes.table} aria-label="customized table">
-              <TableHead>
-                <TableRow hover>
-                  <StyledTableCell width="40%">Nome</StyledTableCell>
-                  <StyledTableCell align="center">CPF</StyledTableCell>
-                  <StyledTableCell align="center">Plano</StyledTableCell>
-                  <StyledTableCell align="center">Contato</StyledTableCell>
-                  <StyledTableCell align="center">Situação</StyledTableCell>
-                  <StyledTableCell align="center">Ações</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {isListUsers &&
-                  isListUsers.map(row => {
-                    console.log(row.people_id);
-                    return (
-                      <StyledTableRow key={row.people_id}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.name}
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          128.235.756-50
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          Master Premium
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          (34) 99120-1229
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          Ativado
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="center"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <ButtonUtil icon={FiSearch} background="primary" />
-                          <Link to={`/edit_user/${row.people_id}`}>
-                            <ButtonUtil icon={FiEdit} background="primary" />
-                          </Link>
-                          <ButtonUtil icon={FiTrash2} background="primary" />
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </Content>
-    </Container>
+            <TableContainer style={{ flex: 1 }}>
+              <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow hover>
+                    <StyledTableCell width="40%">Nome</StyledTableCell>
+                    <StyledTableCell align="center">CPF</StyledTableCell>
+                    <StyledTableCell align="center">Plano</StyledTableCell>
+                    <StyledTableCell align="center">Contato</StyledTableCell>
+                    <StyledTableCell align="center">Situação</StyledTableCell>
+                    <StyledTableCell align="center">Ações</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {isListUsers &&
+                    isListUsers.map(row => {
+                      console.log(row.people_id);
+                      return (
+                        <StyledTableRow key={row.people_id}>
+                          <StyledTableCell component="th" scope="row">
+                            {row.name}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            128.235.756-50
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            Master Premium
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            (34) 99120-1229
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            Ativado
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="center"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <ButtonUtil icon={FiSearch} background="primary" />
+                            <Link to={`/edit_user/${row.people_id}`}>
+                              <ButtonUtil icon={FiEdit} background="primary" />
+                            </Link>
+                            <ButtonUtil icon={FiTrash2} background="primary" />
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Content>
+      </Container>
+    </>
   );
 };
 

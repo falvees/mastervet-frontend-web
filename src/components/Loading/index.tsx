@@ -2,12 +2,12 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { Height } from '@material-ui/icons';
-import { Container } from './styles';
+import { Container, LoadingProps } from './styles';
 import gifLoading from '../../assets/dog.gif';
 
-function Loading() {
+const Loading: React.FC<LoadingProps> = ({ isLoading }) => {
   return (
-    <Container>
+    <Container isLoading={isLoading}>
       <div className="loading-container">
         <svg
           width="150px"
@@ -99,6 +99,6 @@ function Loading() {
       </div>
     </Container>
   );
-}
+};
 
 export default Loading;
