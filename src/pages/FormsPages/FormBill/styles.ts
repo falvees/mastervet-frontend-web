@@ -1,7 +1,6 @@
 import { Button, Grid } from '@material-ui/core';
 import { shade } from 'polished';
 import styled from 'styled-components';
-import px2vw from '../../styles/px2vw';
 
 export const ButtonLogin = styled(Button)`
   margin-top: 20px !important;
@@ -74,8 +73,12 @@ export const GridHeaderSearch = styled(Grid)`
       width: 130px;
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     margin-bottom: 0;
+    .title-header,
+    > a:first-child {
+      display: none;
+    }
     & > .add-user {
       & button {
         width: 100%;
@@ -87,13 +90,21 @@ export const GridHeaderSearch = styled(Grid)`
 `;
 export const Content = styled(Grid)`
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   flex: 1;
   padding: 40px;
   width: 100%;
-  @media only screen and (max-width: 600px) {
+
+  @media only screen and (max-width: 700px) {
     padding: 60px 15px 15px 15px;
+  }
+`;
+
+export const Form = styled.form`
+  text-align: center;
+  width: 60%;
+  @media only screen and (max-width: 700px) {
+    width: 100%;
   }
 `;

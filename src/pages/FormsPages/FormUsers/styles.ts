@@ -1,6 +1,7 @@
 import { Button, Grid } from '@material-ui/core';
 import { shade } from 'polished';
 import styled from 'styled-components';
+import { Form } from '@unform/web';
 
 export const ButtonLogin = styled(Button)`
   margin-top: 20px !important;
@@ -101,7 +102,7 @@ export const Content = styled(Grid)`
   }
 `;
 
-export const Form = styled.form`
+export const FormCustom = styled(Form)`
   text-align: center;
   width: 100%;
   @media only screen and (max-width: 700px) {

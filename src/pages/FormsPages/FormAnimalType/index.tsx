@@ -21,7 +21,7 @@ interface RouteParams {
 
 const FormAnimalType: React.FC = () => {
   const { id } = useParams<RouteParams>();
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch, getValues } = useForm({
     shouldUnregister: false,
   });
 
@@ -95,7 +95,7 @@ const FormAnimalType: React.FC = () => {
                 placeholder="Descrição"
                 icon={AiOutlineUser}
                 register={register}
-                watch={watch}
+                getValues={getValues}
               />
             </Grid>
           </Grid>

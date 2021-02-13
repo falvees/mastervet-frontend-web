@@ -12,7 +12,7 @@ import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 
 import Select from '../../../components/Select';
-import { Container, Content, GridHeaderSearch, Form } from './styles';
+import { Container, Content, GridHeaderSearch, FormCustom } from './styles';
 import PeopleApi from '../../../services/PeopleApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import Loading from '../../../components/Loading';
@@ -32,6 +32,7 @@ const FormUsers: React.FC = () => {
     reset,
     control,
     errors,
+    getValues,
   } = useForm({
     shouldUnregister: false,
     defaultValues: { gender: '', kind_people: '' },
@@ -142,7 +143,7 @@ const FormUsers: React.FC = () => {
             </Grid>
           </GridHeaderSearch>
 
-          <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <FormCustom noValidate onSubmit={handleSubmit(onSubmit)}>
             <Grid container>
               <Grid item xs={12} sm={6} md={6}>
                 <Input
@@ -150,7 +151,7 @@ const FormUsers: React.FC = () => {
                   label="Nome Completo"
                   icon={AiOutlineUser}
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
@@ -162,6 +163,7 @@ const FormUsers: React.FC = () => {
                   watch={watch}
                   setValue={setValue}
                   control={control}
+                  required={false}
                 />
                 {errors.gender && (
                   <p className="required-form">
@@ -172,11 +174,11 @@ const FormUsers: React.FC = () => {
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
                 <Input
+                  mask="99/99/9999"
                   name="date_birth"
                   label="Nascimento"
-                  mask="99/99/9999"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
@@ -185,9 +187,10 @@ const FormUsers: React.FC = () => {
                   placeholder="Tipo Pessoa"
                   options={kindPeople}
                   register={register}
-                  watch={watch}
+                  watch={getValues}
                   setValue={setValue}
                   control={control}
+                  required={false}
                 />
                 {errors.kind_people && (
                   <p className="required-form">
@@ -202,7 +205,7 @@ const FormUsers: React.FC = () => {
                   name="cpf_cgc"
                   label="CPF / CNPJ"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={4}>
@@ -210,7 +213,7 @@ const FormUsers: React.FC = () => {
                   name="identity_document"
                   label="RG"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={2}>
@@ -218,7 +221,7 @@ const FormUsers: React.FC = () => {
                   name="issuing_entity"
                   label="Orgão Emissor"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
 
@@ -227,7 +230,7 @@ const FormUsers: React.FC = () => {
                   name="email"
                   label="Email"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
@@ -235,7 +238,7 @@ const FormUsers: React.FC = () => {
                   name="observations"
                   label="Observações"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
 
@@ -244,7 +247,7 @@ const FormUsers: React.FC = () => {
                   name="telephone01"
                   label="Telefone"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={4} sm={6} md={3}>
@@ -252,7 +255,7 @@ const FormUsers: React.FC = () => {
                   name="telephone02"
                   label="Celular"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={4} sm={6} md={3}>
@@ -260,7 +263,7 @@ const FormUsers: React.FC = () => {
                   name="telephone03"
                   label="Celular"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
 
@@ -269,7 +272,7 @@ const FormUsers: React.FC = () => {
                   name="cep"
                   label="Cep"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
 
@@ -278,7 +281,7 @@ const FormUsers: React.FC = () => {
                   name="address"
                   label="Endereço"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={8} sm={8} md={4}>
@@ -286,7 +289,7 @@ const FormUsers: React.FC = () => {
                   name="neighborhood"
                   label="Bairro"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={4} sm={4} md={2}>
@@ -294,7 +297,7 @@ const FormUsers: React.FC = () => {
                   name="number_address"
                   label="Número"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
 
@@ -303,7 +306,7 @@ const FormUsers: React.FC = () => {
                   name="city"
                   label="Cidade"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={4} sm={4} md={2}>
@@ -311,7 +314,7 @@ const FormUsers: React.FC = () => {
                   name="state"
                   label="UF"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
               <Grid item xs={8} sm={12} md={4}>
@@ -319,7 +322,7 @@ const FormUsers: React.FC = () => {
                   name="address_complement"
                   label="Complemento"
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid>
             </Grid>
@@ -330,7 +333,7 @@ const FormUsers: React.FC = () => {
             >
               {id ? 'Atualizar' : 'Cadastar'}
             </Button>
-          </Form>
+          </FormCustom>
         </Content>
       </Container>
     </>

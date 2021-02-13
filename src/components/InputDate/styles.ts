@@ -1,11 +1,12 @@
-import { Autocomplete } from '@material-ui/lab';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import styled, { css } from 'styled-components';
 
 interface SelectProps {
   isfilled?: boolean | string;
 }
-export const Container = styled(Autocomplete)<SelectProps>`
-  & .MuiForm-filled {
+export const Container = styled(KeyboardDatePicker)<SelectProps>`
+  & .MuiButtonBase-root {
+    padding: 12px 0;
   }
   padding-right: 0;
   display: flex;
@@ -20,14 +21,16 @@ export const Container = styled(Autocomplete)<SelectProps>`
     border-radius: 10px;
     border-width: 2px;
     border-color: #bfbfbf !important;
+    padding: 0 10px;
+    & legend {
+      font-size: 13px;
+    }
   }
   & label {
     transform: translate(10px, 15px) scale(1);
-    color: #bfbfbf;
+    color: #9d9d9c;
   }
-  & fieldset .PrivateNotchedOutline-legendLabelled-9 {
-    font-size: 12.5px !important;
-  }
+
   & input {
     font-size: 16px !important;
     color: #9d9d9c;
@@ -43,6 +46,10 @@ export const Container = styled(Autocomplete)<SelectProps>`
     css`
       & fieldset {
         border-color: #17a0ae !important;
+      }
+      & label {
+        transform: translate(15px, -5px) scale(0.8) !important;
+        color: #9d9d9c;
       }
     `}
 

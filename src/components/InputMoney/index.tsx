@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 import { IconBaseProps } from 'react-icons';
-import InputMask from 'react-input-mask';
+import IntlCurrencyInput from 'react-intl-currency-input';
 import { ButtonIcon, Container } from './styles';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -23,12 +23,12 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   iconColor?: string;
   mask?: string;
   setValue?: any;
-  getValues: any;
+  getValues?: any;
   register?: any;
   defaultValue?: string;
 };
 
-const Input: React.FC<InputProps> = ({
+const InputMoney: React.FC<InputProps> = ({
   defaultValue,
   setValue,
   getValues,
@@ -46,6 +46,20 @@ const Input: React.FC<InputProps> = ({
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
+  const currencyConfig = {
+    locale: 'pt-BR',
+    formats: {
+      number: {
+        BRL: {
+          style: 'currency',
+          currency: 'BRL',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        },
+      },
+    },
+  };
+
   const HandleInputFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
@@ -53,7 +67,12 @@ const Input: React.FC<InputProps> = ({
     setIsFocused(false);
     setIsFilled(!!getValues(name));
   }, []);
+  const handleChange = (event, value, maskedValue) => {
+    event.preventDefault();
 
+    console.log(value); // value without mask (ex: 1234.56)
+    console.log(maskedValue); // masked value (ex: R$1234,56)
+  };
   useEffect(() => {
     getValues(name, setIsFilled(!!getValues(name)));
   }, []);
@@ -68,7 +87,6 @@ const Input: React.FC<InputProps> = ({
       isFocused={isFocused}
       onFocus={HandleInputFocus}
       onBlur={HandleInputBlur}
-      label={!!label}
     >
       <fieldset>
         <legend>
@@ -79,19 +97,19 @@ const Input: React.FC<InputProps> = ({
             <Icon color={iconColor || '#bfbfbf'} />
           </ButtonIcon>
         )}
-
-        <InputMask
-          mask={mask}
+        <IntlCurrencyInput
+          currency="BRL"
+          config={currencyConfig}
+          onChange={handleChange}
+          defaultValue={defaultValue}
           ref={register}
           {...rest}
           id={name}
           name={name}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
         />
         <label>{label}</label>
       </fieldset>
     </Container>
   );
 };
-export default Input;
+export default InputMoney;

@@ -30,7 +30,7 @@ interface arrayList {
 }
 
 const HealthPlans: React.FC = () => {
-  const { register, watch } = useForm();
+  const { register, watch, getValues } = useForm();
   const [isListHealthPlans, setListHealthPlans] = useState<arrayList[]>([]);
   const StyledTableCell = withStyles(() =>
     createStyles({
@@ -120,7 +120,7 @@ const HealthPlans: React.FC = () => {
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
               register={register}
-              watch={watch}
+              getValues={getValues}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

@@ -27,6 +27,7 @@ const FormAnimalType: React.FC = () => {
     reset,
     control,
     errors,
+    getValues,
   } = useForm({ shouldUnregister: false });
 
   const onSubmit = data => {
@@ -110,6 +111,7 @@ const FormAnimalType: React.FC = () => {
                 name="description"
                 placeholder="Descrição"
                 icon={AiOutlineUser}
+                getValues={getValues}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>

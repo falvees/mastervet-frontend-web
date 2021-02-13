@@ -26,6 +26,7 @@ interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
   watch?: any;
   register?: any;
   control?: any;
+  required?: boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -39,6 +40,7 @@ const Select: React.FC<SelectProps> = ({
   iconColor,
   placeholder,
   options,
+  required,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -136,7 +138,7 @@ const Select: React.FC<SelectProps> = ({
         control={control}
         defaultValue={null}
         name={name}
-        rules={{ required: true }}
+        rules={{ required }}
       />
     </>
   );

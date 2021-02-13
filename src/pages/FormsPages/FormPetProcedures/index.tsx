@@ -35,6 +35,7 @@ const FormPetProcedure: React.FC = () => {
     reset,
     control,
     errors,
+    getValues,
   } = useForm({ shouldUnregister: false });
 
   const [isListModalities, setListModalities] = useState<arrayList[]>([]);
@@ -123,7 +124,7 @@ const FormPetProcedure: React.FC = () => {
                 placeholder="Descrição do Procedimento"
                 icon={AiOutlineUser}
                 register={register}
-                watch={watch}
+                getValues={getValues}
               />
             </Grid>
             <Grid item xs={6} sm={6} md={6}>

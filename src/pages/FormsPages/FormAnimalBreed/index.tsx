@@ -26,7 +26,15 @@ interface arrayList {
 const FormAnimalBreed: React.FC = () => {
   const { id } = useParams<RouteParams>();
 
-  const { register, handleSubmit, errors, watch, control, setValue } = useForm({
+  const {
+    register,
+    handleSubmit,
+    errors,
+    watch,
+    control,
+    setValue,
+    getValues,
+  } = useForm({
     shouldUnregister: false,
   });
   const [isAnimalType, setIsAnimalType] = useState<arrayList[]>([]);
@@ -124,7 +132,7 @@ const FormAnimalBreed: React.FC = () => {
                 placeholder="Nome da Raça"
                 icon={AiOutlineUser}
                 register={register}
-                watch={watch}
+                getValues={getValues}
               />
             </Grid>
             <Grid item xs={6} sm={6} md={6}>

@@ -16,9 +16,16 @@ const put = data => {
 const get = id => {
   return http.get(`/financial-pay-item/${id}`);
 };
+const getBetween = (dt_init, dt_end) => {
+  console.log(`/financial-pay-item/${dt_init}/${dt_end}`);
+  return http
+    .get(`/financial-pay-item/${dt_init}/${dt_end}`)
+    .then(response => response.data);
+};
 export default {
   getAll,
   create,
   get,
   put,
+  getBetween,
 };

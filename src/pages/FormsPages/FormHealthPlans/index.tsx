@@ -29,6 +29,7 @@ const FormHealthPlans: React.FC = () => {
     reset,
     control,
     errors,
+    getValues,
   } = useForm({ shouldUnregister: false });
 
   const onSubmit = data => {
@@ -107,7 +108,7 @@ const FormHealthPlans: React.FC = () => {
                 placeholder="Descrição"
                 icon={AiOutlineUser}
                 register={register}
-                watch={watch}
+                getValues={getValues}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>

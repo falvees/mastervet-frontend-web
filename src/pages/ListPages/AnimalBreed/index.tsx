@@ -29,7 +29,7 @@ interface arrayList {
 }
 
 const AnimalBreed: React.FC = () => {
-  const { register, watch } = useForm();
+  const { register, watch, getValues } = useForm();
   const [isListAnimalBreed, setListAnimalBreed] = useState<arrayList[]>([]);
   const StyledTableCell = withStyles(() =>
     createStyles({
@@ -119,7 +119,7 @@ const AnimalBreed: React.FC = () => {
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
               register={register}
-              watch={watch}
+              getValues={getValues}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

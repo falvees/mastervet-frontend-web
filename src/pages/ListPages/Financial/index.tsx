@@ -28,7 +28,7 @@ import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 
 import Select from '../../../components/Select';
 import { Container, Content, GridHeaderSearch, Form } from './styles';
-import BillsPay from '../../../services/BillsPay';
+import FinancialPay from '../../../services/FinancialPayItem';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import Loading from '../../../components/Loading';
 import InputDate from '../../../components/InputDate';
@@ -44,10 +44,12 @@ interface arrayList {
   amount: string;
 }
 interface financialList {
-  pay_id: string;
+  pay_item_id: string;
+  pay_id: { description: string; pay_id: string };
   description: string;
   expected_date: string;
   expected_amount: string;
+  status: string;
 }
 const StyledTableCell = withStyles(() =>
   createStyles({
@@ -98,6 +100,7 @@ const FormUsers: React.FC = () => {
     reset,
     control,
     errors,
+    getValues,
   } = useForm({
     shouldUnregister: false,
     defaultValues: { gender: '', kind_people: '' },
@@ -132,15 +135,16 @@ const FormUsers: React.FC = () => {
     //     });
     // }
   };
+
   const listAnimalBreed = () => {
-    const array: arrayList[] = [];
-    BillsPay.getBetween(watch('dt_inicio'), watch('dt_end'))
+    const array: financialList[] = [];
+    FinancialPay.getBetween(watch('dt_inicio'), watch('dt_end'))
       .then(result => {
-        console.log(result);
+        console.log(result.response);
         result.response.forEach(item => {
           array.push(item);
         });
-        // setIsListFinancial(array);
+        setIsListFinancial(array);
       })
       .catch(e => {
         console.log(e);
@@ -215,9 +219,12 @@ const FormUsers: React.FC = () => {
                   label="Data Início"
                   control={control}
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                   setValue={setValue}
                   dateInitial="2021-02-18"
+                  classNameDateButton="dateInit"
+                  onChangeCustom={listAnimalBreed}
+                  // onChangeCustom={myFunction}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
@@ -226,9 +233,11 @@ const FormUsers: React.FC = () => {
                   label="Data Final"
                   control={control}
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                   setValue={setValue}
                   dateInitial="2021-02-18"
+                  classNameDateButton="dateEnd"
+                  // onChangeCustom={myFunction}
                 />
               </Grid>
               {/* <Grid item xs={12} sm={12} md={12}>
@@ -237,14 +246,15 @@ const FormUsers: React.FC = () => {
                   placeholder="Nome da Raça"
                   icon={AiOutlineUser}
                   register={register}
-                  watch={watch}
+                  getValues={getValues}
                 />
               </Grid> */}
             </Grid>
             <Button
-              type="submit"
+              type="button"
               background="primary"
               style={{ marginLeft: 5, marginTop: 15, width: '40%' }}
+              onClick={listAnimalBreed}
             >
               Buscar
             </Button>
@@ -268,20 +278,26 @@ const FormUsers: React.FC = () => {
                 <TableBody>
                   {isListFinancial &&
                     isListFinancial.map(row => {
-                      console.log(row.pay_id);
+                      // console.log(row.pay_id);
                       return (
-                        <StyledTableRow key={row.pay_id}>
+                        <StyledTableRow key={row.pay_item_id}>
                           <StyledTableCell component="th" scope="row">
-                            {row.pay_id}
+                            {row.pay_item_id}
                           </StyledTableCell>
                           <StyledTableCell component="th" scope="row">
-                            {row.description}
+                            {row.pay_id.description}
                           </StyledTableCell>
                           <StyledTableCell component="th" scope="row">
                             {row.expected_date}
                           </StyledTableCell>
                           <StyledTableCell component="th" scope="row">
-                            {row.expected_amount}
+                            {parseFloat(row.expected_amount).toLocaleString(
+                              'pt-br',
+                              {
+                                style: 'currency',
+                                currency: 'BRL',
+                              },
+                            )}
                           </StyledTableCell>
                           <StyledTableCell
                             align="center"
@@ -292,7 +308,7 @@ const FormUsers: React.FC = () => {
                             }}
                           >
                             <ButtonUtil icon={FiSearch} background="primary" />
-                            <Link to={`/edit_user/${row.pay_id}`}>
+                            <Link to={`/edit_user/${row.pay_item_id}`}>
                               <ButtonUtil icon={FiEdit} background="primary" />
                             </Link>
                             <ButtonUtil icon={FiTrash2} background="primary" />

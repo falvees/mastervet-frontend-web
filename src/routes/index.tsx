@@ -4,8 +4,8 @@ import { Switch, Route, match } from 'react-router-dom';
 import SingIn from '../pages/SignIn';
 import FormUsers from '../pages/FormsPages/FormUsers';
 import People from '../pages/ListPages/People';
-import PadraoAdd from '../pages/PadraoAdd';
-import PadraoList from '../pages/PadraoList';
+// import PadraoAdd from '../pages/PadraoAdd';
+// import PadraoList from '../pages/PadraoList';
 import AnimalType from '../pages/ListPages/AnimalType';
 import FormAnimalType from '../pages/FormsPages/FormAnimalType';
 import FormAnimalBreed from '../pages/FormsPages/FormAnimalBreed';
@@ -21,19 +21,21 @@ import HealthPlans from '../pages/ListPages/HealthPlans';
 import FormHealthPlans from '../pages/FormsPages/FormHealthPlans';
 import PetProcedures from '../pages/ListPages/PetProcedures';
 import FormFinancial from '../pages/ListPages/Financial';
+import FormBill from '../pages/FormsPages/FormBill';
 
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={SingIn} />
     <Route path="/register_user" component={FormUsers} />
     <Route path="/register_financial" component={FormFinancial} />
+    <Route path="/register_bill" component={FormBill} />
     <Route path="/edit_user/:id" component={FormUsers} />
     <Route path="/register_animal_type" component={FormAnimalType} />
     <Route path="/register_animal_breed" component={FormAnimalBreed} />
     <Route path="/register_modalities" component={FormModalities} />
     <Route path="/register_accounts_category" component={FormBillsCategory} />
-    <Route path="/padrao_add" component={PadraoAdd} />
-    <Route path="/padrao_list" component={PadraoList} />
+    {/* <Route path="/padrao_add" component={PadraoAdd} />
+    <Route path="/padrao_list" component={PadraoList} /> */}
     <Route path="/users" component={People} />
     <Route path="/animaltype" component={AnimalType} />
     <Route path="/animalbreed" component={AnimalBreed} />

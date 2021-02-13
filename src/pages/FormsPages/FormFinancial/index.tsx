@@ -94,6 +94,7 @@ const FormAnimalBreed: React.FC = () => {
     control,
     setValue,
     reset,
+    getValues,
   } = useForm({
     shouldUnregister: false,
   });
@@ -189,7 +190,7 @@ const FormAnimalBreed: React.FC = () => {
                 label="Data Início"
                 control={control}
                 register={register}
-                watch={watch}
+                getValues={getValues}
                 setValue={setValue}
                 dateInitial="2021-02-18"
               />
@@ -200,7 +201,7 @@ const FormAnimalBreed: React.FC = () => {
                 label="Data Final"
                 control={control}
                 register={register}
-                watch={watch}
+                getValues={getValues}
                 setValue={setValue}
                 dateInitial="2021-02-18"
               />
@@ -211,7 +212,7 @@ const FormAnimalBreed: React.FC = () => {
                 placeholder="Nome da Raça"
                 icon={AiOutlineUser}
                 register={register}
-                watch={watch}
+                getValues={getValues}
               />
             </Grid> */}
           </Grid>

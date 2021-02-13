@@ -11,10 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // eslint-disable-next-line import/no-duplicates
 import { format } from 'date-fns';
 
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 // eslint-disable-next-line import/no-duplicates
 import { ptBR } from 'date-fns/locale';
@@ -22,24 +19,25 @@ import { Container } from './styles';
 
 interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  label: string;
+  label?: string;
   icon?: React.ComponentType<IconBaseProps>;
   id?: string;
   placeholder?: string;
   iconColor?: string;
   mask?: string;
-
   setValue?: any;
-  watch?: any;
+  getValues?: any;
   register?: any;
   control?: any;
-  dateInitial: string | Date;
+  dateInitial?: Date | string;
+  classNameDateButton?: string;
+  onChangeCustom?: any;
 }
 
 const InputDate: React.FC<SelectProps> = ({
   dateInitial,
   setValue,
-  watch,
+  getValues,
   register,
   control,
   name,
@@ -48,6 +46,8 @@ const InputDate: React.FC<SelectProps> = ({
   icon: Icon,
   iconColor,
   placeholder,
+  classNameDateButton,
+  onChangeCustom,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -74,10 +74,11 @@ const InputDate: React.FC<SelectProps> = ({
   const HandleInputFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
+
   const HandleInputBlur = useCallback(() => {
     setIsFocused(false);
-    setIsFilled(!!watch(name));
-  }, [watch, name]);
+    setIsFilled(!!getValues(name));
+  }, [getValues, name]);
 
   const [selectedDate, setSelectedDate] = useState<Date | string>(
     new Date(`${dateInitial} 00:00:00`),
@@ -92,10 +93,13 @@ const InputDate: React.FC<SelectProps> = ({
     console.log(finalDate);
     setSelectedDate(new Date(`${ano}/${mes}/${dia} 00:00:00`)); // Vai para o DatePicker
     setValue(name, finalDate); // Vai para o Form
+    HandleInputBlur();
+    HandleInputFocus();
   };
 
   useEffect(() => {
-    formatDate(new Date(`${dateInitial} 00:00:00`));
+    if (dateInitial) formatDate(new Date(`${dateInitial} 00:00:00`));
+    else formatDate(new Date());
   }, []);
 
   return (
@@ -103,26 +107,37 @@ const InputDate: React.FC<SelectProps> = ({
       <Controller
         {...{ name, control }}
         name={name}
-        defaultValue={new Date(`${watch(name)} 00:00:00`)}
+        defaultValue={new Date(`${getValues(name)} 00:00:00`)}
         render={({ onBlur, value }) => (
-          <KeyboardDatePicker
+          <Container
+            isfilled={isFilled.toString()}
+            onBlur={HandleInputBlur}
+            onFocus={HandleInputFocus}
             name={name}
             disableToolbar
-            variant="dialog"
+            variant="inline"
             inputVariant="outlined"
             format="dd/MM/yyyy"
             margin="normal"
-            id="date-picker-inline"
             label={label}
-            value={watch(name) ? new Date(`${watch(name)} 00:00:00`) : null}
-            defaultValue={new Date(`${watch(name)} 00:00:00`)}
-            onChange={formatDate}
+            value={
+              getValues(name) ? new Date(`${getValues(name)} 00:00:00`) : null
+            }
+            defaultValue={new Date(`${getValues(name)} 00:00:00`)}
+            onChange={e => {
+              formatDate(e);
+              if (onChangeCustom) onChangeCustom();
+            }}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
             invalidDateMessage="Data em formato inválido."
             cancelLabel="Cancelar"
-            InputAdornmentProps={{ position: 'start' }}
+            InputAdornmentProps={{
+              position: 'start',
+
+              id: classNameDateButton,
+            }}
           />
         )}
       />
