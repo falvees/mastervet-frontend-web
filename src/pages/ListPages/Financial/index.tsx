@@ -92,16 +92,7 @@ const FormUsers: React.FC = () => {
   const [isListFinancial, setIsListFinancial] = useState<financialList[]>([]);
   const { id } = useParams<RouteParams>();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    reset,
-    control,
-    errors,
-    getValues,
-  } = useForm({
+  const methods = useForm({
     shouldUnregister: false,
     defaultValues: { gender: '', kind_people: '' },
   });
@@ -138,7 +129,10 @@ const FormUsers: React.FC = () => {
 
   const listAnimalBreed = () => {
     const array: financialList[] = [];
-    FinancialPay.getBetween(watch('dt_inicio'), watch('dt_end'))
+    FinancialPay.getBetween(
+      methods.getValues('dt_inicio'),
+      methods.getValues('dt_end'),
+    )
       .then(result => {
         console.log(result.response);
         result.response.forEach(item => {
@@ -211,16 +205,16 @@ const FormUsers: React.FC = () => {
             </Grid>
           </GridHeaderSearch>
 
-          <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            autoComplete="off"
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
             <Grid container>
               <Grid item xs={12} sm={12} md={6}>
                 <InputDate
                   name="dt_inicio"
                   label="Data Início"
-                  control={control}
-                  register={register}
-                  getValues={getValues}
-                  setValue={setValue}
                   dateInitial="2021-02-18"
                   classNameDateButton="dateInit"
                   onChangeCustom={listAnimalBreed}
@@ -231,10 +225,6 @@ const FormUsers: React.FC = () => {
                 <InputDate
                   name="dt_end"
                   label="Data Final"
-                  control={control}
-                  register={register}
-                  getValues={getValues}
-                  setValue={setValue}
                   dateInitial="2021-02-18"
                   classNameDateButton="dateEnd"
                   // onChangeCustom={myFunction}

@@ -26,15 +26,7 @@ interface arrayList {
 const FormAnimalBreed: React.FC = () => {
   const { id } = useParams<RouteParams>();
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    watch,
-    control,
-    setValue,
-    getValues,
-  } = useForm({
+  const methods = useForm({
     shouldUnregister: false,
   });
   const [isAnimalType, setIsAnimalType] = useState<arrayList[]>([]);
@@ -124,15 +116,17 @@ const FormAnimalBreed: React.FC = () => {
             />
           </Grid>
         </GridHeaderSearch>
-        <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <Form
+          noValidate
+          autoComplete="off"
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>
               <Input
                 name="breed_name"
                 placeholder="Nome da Raça"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
               />
             </Grid>
             <Grid item xs={6} sm={6} md={6}>
@@ -140,12 +134,8 @@ const FormAnimalBreed: React.FC = () => {
                 name="type_id"
                 placeholder="Tipo de Animal"
                 options={isAnimalType}
-                register={register}
-                watch={watch}
-                setValue={setValue}
-                control={control}
               />
-              {errors.type_id && (
+              {methods.errors.type_id && (
                 <p className="required-form">
                   <span>* </span>
                   Este campo é obrigatório.
@@ -157,12 +147,8 @@ const FormAnimalBreed: React.FC = () => {
                 name="animal_size"
                 placeholder="Porte do Animal"
                 options={sizes}
-                register={register}
-                watch={watch}
-                setValue={setValue}
-                control={control}
               />
-              {errors.animal_size && (
+              {methods.errors.animal_size && (
                 <p className="required-form">
                   <span>* </span>
                   Este campo é obrigatório.

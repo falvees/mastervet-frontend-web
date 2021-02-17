@@ -13,34 +13,26 @@ import logo from '../../assets/logo.png';
 import pata from '../../assets/pata.png';
 
 const SignIn: React.FC = () => {
-  const { register, handleSubmit, unregister, getValues } = useForm();
+  const methods = useForm({
+    shouldUnregister: false,
+  });
 
   const onSubmit = data => console.log(data);
 
   return (
     <>
       <Container xs={12}>
-        {/* <Hidden only="xs"> */}
         <Background className="background-sign-in" />
-        {/* </Hidden> */}
         <Content className="form-sign-in">
-          <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+          <Form
+            noValidate
+            autoComplete="off"
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
             <img src={pata} alt="pata-sign-in" />
             <p>Faça seu login</p>
-            <Input
-              name="user"
-              icon={AiOutlineUser}
-              placeholder="Usuário"
-              register={register}
-              getValues={getValues}
-            />
-            <Input
-              name="password"
-              icon={FiLock}
-              placeholder="Senha"
-              register={register}
-              getValues={getValues}
-            />
+            <Input name="user" icon={AiOutlineUser} placeholder="Usuário" />
+            <Input name="password" icon={FiLock} placeholder="Senha" />
             <Link to="/users">
               <Button
                 type="submit"

@@ -22,6 +22,8 @@ import FormHealthPlans from '../pages/FormsPages/FormHealthPlans';
 import PetProcedures from '../pages/ListPages/PetProcedures';
 import FormFinancial from '../pages/ListPages/Financial';
 import FormBill from '../pages/FormsPages/FormBill';
+import Accreditations from '../pages/ListPages/Accreditations';
+import FormAccreditations from '../pages/FormsPages/FormAccreditations';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -47,6 +49,8 @@ const Routes: React.FC = () => (
     <Route path="/plans" component={HealthPlans} />
     <Route path="/register_plans" component={FormHealthPlans} />
     <Route path="/procedures" component={PetProcedures} />
+    <Route path="/accreditations" component={Accreditations} />
+    <Route path="/edit_accreditation/:id" component={FormAccreditations} />
   </Switch>
 );
 export default Routes;

@@ -29,6 +29,9 @@ export const Container = styled.div<inputProps>`
     border: 2px solid #bfbfbf;
     width: 100%;
     display: flex;
+    &:hover {
+      border-color: #17a0ae;
+    }
     & legend {
       border: 0;
       width: auto;
@@ -94,6 +97,10 @@ export const Container = styled.div<inputProps>`
     background-color: transparent;
     padding: 0 5px;
     box-sizing: border-box;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   svg {
     font-size: 20px;
@@ -111,7 +118,8 @@ export const Container = styled.div<inputProps>`
     props.isFocused &&
     css`
       & label {
-        /* background-color: white; */
+        overflow: unset;
+        text-overflow: unset;
         color: #9d9d9c;
         top: -8px;
         left: 15px;
@@ -136,12 +144,12 @@ export const Container = styled.div<inputProps>`
     props.isFilled &&
     css`
       & label {
-        /* background-color: white; */
+        overflow: unset;
+        text-overflow: unset;
         color: #9d9d9c;
         top: -8px;
         left: 15px;
         transform: scale(0.8);
-        /* font-weight: 500; */
       }
       & svg {
         color: #17a0ae !important;

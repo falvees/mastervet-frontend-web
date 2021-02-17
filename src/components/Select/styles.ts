@@ -32,8 +32,11 @@ export const Container = styled(Autocomplete)<SelectProps>`
     font-size: 16px !important;
     color: #9d9d9c;
   }
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #17a0ae !important;
+  }
   &:hover fieldset {
-    border-color: #17a0ae;
+    border-color: #17a0ae !important;
     & svg {
       color: #17a0ae !important;
     }

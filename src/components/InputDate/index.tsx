@@ -25,10 +25,6 @@ interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   iconColor?: string;
   mask?: string;
-  setValue?: any;
-  getValues?: any;
-  register?: any;
-  control?: any;
   dateInitial?: Date | string;
   classNameDateButton?: string;
   onChangeCustom?: any;
@@ -36,10 +32,6 @@ interface SelectProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const InputDate: React.FC<SelectProps> = ({
   dateInitial,
-  setValue,
-  getValues,
-  register,
-  control,
   name,
   label,
   mask,
@@ -49,6 +41,7 @@ const InputDate: React.FC<SelectProps> = ({
   classNameDateButton,
   onChangeCustom,
 }) => {
+  const { setValue, getValues, register, control } = useFormContext();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 

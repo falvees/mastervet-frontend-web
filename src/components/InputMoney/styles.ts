@@ -22,6 +22,8 @@ export const Container = styled.div<inputProps>`
   & fieldset {
     font-size: 16px;
     border-radius: 10px;
+    /* border-width: 2px;
+    border-color: #bfbfbf; */
     padding: 0;
     height: 46px;
     border: 2px solid #bfbfbf;
@@ -32,7 +34,9 @@ export const Container = styled.div<inputProps>`
       width: auto;
       height: 0px;
       display: block;
-      padding: 0 7px;
+      padding: 0;
+      /* font-size: 0.75em; */
+      width: 0px;
       text-align: left;
       transition: max-width 50ms cubic-bezier(0, 0, 0.2, 1) 0ms;
       visibility: hidden;
@@ -81,6 +85,8 @@ export const Container = styled.div<inputProps>`
   & label {
     pointer-events: none;
     position: absolute;
+    top: calc(50% - 9px);
+    left: ${props => (props.isIcon ? `40px` : `10px`)};
     transform-origin: left;
     transition: all 0.2s linear;
     -webkit-transition: all 0.2s linear;
@@ -88,35 +94,67 @@ export const Container = styled.div<inputProps>`
     background-color: transparent;
     padding: 0 5px;
     box-sizing: border-box;
-    color: #9d9d9c;
-    top: -8px;
-    left: 15px;
-    transform: scale(0.8);
   }
   svg {
     font-size: 20px;
     margin: 5px;
   }
 
+  /* & input:focus + label,
+  & input:not(:placeholder-shown) + & label {
+    font-size: 13px;
+    top: -8px;
+    color: #9d9d9c;
+  } */
+
   ${props =>
     props.isFocused &&
     css`
+      & label {
+        /* background-color: white; */
+        color: #9d9d9c;
+        top: -8px;
+        left: 15px;
+        transform: scale(0.8);
+      }
       & svg {
         color: #17a0ae !important;
       }
       & fieldset {
         border-color: #17a0ae;
+        & legend {
+          ${props.label &&
+          css`
+            padding: 0 7px;
+          `}
+          width: auto;
+        }
       }
     `}
 
   ${props =>
     props.isFilled &&
     css`
+      & label {
+        /* background-color: white; */
+        color: #9d9d9c;
+        top: -8px;
+        left: 15px;
+        transform: scale(0.8);
+        /* font-weight: 500; */
+      }
       & svg {
         color: #17a0ae !important;
       }
       & fieldset {
         border-color: #17a0ae;
+        & legend {
+          ${props.label &&
+          css`
+            padding: 0 7px;
+          `}
+          width: auto;
+        }
       }
     `}
 

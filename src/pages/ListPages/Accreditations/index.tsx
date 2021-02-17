@@ -14,26 +14,29 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
-import { FiArrowLeft, FiSearch } from 'react-icons/fi';
+import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
 import Input from '../../../components/InputLabelPure';
-import HealthPlansApi from '../../../services/HealthPlansApi';
+import ButtonUtil from '../../../components/ButtonUtil';
+import AccreditationsApi from '../../../services/AccreditattionsApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 
 interface arrayList {
-  plan_id: string;
-  description: string;
+  accreditation_id: string;
+  people_id: { people_id: string; name: string };
+  registration_date: string;
+  plan_id: { plan_id: string; description: string };
   status: string;
 }
 
-const HealthPlans: React.FC = () => {
-  const methods = useForm({
-    shouldUnregister: false,
-  });
-  const [isListHealthPlans, setListHealthPlans] = useState<arrayList[]>([]);
+const Acreditations: React.FC = () => {
+  const { register, watch } = useForm();
+  const [isListAccreditations, setListAccreditations] = useState<arrayList[]>(
+    [],
+  );
   const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
@@ -71,10 +74,10 @@ const HealthPlans: React.FC = () => {
     },
   });
 
-  const listHealthPlans = () => {
-    HealthPlansApi.getAll()
+  const listAccreditations = () => {
+    AccreditationsApi.getAll()
       .then(result => {
-        setListHealthPlans(result.response);
+        setListAccreditations(result.response);
         console.log(result.response);
       })
       .catch(e => {
@@ -83,19 +86,19 @@ const HealthPlans: React.FC = () => {
   };
 
   useEffect(() => {
-    listHealthPlans();
+    listAccreditations();
   }, []);
 
   const classes = useStyles();
   return (
     <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
       <MenuPrincipalLeft pages={['all']} />
-      <Navbar name="Listando Usuários" />
+      <Navbar name="Listando Contratos" />
       <Content>
         <Hidden only={['xs', 'sm']}>
           <Grid justify="center">
             <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              Listando Usuários
+              Listando Contratos
             </p>
           </Grid>
         </Hidden>
@@ -107,29 +110,29 @@ const HealthPlans: React.FC = () => {
             </Link>
           </Hidden>
 
-          <Grid
+          {/* <Grid
             item
             style={{
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
             }}
-          >
+          
             <Input
               style={{ flex: 1, color: '#fff' }}
               name="search_user"
               placeholder="Digite aqui..."
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
+              register={register}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />
             </IconButton>
-          </Grid>
-
-          <Link to="/register_plans" className="add-user">
+          </Grid> */}
+          <Link to="/register_accreditation" className="add-user">
             <Button background="primary" style={{ width: 180 }}>
-              Adicionar Plano
+              Adicionar Contrato
             </Button>
           </Link>
         </GridHeaderSearch>
@@ -143,24 +146,49 @@ const HealthPlans: React.FC = () => {
               <TableHead>
                 <TableRow hover>
                   <StyledTableCell width="10%">Id</StyledTableCell>
-                  <StyledTableCell width="50%">Descricao</StyledTableCell>
+                  <StyledTableCell width="30%">Cliente</StyledTableCell>
+                  <StyledTableCell width="10%">Plano</StyledTableCell>
+                  <StyledTableCell width="10%">Data Registro</StyledTableCell>
+                  <StyledTableCell width="10%">Situação</StyledTableCell>
                   <StyledTableCell align="center">Ações</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {isListHealthPlans &&
-                  isListHealthPlans.map(row => {
+                {isListAccreditations &&
+                  isListAccreditations.map(row => {
                     // console.log(row.type_id);
                     return (
-                      <StyledTableRow key={row.plan_id}>
+                      <StyledTableRow key={row.accreditation_id}>
                         <StyledTableCell component="th" scope="row">
-                          {row.plan_id}
+                          {row.accreditation_id}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                          {row.description}
+                          {row.people_id.name}
                         </StyledTableCell>
-                        <StyledTableCell align="center">
-                          ver, editar, apagar
+                        <StyledTableCell component="th" scope="row">
+                          {row.plan_id.description}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.registration_date}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row.status}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          align="center"
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <ButtonUtil icon={FiSearch} background="primary" />
+                          <Link
+                            to={`/edit_accreditation/${row.accreditation_id}`}
+                          >
+                            <ButtonUtil icon={FiEdit} background="primary" />
+                          </Link>
+                          <ButtonUtil icon={FiTrash2} background="primary" />
                         </StyledTableCell>
                       </StyledTableRow>
                     );
@@ -174,4 +202,4 @@ const HealthPlans: React.FC = () => {
   );
 };
 
-export default HealthPlans;
+export default Acreditations;

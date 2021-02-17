@@ -31,7 +31,9 @@ interface arrayList {
 }
 
 const AnimalType: React.FC = () => {
-  const { register, watch, getValues } = useForm();
+  const methods = useForm({
+    shouldUnregister: false,
+  });
   const [isListAnimaType, setListAnimalType] = useState<arrayList[]>([]);
   const StyledTableCell = withStyles(() =>
     createStyles({
@@ -120,8 +122,6 @@ const AnimalType: React.FC = () => {
               placeholder="Digite aqui..."
               colorPlaceholder="#03818f"
               backgroundColor="#17a0ae"
-              register={register}
-              getValues={getValues}
             />
             <IconButton className="button-search">
               <FiSearch color="#17a0ae" />

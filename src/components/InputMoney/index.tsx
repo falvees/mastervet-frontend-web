@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { TextField } from '@material-ui/core';
 import React, {
   InputHTMLAttributes,
   useCallback,
@@ -9,7 +8,8 @@ import React, {
   useState,
 } from 'react';
 import { IconBaseProps } from 'react-icons';
-import IntlCurrencyInput from 'react-intl-currency-input';
+import NumberFormat from 'react-number-format';
+import { Controller, useFormContext } from 'react-hook-form';
 import { ButtonIcon, Container } from './styles';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -21,20 +21,14 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   backgroundColor?: string;
   label?: string;
   iconColor?: string;
-  mask?: string;
-  setValue?: any;
-  getValues?: any;
-  register?: any;
+
   defaultValue?: string;
 };
 
 const InputMoney: React.FC<InputProps> = ({
   defaultValue,
-  setValue,
-  getValues,
-  register,
+
   name,
-  mask,
   icon: Icon,
   iconColor,
   placeholder,
@@ -43,38 +37,33 @@ const InputMoney: React.FC<InputProps> = ({
   label,
   ...rest
 }) => {
+  const { setValue, getValues, register, control } = useFormContext();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-
-  const currencyConfig = {
-    locale: 'pt-BR',
-    formats: {
-      number: {
-        BRL: {
-          style: 'currency',
-          currency: 'BRL',
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        },
-      },
-    },
-  };
 
   const HandleInputFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
+
   const HandleInputBlur = useCallback(() => {
     setIsFocused(false);
     setIsFilled(!!getValues(name));
   }, []);
-  const handleChange = (event, value, maskedValue) => {
-    event.preventDefault();
 
-    console.log(value); // value without mask (ex: 1234.56)
-    console.log(maskedValue); // masked value (ex: R$1234,56)
-  };
   useEffect(() => {
-    getValues(name, setIsFilled(!!getValues(name)));
+    setIsFilled(!!getValues(name));
+    console.log(getValues(name));
+  }, [getValues(name)]);
+
+  const currencyFormatter = useCallback(value => {
+    if (!Number(value)) return '';
+
+    const amount = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(value / 100);
+
+    return `${amount}`;
   }, []);
 
   return (
@@ -87,6 +76,7 @@ const InputMoney: React.FC<InputProps> = ({
       isFocused={isFocused}
       onFocus={HandleInputFocus}
       onBlur={HandleInputBlur}
+      label={!!label}
     >
       <fieldset>
         <legend>
@@ -97,15 +87,25 @@ const InputMoney: React.FC<InputProps> = ({
             <Icon color={iconColor || '#bfbfbf'} />
           </ButtonIcon>
         )}
-        <IntlCurrencyInput
-          currency="BRL"
-          config={currencyConfig}
-          onChange={handleChange}
-          defaultValue={defaultValue}
-          ref={register}
-          {...rest}
-          id={name}
+        <Controller
+          render={({ onChange, ...props }) => (
+            <NumberFormat
+              decimalScale={2}
+              decimalSeparator=","
+              fixedDecimalScale
+              format={currencyFormatter}
+              thousandSeparator="."
+              onValueChange={({ value }) => {
+                onChange((parseFloat(value) / 100).toString());
+              }}
+              {...props}
+              defaultValue={defaultValue}
+            />
+          )}
+          control={control}
+          defaultValue={null}
           name={name}
+          // rules={{ required }}
         />
         <label>{label}</label>
       </fieldset>

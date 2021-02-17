@@ -33,7 +33,9 @@ interface arrayList {
 }
 
 const People: React.FC = () => {
-  const { register, watch, getValues } = useForm();
+  const methods = useForm({
+    shouldUnregister: false,
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const [isListUsers, setListUsers] = useState<arrayList[]>([]);
@@ -133,8 +135,6 @@ const People: React.FC = () => {
                 placeholder="Digite aqui..."
                 colorPlaceholder="#03818f"
                 backgroundColor="#17a0ae"
-                register={register}
-                getValues={getValues}
               />
               <IconButton className="button-search">
                 <FiSearch color="#17a0ae" />

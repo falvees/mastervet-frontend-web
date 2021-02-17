@@ -21,15 +21,7 @@ interface RouteParams {
 
 const FormBillsCategory: React.FC = () => {
   const { id } = useParams<RouteParams>();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    control,
-    errors,
-    getValues,
-  } = useForm({
+  const methods = useForm({
     shouldUnregister: false,
   });
 
@@ -99,15 +91,17 @@ const FormBillsCategory: React.FC = () => {
             />
           </Grid>
         </GridHeaderSearch>
-        <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <Form
+          noValidate
+          autoComplete="off"
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>
               <Input
                 name="description"
                 placeholder="Descrição"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
@@ -115,10 +109,6 @@ const FormBillsCategory: React.FC = () => {
                 name="kind"
                 placeholder="Pagar/Receber"
                 options={Status}
-                register={register}
-                watch={watch}
-                setValue={setValue}
-                control={control}
               />
             </Grid>
           </Grid>

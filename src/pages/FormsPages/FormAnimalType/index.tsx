@@ -21,7 +21,7 @@ interface RouteParams {
 
 const FormAnimalType: React.FC = () => {
   const { id } = useParams<RouteParams>();
-  const { register, handleSubmit, watch, getValues } = useForm({
+  const methods = useForm({
     shouldUnregister: false,
   });
 
@@ -87,15 +87,17 @@ const FormAnimalType: React.FC = () => {
           </Grid>
         </GridHeaderSearch>
 
-        <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <Form
+          noValidate
+          autoComplete="off"
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
           <Grid container>
             <Grid item xs={12} sm={12} md={12}>
               <Input
                 name="description"
                 placeholder="Descrição"
                 icon={AiOutlineUser}
-                register={register}
-                getValues={getValues}
               />
             </Grid>
           </Grid>

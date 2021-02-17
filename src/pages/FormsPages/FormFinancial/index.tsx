@@ -86,16 +86,7 @@ const FormAnimalBreed: React.FC = () => {
 
   const { id } = useParams<RouteParams>();
 
-  const {
-    register,
-    handleSubmit,
-    errors,
-    watch,
-    control,
-    setValue,
-    reset,
-    getValues,
-  } = useForm({
+  const methods = useForm({
     shouldUnregister: false,
   });
   const [isListAnimalBreed, setListAnimalBreed] = useState<arrayList[]>([]);
@@ -182,16 +173,16 @@ const FormAnimalBreed: React.FC = () => {
             />
           </Grid>
         </GridHeaderSearch>
-        <Form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <Form
+          noValidate
+          autoComplete="off"
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
           <Grid container>
             <Grid item xs={12} sm={12} md={6}>
               <InputDate
                 name="dt_inicio"
                 label="Data Início"
-                control={control}
-                register={register}
-                getValues={getValues}
-                setValue={setValue}
                 dateInitial="2021-02-18"
               />
             </Grid>
@@ -199,10 +190,6 @@ const FormAnimalBreed: React.FC = () => {
               <InputDate
                 name="dt_end"
                 label="Data Final"
-                control={control}
-                register={register}
-                getValues={getValues}
-                setValue={setValue}
                 dateInitial="2021-02-18"
               />
             </Grid>

@@ -1,5 +1,6 @@
 import { useField } from '@unform/core';
 import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { IconBaseProps } from 'react-icons';
 import InputMask from 'react-input-mask';
 import { Container } from './styles';
@@ -11,20 +12,17 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   iconColor?: string;
   mask?: string;
-  register: any;
-  getValues: any;
 }
 
 const Input: React.FC<InputProps> = ({
   name,
-  register,
-  getValues,
   mask,
   icon: Icon,
   iconColor,
   placeholder,
   ...rest
 }) => {
+  const { setValue, getValues, register, control } = useFormContext();
   const inputRef = useRef(null);
   return (
     <Container>
