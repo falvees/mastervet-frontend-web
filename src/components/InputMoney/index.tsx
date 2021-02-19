@@ -50,10 +50,9 @@ const InputMoney: React.FC<InputProps> = ({
     setIsFilled(!!getValues(name));
   }, []);
 
-  useEffect(() => {
-    setIsFilled(!!getValues(name));
-    console.log(getValues(name));
-  }, [getValues(name)]);
+  // useEffect(() => {
+  //   setIsFilled(!!getValues(name));
+  // }, [getValues(name)]);
 
   const currencyFormatter = useCallback(value => {
     if (!Number(value)) return '';
@@ -67,28 +66,28 @@ const InputMoney: React.FC<InputProps> = ({
   }, []);
 
   return (
-    <Container
-      className="input-root"
-      colorPlaceholder={colorPlaceholder}
-      backgroundColor={backgroundColor}
-      isIcon={!!Icon}
-      isFilled={isFilled}
-      isFocused={isFocused}
-      onFocus={HandleInputFocus}
-      onBlur={HandleInputBlur}
-      label={!!label}
-    >
-      <fieldset>
-        <legend>
-          <span>{label}</span>
-        </legend>
-        {Icon && (
-          <ButtonIcon tabIndex="-1">
-            <Icon color={iconColor || '#bfbfbf'} />
-          </ButtonIcon>
-        )}
-        <Controller
-          render={({ onChange, ...props }) => (
+    <Controller
+      render={({ onChange, ...props }) => (
+        <Container
+          className="input-root"
+          colorPlaceholder={colorPlaceholder}
+          backgroundColor={backgroundColor}
+          isIcon={!!Icon}
+          isFilled={!!props.value}
+          isFocused={isFocused}
+          onFocus={HandleInputFocus}
+          onBlur={HandleInputBlur}
+          label={!!label}
+        >
+          <fieldset>
+            <legend>
+              <span>{label}</span>
+            </legend>
+            {Icon && (
+              <ButtonIcon tabIndex="-1">
+                <Icon color={iconColor || '#bfbfbf'} />
+              </ButtonIcon>
+            )}
             <NumberFormat
               decimalScale={2}
               decimalSeparator=","
@@ -96,20 +95,19 @@ const InputMoney: React.FC<InputProps> = ({
               format={currencyFormatter}
               thousandSeparator="."
               onValueChange={({ value }) => {
-                onChange((parseFloat(value) / 100).toString());
+                onChange((Number(value) / 100).toString());
               }}
               {...props}
               defaultValue={defaultValue}
             />
-          )}
-          control={control}
-          defaultValue={null}
-          name={name}
-          // rules={{ required }}
-        />
-        <label>{label}</label>
-      </fieldset>
-    </Container>
+            <label>{label}</label>
+          </fieldset>
+        </Container>
+      )}
+      control={control}
+      defaultValue={null}
+      name={name}
+    />
   );
 };
 export default InputMoney;

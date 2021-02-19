@@ -26,6 +26,9 @@ export const Container = styled(KeyboardDatePicker)<SelectProps>`
       font-size: 13px;
     }
   }
+  .MuiFormLabel-root.Mui-focused {
+    color: #9d9d9c;
+  }
   & label {
     transform: translate(10px, 15px) scale(1);
     color: #9d9d9c;

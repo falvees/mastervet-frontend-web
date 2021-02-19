@@ -104,10 +104,9 @@ const FormAccreditations: React.FC = () => {
   };
   useEffect(() => {
     const listAccreditations = () => {
-      // setIsLoading(true);
+      setIsLoading(true);
       AccreditationsApi.get(id)
         .then(result => {
-          console.log(methods);
           methods.reset(result.data.response[0]);
           setTimeout(() => {
             setIsLoading(false);
@@ -145,8 +144,8 @@ const FormAccreditations: React.FC = () => {
     { animal2: '../../../assets/petPictures/perfildog2.jpg' },
   ];
   return (
-    <>
-      <Loading isLoading={isLoading} />
+    <FormProvider {...methods}>
+      <Loading isLoading={isLoading} full />
       <Container container>
         <MenuPrincipalLeft pages={['all']} />
 
@@ -186,140 +185,134 @@ const FormAccreditations: React.FC = () => {
               />
             </Grid>
           </GridHeaderSearch>
-          <FormProvider {...methods}>
-            <Form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
-              <Grid container>
-                <Grid item xs={12} sm={6} md={5}>
-                  <Input
-                    style={{ width: '80%' }}
-                    name="name"
-                    label="Nome Completo"
-                    icon={AiOutlineUser}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} md={1}>
-                  <Button
-                    background="primary"
-                    style={{ width: '100%', display: 'flex' }}
-                  >
-                    ...
-                  </Button>
-                </Grid>
-                <Grid item xs={4} sm={6} md={2}>
-                  <Input
-                    name="date_register"
-                    label="Data de Associacao"
-                    mask="99/99/9999"
-                  />
-                </Grid>
-                <Grid item xs={4} sm={6} md={4}>
-                  <Select
-                    name="plans"
-                    placeholder="Plano"
-                    options={isHealthPlans}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} md={4}>
-                  <Select
-                    name="duration"
-                    placeholder="Prazo em Meses"
-                    options={durations}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={4}>
-                  <Select
-                    name="regitration_user"
-                    placeholder="Vendedor"
-                    options={isSeller}
-                  />
-                </Grid>
-                <Grid item xs={4} sm={6} md={4}>
-                  <Input
-                    name="disqualification_date"
-                    label="Data de Encerramento"
-                    mask="99/99/9999"
-                  />
-                </Grid>
-                <Grid item xs={4} sm={6} md={4}>
-                  <Select
-                    name="pets_number"
-                    placeholder="Qtde de Animais"
-                    options={petsnumber}
-                  />
-                </Grid>
-                <Grid item xs={4} sm={6} md={4}>
-                  <Select
-                    name="status"
-                    placeholder="Situação"
-                    options={status}
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6} md={4}>
-                  <InputMoney name="amount" label="Valor Total" />
-                </Grid>
+          <Form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
+            <Grid container>
+              <Grid item xs={12} sm={6} md={5}>
+                <Input
+                  style={{ width: '80%' }}
+                  name="name"
+                  label="Nome Completo"
+                  icon={AiOutlineUser}
+                />
               </Grid>
-              {/* nome raça peso idade caracteristica */}
-              <Grid container xs={12} sm={12} md={12} style={{ padding: 8 }}>
-                <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
-                  <ContainerDog>
-                    <div
-                      className="profile-dog"
-                      style={{
-                        background: `no-repeat center/100% url(${process.env.PUBLIC_URL}/assets/perfildog.jpg)`,
-                      }}
-                    />
-                    <Input name="named" label="Nome" />
-                    <Input name="breed" label="Raça" />
-                    <Input name="weigth" label="Peso" />
-                    <Input name="age" label="Idade" />
-                    <InputText name="caracter" label="Características" />
-                  </ContainerDog>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
-                  <ContainerDog>
-                    <div
-                      className="profile-dog"
-                      style={{
-                        background:
-                          "no-repeat center/100% url('http://matsudapet.com.br/blog/wp-content/uploads/2019/08/shutterstock_559799125-compressed.jpg')",
-                      }}
-                    />
-                    <Input name="named" label="Nome" />
-                    <Input name="breed" label="Raça" />
-                    <Input name="weigth" label="Peso" />
-                    <Input name="age" label="Idade" />
-                    <InputText name="caracter" label="Características" />
-                  </ContainerDog>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
-                  <ContainerDog>
-                    <div
-                      className="profile-dog"
-                      style={{
-                        backgroundImage:
-                          "no-repeat center/100% url('https://matsudapet.com.br/blog/wp-content/uploads/2019/08/shutterstock_559799125-compressed.jpg')",
-                      }}
-                    />
-                    <Input name="named" label="Nome" />
-                    <Input name="breed" label="Raça" />
-                    <Input name="weigth" label="Peso" />
-                    <Input name="age" label="Idade" />
-                    <InputText name="caracter" label="Características" />
-                  </ContainerDog>
-                </Grid>
+              <Grid item xs={12} sm={6} md={1}>
+                <Button
+                  background="primary"
+                  style={{ width: '100%', display: 'flex' }}
+                >
+                  ...
+                </Button>
               </Grid>
-              <Button
-                type="submit"
-                background="primary"
-                style={{ marginTop: 15 }}
-              >
-                {id ? 'Atualizar' : 'Cadastar'}
-              </Button>
-            </Form>
-          </FormProvider>
+              <Grid item xs={4} sm={6} md={2}>
+                <Input
+                  name="date_register"
+                  label="Data de Associacao"
+                  mask="99/99/9999"
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={4}>
+                <Select
+                  name="plans"
+                  placeholder="Plano"
+                  options={isHealthPlans}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={4}>
+                <Select
+                  name="duration"
+                  placeholder="Prazo em Meses"
+                  options={durations}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={4}>
+                <Select
+                  name="regitration_user"
+                  placeholder="Vendedor"
+                  options={isSeller}
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={4}>
+                <Input
+                  name="disqualification_date"
+                  label="Data de Encerramento"
+                  mask="99/99/9999"
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={4}>
+                <Select
+                  name="pets_number"
+                  placeholder="Qtde de Animais"
+                  options={petsnumber}
+                />
+              </Grid>
+              <Grid item xs={4} sm={6} md={4}>
+                <Select name="status" placeholder="Situação" options={status} />
+              </Grid>
+              <Grid item xs={6} sm={6} md={4}>
+                <InputMoney name="amount" label="Valor Total" />
+              </Grid>
+            </Grid>
+            {/* nome raça peso idade caracteristica */}
+            <Grid container xs={12} sm={12} md={12} style={{ padding: 8 }}>
+              <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
+                <ContainerDog>
+                  <div
+                    className="profile-dog"
+                    style={{
+                      background: `no-repeat center/100% url(${process.env.PUBLIC_URL}/assets/perfildog.jpg)`,
+                    }}
+                  />
+                  <Input name="named" label="Nome" />
+                  <Input name="breed" label="Raça" />
+                  <Input name="weigth" label="Peso" />
+                  <Input name="age" label="Idade" />
+                  <InputText name="caracter" label="Características" />
+                </ContainerDog>
+              </Grid>
+              <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
+                <ContainerDog>
+                  <div
+                    className="profile-dog"
+                    style={{
+                      background:
+                        "no-repeat center/100% url('http://matsudapet.com.br/blog/wp-content/uploads/2019/08/shutterstock_559799125-compressed.jpg')",
+                    }}
+                  />
+                  <Input name="named" label="Nome" />
+                  <Input name="breed" label="Raça" />
+                  <Input name="weigth" label="Peso" />
+                  <Input name="age" label="Idade" />
+                  <InputText name="caracter" label="Características" />
+                </ContainerDog>
+              </Grid>
+              <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
+                <ContainerDog>
+                  <div
+                    className="profile-dog"
+                    style={{
+                      backgroundImage:
+                        "no-repeat center/100% url('https://matsudapet.com.br/blog/wp-content/uploads/2019/08/shutterstock_559799125-compressed.jpg')",
+                    }}
+                  />
+                  <Input name="named" label="Nome" />
+                  <Input name="breed" label="Raça" />
+                  <Input name="weigth" label="Peso" />
+                  <Input name="age" label="Idade" />
+                  <InputText name="caracter" label="Características" />
+                </ContainerDog>
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              background="primary"
+              style={{ marginTop: 15 }}
+            >
+              {id ? 'Atualizar' : 'Cadastar'}
+            </Button>
+          </Form>
         </Content>
       </Container>
-    </>
+    </FormProvider>
   );
 };
 

@@ -14,7 +14,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
@@ -64,7 +64,6 @@ const People: React.FC = () => {
 
   const useStyles = makeStyles({
     table: {
-      minWidth: 700,
       height: '100%',
     },
     paper: {
@@ -84,7 +83,7 @@ const People: React.FC = () => {
         setListUsers(result.response);
         setTimeout(() => {
           setIsLoading(false);
-        }, 700);
+        }, 100);
       })
       .catch(e => {
         console.log(e);
@@ -95,13 +94,13 @@ const People: React.FC = () => {
   };
 
   useEffect(() => {
-    listPeoples();
+    // listPeoples();
   }, []);
 
   const classes = useStyles();
   return (
-    <>
-      <Loading isLoading={isLoading} />
+    <FormProvider {...methods}>
+      <Loading isLoading={isLoading} background="#fff" />
       <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
         <MenuPrincipalLeft pages={['all']} />
         <Navbar name="Listando Usuários" />
@@ -136,7 +135,7 @@ const People: React.FC = () => {
                 colorPlaceholder="#03818f"
                 backgroundColor="#17a0ae"
               />
-              <IconButton className="button-search">
+              <IconButton className="button-search" onClick={listPeoples}>
                 <FiSearch color="#17a0ae" />
               </IconButton>
             </Grid>
@@ -207,7 +206,7 @@ const People: React.FC = () => {
           </Paper>
         </Content>
       </Container>
-    </>
+    </FormProvider>
   );
 };
 

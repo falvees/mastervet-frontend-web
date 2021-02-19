@@ -3,7 +3,7 @@ import { Form } from '@unform/web';
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
 import Button from '../../../components/Button';
 import Input from '../../../components/InputLabelPure';
@@ -50,84 +50,86 @@ const FormAnimalType: React.FC = () => {
   ];
 
   return (
-    <Container container>
-      <MenuPrincipalLeft pages={['all']} />
+    <FormProvider {...methods}>
+      <Container container>
+        <MenuPrincipalLeft pages={['all']} />
 
-      <Content>
-        <GridHeaderSearch
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          <Link to="/">
-            <FiArrowLeft />
-            Voltar
-          </Link>
-
-          <Navbar
-            name={
-              id
-                ? 'Editar Modalidade de Atendimento'
-                : 'Criar Novo Modalidade de Atendimento'
-            }
-          />
-
-          <Grid
-            className="title-header"
+        <Content>
+          <GridHeaderSearch
             container
-            item
-            sm={12}
-            alignItems="center"
+            direction="row"
             justify="center"
-            direction="column"
+            alignItems="center"
           >
-            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              {id
-                ? 'Editar Modalidade de Atendimento'
-                : 'Criar Novo Modalidade de Atendimento'}
-            </p>
-            <hr
-              style={{
-                border: 0,
-                borderBottom: '2px solid #17a0ae',
-                width: 130,
-                marginTop: 5,
-              }}
+            <Link to="/">
+              <FiArrowLeft />
+              Voltar
+            </Link>
+
+            <Navbar
+              name={
+                id
+                  ? 'Editar Modalidade de Atendimento'
+                  : 'Criar Novo Modalidade de Atendimento'
+              }
             />
-          </Grid>
-        </GridHeaderSearch>
-        <Form
-          noValidate
-          autoComplete="off"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <Grid container>
-            <Grid item xs={12} sm={12} md={12}>
-              <Input
-                name="description"
-                placeholder="Descrição"
-                icon={AiOutlineUser}
+
+            <Grid
+              className="title-header"
+              container
+              item
+              sm={12}
+              alignItems="center"
+              justify="center"
+              direction="column"
+            >
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                {id
+                  ? 'Editar Modalidade de Atendimento'
+                  : 'Criar Novo Modalidade de Atendimento'}
+              </p>
+              <hr
+                style={{
+                  border: 0,
+                  borderBottom: '2px solid #17a0ae',
+                  width: 130,
+                  marginTop: 5,
+                }}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <Select
-                name="status"
-                placeholder="Ativo/Inativo"
-                options={Status}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            background="primary"
-            style={{ marginLeft: 5, marginTop: 15, width: '97.5%' }}
+          </GridHeaderSearch>
+          <Form
+            noValidate
+            autoComplete="off"
+            onSubmit={methods.handleSubmit(onSubmit)}
           >
-            {id ? 'Atualizar' : 'Cadastar'}
-          </Button>
-        </Form>
-      </Content>
-    </Container>
+            <Grid container>
+              <Grid item xs={12} sm={12} md={12}>
+                <Input
+                  name="description"
+                  placeholder="Descrição"
+                  icon={AiOutlineUser}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <Select
+                  name="status"
+                  placeholder="Ativo/Inativo"
+                  options={Status}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              background="primary"
+              style={{ marginLeft: 5, marginTop: 15, width: '97.5%' }}
+            >
+              {id ? 'Atualizar' : 'Cadastar'}
+            </Button>
+          </Form>
+        </Content>
+      </Container>
+    </FormProvider>
   );
 };
 

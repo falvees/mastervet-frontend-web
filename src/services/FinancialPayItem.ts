@@ -16,6 +16,9 @@ const put = data => {
 const get = id => {
   return http.get(`/financial-pay-item/${id}`);
 };
+const del = id => {
+  return http.delete(`/financial-pay-item/${id}`);
+};
 const getBetween = (dt_init, dt_end) => {
   console.log(`/financial-pay-item/${dt_init}/${dt_end}`);
   return http
@@ -23,6 +26,7 @@ const getBetween = (dt_init, dt_end) => {
     .then(response => response.data);
 };
 export default {
+  del,
   getAll,
   create,
   get,

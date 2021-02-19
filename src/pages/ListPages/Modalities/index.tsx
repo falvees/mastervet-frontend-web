@@ -13,7 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
@@ -58,7 +58,6 @@ const Modalities: React.FC = () => {
 
   const useStyles = makeStyles({
     table: {
-      minWidth: 700,
       height: '100%',
     },
     paper: {
@@ -87,88 +86,90 @@ const Modalities: React.FC = () => {
 
   const classes = useStyles();
   return (
-    <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
-      <MenuPrincipalLeft pages={['all']} />
-      <Navbar name="Listando Usuários" />
-      <Content>
-        <Hidden only={['xs', 'sm']}>
-          <Grid justify="center">
-            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              Listando Usuários
-            </p>
-          </Grid>
-        </Hidden>
-        <GridHeaderSearch container>
+    <FormProvider {...methods}>
+      <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
+        <MenuPrincipalLeft pages={['all']} />
+        <Navbar name="Listando Usuários" />
+        <Content>
           <Hidden only={['xs', 'sm']}>
-            <Link to="/">
-              <FiArrowLeft />
-              Voltar
-            </Link>
+            <Grid justify="center">
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                Listando Usuários
+              </p>
+            </Grid>
           </Hidden>
+          <GridHeaderSearch container>
+            <Hidden only={['xs', 'sm']}>
+              <Link to="/">
+                <FiArrowLeft />
+                Voltar
+              </Link>
+            </Hidden>
 
-          <Grid
-            item
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-            }}
+            <Grid
+              item
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                position: 'relative',
+              }}
+            >
+              <Input
+                style={{ flex: 1, color: '#fff' }}
+                name="search_user"
+                placeholder="Digite aqui..."
+                colorPlaceholder="#03818f"
+                backgroundColor="#17a0ae"
+              />
+              <IconButton className="button-search">
+                <FiSearch color="#17a0ae" />
+              </IconButton>
+            </Grid>
+            <Link to="/register_modalities" className="add-user">
+              <Button background="primary" style={{ width: 180 }}>
+                Adicionar Modalidades
+              </Button>
+            </Link>
+          </GridHeaderSearch>
+          <Paper
+            elevation={2}
+            style={{ width: '100%' }}
+            className={classes.paper}
           >
-            <Input
-              style={{ flex: 1, color: '#fff' }}
-              name="search_user"
-              placeholder="Digite aqui..."
-              colorPlaceholder="#03818f"
-              backgroundColor="#17a0ae"
-            />
-            <IconButton className="button-search">
-              <FiSearch color="#17a0ae" />
-            </IconButton>
-          </Grid>
-          <Link to="/register_modalities" className="add-user">
-            <Button background="primary" style={{ width: 180 }}>
-              Adicionar Modalidades
-            </Button>
-          </Link>
-        </GridHeaderSearch>
-        <Paper
-          elevation={2}
-          style={{ width: '100%' }}
-          className={classes.paper}
-        >
-          <TableContainer style={{ flex: 1 }}>
-            <Table className={classes.table} aria-label="customized table">
-              <TableHead>
-                <TableRow hover>
-                  <StyledTableCell width="10%">Id</StyledTableCell>
-                  <StyledTableCell width="50%">Descricao</StyledTableCell>
-                  <StyledTableCell align="center">Ações</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {isListModalities &&
-                  isListModalities.map(row => {
-                    // console.log(row.type_id);
-                    return (
-                      <StyledTableRow key={row.modality_id}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.modality_id}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.description}
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          ver, editar, apagar
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </Content>
-    </Container>
+            <TableContainer style={{ flex: 1 }}>
+              <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow hover>
+                    <StyledTableCell width="10%">Id</StyledTableCell>
+                    <StyledTableCell width="50%">Descricao</StyledTableCell>
+                    <StyledTableCell align="center">Ações</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {isListModalities &&
+                    isListModalities.map(row => {
+                      // console.log(row.type_id);
+                      return (
+                        <StyledTableRow key={row.modality_id}>
+                          <StyledTableCell component="th" scope="row">
+                            {row.modality_id}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {row.description}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            ver, editar, apagar
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Content>
+      </Container>
+    </FormProvider>
   );
 };
 

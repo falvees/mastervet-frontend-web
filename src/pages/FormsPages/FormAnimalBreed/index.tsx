@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link, useParams } from 'react-router-dom';
 import Button from '../../../components/Button';
@@ -77,95 +77,97 @@ const FormAnimalBreed: React.FC = () => {
   ];
 
   return (
-    <Container container>
-      <MenuPrincipalLeft pages={['all']} />
+    <FormProvider {...methods}>
+      <Container container>
+        <MenuPrincipalLeft pages={['all']} />
 
-      <Content>
-        <GridHeaderSearch
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          <Link to="/">
-            <FiArrowLeft />
-            Voltar
-          </Link>
-
-          <Navbar name={id ? 'Editar Raça' : 'Criar Nova Raça'} />
-
-          <Grid
-            className="title-header"
+        <Content>
+          <GridHeaderSearch
             container
-            item
-            sm={12}
-            alignItems="center"
+            direction="row"
             justify="center"
-            direction="column"
+            alignItems="center"
           >
-            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              {id ? 'Editar Raça' : 'Criar Nova Raça'}
-            </p>
-            <hr
-              style={{
-                border: 0,
-                borderBottom: '2px solid #17a0ae',
-                width: 130,
-                marginTop: 5,
-              }}
-            />
-          </Grid>
-        </GridHeaderSearch>
-        <Form
-          noValidate
-          autoComplete="off"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <Grid container>
-            <Grid item xs={12} sm={12} md={12}>
-              <Input
-                name="breed_name"
-                placeholder="Nome da Raça"
-                icon={AiOutlineUser}
+            <Link to="/">
+              <FiArrowLeft />
+              Voltar
+            </Link>
+
+            <Navbar name={id ? 'Editar Raça' : 'Criar Nova Raça'} />
+
+            <Grid
+              className="title-header"
+              container
+              item
+              sm={12}
+              alignItems="center"
+              justify="center"
+              direction="column"
+            >
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                {id ? 'Editar Raça' : 'Criar Nova Raça'}
+              </p>
+              <hr
+                style={{
+                  border: 0,
+                  borderBottom: '2px solid #17a0ae',
+                  width: 130,
+                  marginTop: 5,
+                }}
               />
             </Grid>
-            <Grid item xs={6} sm={6} md={6}>
-              <Select
-                name="type_id"
-                placeholder="Tipo de Animal"
-                options={isAnimalType}
-              />
-              {methods.errors.type_id && (
-                <p className="required-form">
-                  <span>* </span>
-                  Este campo é obrigatório.
-                </p>
-              )}
-            </Grid>
-            <Grid item xs={6} sm={6} md={6}>
-              <Select
-                name="animal_size"
-                placeholder="Porte do Animal"
-                options={sizes}
-              />
-              {methods.errors.animal_size && (
-                <p className="required-form">
-                  <span>* </span>
-                  Este campo é obrigatório.
-                </p>
-              )}
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            background="primary"
-            style={{ marginLeft: 5, marginTop: 15, width: '97.5%' }}
+          </GridHeaderSearch>
+          <Form
+            noValidate
+            autoComplete="off"
+            onSubmit={methods.handleSubmit(onSubmit)}
           >
-            Cadastrar
-          </Button>
-        </Form>
-      </Content>
-    </Container>
+            <Grid container>
+              <Grid item xs={12} sm={12} md={12}>
+                <Input
+                  name="breed_name"
+                  placeholder="Nome da Raça"
+                  icon={AiOutlineUser}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={6}>
+                <Select
+                  name="type_id"
+                  placeholder="Tipo de Animal"
+                  options={isAnimalType}
+                />
+                {methods.errors.type_id && (
+                  <p className="required-form">
+                    <span>* </span>
+                    Este campo é obrigatório.
+                  </p>
+                )}
+              </Grid>
+              <Grid item xs={6} sm={6} md={6}>
+                <Select
+                  name="animal_size"
+                  placeholder="Porte do Animal"
+                  options={sizes}
+                />
+                {methods.errors.animal_size && (
+                  <p className="required-form">
+                    <span>* </span>
+                    Este campo é obrigatório.
+                  </p>
+                )}
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              background="primary"
+              style={{ marginLeft: 5, marginTop: 15, width: '97.5%' }}
+            >
+              Cadastrar
+            </Button>
+          </Form>
+        </Content>
+      </Container>
+    </FormProvider>
   );
 };
 

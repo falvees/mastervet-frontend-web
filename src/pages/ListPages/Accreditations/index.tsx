@@ -13,7 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
@@ -33,7 +33,7 @@ interface arrayList {
 }
 
 const Acreditations: React.FC = () => {
-  const { register, watch } = useForm();
+  const methods = useForm();
   const [isListAccreditations, setListAccreditations] = useState<arrayList[]>(
     [],
   );
@@ -62,7 +62,6 @@ const Acreditations: React.FC = () => {
 
   const useStyles = makeStyles({
     table: {
-      minWidth: 700,
       height: '100%',
     },
     paper: {
@@ -91,33 +90,34 @@ const Acreditations: React.FC = () => {
 
   const classes = useStyles();
   return (
-    <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
-      <MenuPrincipalLeft pages={['all']} />
-      <Navbar name="Listando Contratos" />
-      <Content>
-        <Hidden only={['xs', 'sm']}>
-          <Grid justify="center">
-            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              Listando Contratos
-            </p>
-          </Grid>
-        </Hidden>
-        <GridHeaderSearch container>
+    <FormProvider {...methods}>
+      <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
+        <MenuPrincipalLeft pages={['all']} />
+        <Navbar name="Listando Contratos" />
+        <Content>
           <Hidden only={['xs', 'sm']}>
-            <Link to="/">
-              <FiArrowLeft />
-              Voltar
-            </Link>
+            <Grid justify="center">
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                Listando Contratos
+              </p>
+            </Grid>
           </Hidden>
+          <GridHeaderSearch container>
+            <Hidden only={['xs', 'sm']}>
+              <Link to="/">
+                <FiArrowLeft />
+                Voltar
+              </Link>
+            </Hidden>
 
-          {/* <Grid
+            {/* <Grid
             item
             style={{
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
             }}
-          
+
             <Input
               style={{ flex: 1, color: '#fff' }}
               name="search_user"
@@ -130,75 +130,76 @@ const Acreditations: React.FC = () => {
               <FiSearch color="#17a0ae" />
             </IconButton>
           </Grid> */}
-          <Link to="/register_accreditation" className="add-user">
-            <Button background="primary" style={{ width: 180 }}>
-              Adicionar Contrato
-            </Button>
-          </Link>
-        </GridHeaderSearch>
-        <Paper
-          elevation={2}
-          style={{ width: '100%' }}
-          className={classes.paper}
-        >
-          <TableContainer style={{ flex: 1 }}>
-            <Table className={classes.table} aria-label="customized table">
-              <TableHead>
-                <TableRow hover>
-                  <StyledTableCell width="10%">Id</StyledTableCell>
-                  <StyledTableCell width="30%">Cliente</StyledTableCell>
-                  <StyledTableCell width="10%">Plano</StyledTableCell>
-                  <StyledTableCell width="10%">Data Registro</StyledTableCell>
-                  <StyledTableCell width="10%">Situação</StyledTableCell>
-                  <StyledTableCell align="center">Ações</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {isListAccreditations &&
-                  isListAccreditations.map(row => {
-                    // console.log(row.type_id);
-                    return (
-                      <StyledTableRow key={row.accreditation_id}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.accreditation_id}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.people_id.name}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.plan_id.description}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.registration_date}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.status}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="center"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <ButtonUtil icon={FiSearch} background="primary" />
-                          <Link
-                            to={`/edit_accreditation/${row.accreditation_id}`}
+            <Link to="/register_accreditation" className="add-user">
+              <Button background="primary" style={{ width: 180 }}>
+                Adicionar Contrato
+              </Button>
+            </Link>
+          </GridHeaderSearch>
+          <Paper
+            elevation={2}
+            style={{ width: '100%' }}
+            className={classes.paper}
+          >
+            <TableContainer style={{ flex: 1 }}>
+              <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow hover>
+                    <StyledTableCell width="10%">Id</StyledTableCell>
+                    <StyledTableCell width="30%">Cliente</StyledTableCell>
+                    <StyledTableCell width="10%">Plano</StyledTableCell>
+                    <StyledTableCell width="10%">Data Registro</StyledTableCell>
+                    <StyledTableCell width="10%">Situação</StyledTableCell>
+                    <StyledTableCell align="center">Ações</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {isListAccreditations &&
+                    isListAccreditations.map(row => {
+                      // console.log(row.type_id);
+                      return (
+                        <StyledTableRow key={row.accreditation_id}>
+                          <StyledTableCell component="th" scope="row">
+                            {row.accreditation_id}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {row.people_id.name}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {row.plan_id.description}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {row.registration_date}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {row.status}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="center"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
                           >
-                            <ButtonUtil icon={FiEdit} background="primary" />
-                          </Link>
-                          <ButtonUtil icon={FiTrash2} background="primary" />
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </Content>
-    </Container>
+                            <ButtonUtil icon={FiSearch} background="primary" />
+                            <Link
+                              to={`/edit_accreditation/${row.accreditation_id}`}
+                            >
+                              <ButtonUtil icon={FiEdit} background="primary" />
+                            </Link>
+                            <ButtonUtil icon={FiTrash2} background="primary" />
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Content>
+      </Container>
+    </FormProvider>
   );
 };
 

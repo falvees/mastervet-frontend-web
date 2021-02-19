@@ -83,7 +83,6 @@ const InputDate: React.FC<SelectProps> = ({
     const mes = (date.getMonth() + 1).toString().padStart(2, '0');
     const ano = date.getFullYear();
     const finalDate = `${ano}-${mes}-${dia}`;
-    console.log(finalDate);
     setSelectedDate(new Date(`${ano}/${mes}/${dia} 00:00:00`)); // Vai para o DatePicker
     setValue(name, finalDate); // Vai para o Form
     HandleInputBlur();

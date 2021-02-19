@@ -92,7 +92,7 @@ const FormUsers: React.FC = () => {
   ];
 
   return (
-    <>
+    <FormProvider {...methods}>
       <Loading isLoading={isLoading} />
       <Container container>
         <MenuPrincipalLeft pages={['all']} />
@@ -133,115 +133,105 @@ const FormUsers: React.FC = () => {
               />
             </Grid>
           </GridHeaderSearch>
-          <FormProvider {...methods}>
-            <FormCustom noValidate onSubmit={methods.handleSubmit(onSubmit)}>
-              <Grid container>
-                <Grid item xs={12} sm={6} md={6}>
-                  <Input
-                    name="name"
-                    label="Nome Completo"
-                    icon={AiOutlineUser}
-                  />
-                </Grid>
-                <Grid item xs={4} sm={6} md={2}>
-                  <Select
-                    name="gender"
-                    placeholder="Sexo"
-                    options={genders}
-                    required={false}
-                  />
-                  {methods.errors.gender && (
-                    <p className="required-form">
-                      <span>* </span>
-                      Este campo é obrigatório.
-                    </p>
-                  )}
-                </Grid>
-                <Grid item xs={4} sm={6} md={2}>
-                  <Input
-                    mask="99/99/9999"
-                    name="date_birth"
-                    label="Nascimento"
-                  />
-                </Grid>
-                <Grid item xs={4} sm={6} md={2}>
-                  <Select
-                    name="kind_people"
-                    placeholder="Tipo Pessoa"
-                    options={kindPeople}
-                    required={false}
-                  />
-                  {methods.errors.kind_people && (
-                    <p className="required-form">
-                      <span>* </span>
-                      Este campo é obrigatório.
-                    </p>
-                  )}
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <Input name="cpf_cgc" label="CPF / CNPJ" />
-                </Grid>
-                <Grid item xs={6} sm={6} md={4}>
-                  <Input name="identity_document" label="RG" />
-                </Grid>
-                <Grid item xs={6} sm={6} md={2}>
-                  <Input name="issuing_entity" label="Orgão Emissor" />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <Input name="email" label="Email" />
-                </Grid>
-                <Grid item xs={12} sm={12} md={6}>
-                  <Input name="observations" label="Observações" />
-                </Grid>
-
-                <Grid item xs={4} sm={6} md={3}>
-                  <Input name="telephone01" label="Telefone" />
-                </Grid>
-                <Grid item xs={4} sm={6} md={3}>
-                  <Input name="telephone02" label="Celular" />
-                </Grid>
-                <Grid item xs={4} sm={6} md={3}>
-                  <Input name="telephone03" label="Celular" />
-                </Grid>
-
-                <Grid item xs={4} sm={4} md={3}>
-                  <Input name="cep" label="Cep" />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <Input name="address" label="Endereço" />
-                </Grid>
-                <Grid item xs={8} sm={8} md={4}>
-                  <Input name="neighborhood" label="Bairro" />
-                </Grid>
-                <Grid item xs={4} sm={4} md={2}>
-                  <Input name="number_address" label="Número" />
-                </Grid>
-
-                <Grid item xs={12} sm={8} md={6}>
-                  <Input name="city" label="Cidade" />
-                </Grid>
-                <Grid item xs={4} sm={4} md={2}>
-                  <Input name="state" label="UF" />
-                </Grid>
-                <Grid item xs={8} sm={12} md={4}>
-                  <Input name="address_complement" label="Complemento" />
-                </Grid>
+          <FormCustom noValidate onSubmit={methods.handleSubmit(onSubmit)}>
+            <Grid container>
+              <Grid item xs={12} sm={6} md={6}>
+                <Input name="name" label="Nome Completo" icon={AiOutlineUser} />
               </Grid>
-              <Button
-                type="submit"
-                background="primary"
-                style={{ marginTop: 15 }}
-              >
-                {id ? 'Atualizar' : 'Cadastar'}
-              </Button>
-            </FormCustom>
-          </FormProvider>
+              <Grid item xs={4} sm={6} md={2}>
+                <Select
+                  name="gender"
+                  placeholder="Sexo"
+                  options={genders}
+                  required={false}
+                />
+                {methods.errors.gender && (
+                  <p className="required-form">
+                    <span>* </span>
+                    Este campo é obrigatório.
+                  </p>
+                )}
+              </Grid>
+              <Grid item xs={4} sm={6} md={2}>
+                <Input mask="99/99/9999" name="date_birth" label="Nascimento" />
+              </Grid>
+              <Grid item xs={4} sm={6} md={2}>
+                <Select
+                  name="kind_people"
+                  placeholder="Tipo Pessoa"
+                  options={kindPeople}
+                  required={false}
+                />
+                {methods.errors.kind_people && (
+                  <p className="required-form">
+                    <span>* </span>
+                    Este campo é obrigatório.
+                  </p>
+                )}
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <Input name="cpf_cgc" label="CPF / CNPJ" />
+              </Grid>
+              <Grid item xs={6} sm={6} md={4}>
+                <Input name="identity_document" label="RG" />
+              </Grid>
+              <Grid item xs={6} sm={6} md={2}>
+                <Input name="issuing_entity" label="Orgão Emissor" />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <Input name="email" label="Email" />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <Input name="observations" label="Observações" />
+              </Grid>
+
+              <Grid item xs={4} sm={6} md={3}>
+                <Input name="telephone01" label="Telefone" />
+              </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input name="telephone02" label="Celular" />
+              </Grid>
+              <Grid item xs={4} sm={6} md={3}>
+                <Input name="telephone03" label="Celular" />
+              </Grid>
+
+              <Grid item xs={4} sm={4} md={3}>
+                <Input name="cep" label="Cep" />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <Input name="address" label="Endereço" />
+              </Grid>
+              <Grid item xs={8} sm={8} md={4}>
+                <Input name="neighborhood" label="Bairro" />
+              </Grid>
+              <Grid item xs={4} sm={4} md={2}>
+                <Input name="number_address" label="Número" />
+              </Grid>
+
+              <Grid item xs={12} sm={8} md={6}>
+                <Input name="city" label="Cidade" />
+              </Grid>
+              <Grid item xs={4} sm={4} md={2}>
+                <Input name="state" label="UF" />
+              </Grid>
+              <Grid item xs={8} sm={12} md={4}>
+                <Input name="address_complement" label="Complemento" />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              background="primary"
+              style={{ marginTop: 15 }}
+            >
+              {id ? 'Atualizar' : 'Cadastar'}
+            </Button>
+          </FormCustom>
         </Content>
       </Container>
-    </>
+    </FormProvider>
   );
 };
 

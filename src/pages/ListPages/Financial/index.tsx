@@ -18,7 +18,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
 
@@ -76,7 +76,6 @@ const StyledTableRow = withStyles((theme: import('@material-ui/core').Theme) =>
 
 const useStyles = makeStyles({
   table: {
-    minWidth: '100%',
     height: '100%',
   },
   paper: {
@@ -164,7 +163,7 @@ const FormUsers: React.FC = () => {
   ];
   const classes = useStyles();
   return (
-    <>
+    <FormProvider {...methods}>
       <Loading isLoading={isLoading} />
       <Container container>
         <MenuPrincipalLeft pages={['all']} />
@@ -312,7 +311,7 @@ const FormUsers: React.FC = () => {
           </Paper>
         </Content>
       </Container>
-    </>
+    </FormProvider>
   );
 };
 

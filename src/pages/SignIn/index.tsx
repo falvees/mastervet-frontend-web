@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import Input from '../../components/InputLabelPure';
 import Button from '../../components/Button';
 import { Background, Container, Content } from './styles';
@@ -20,7 +20,7 @@ const SignIn: React.FC = () => {
   const onSubmit = data => console.log(data);
 
   return (
-    <>
+    <FormProvider {...methods}>
       <Container xs={12}>
         <Background className="background-sign-in" />
         <Content className="form-sign-in">
@@ -45,7 +45,7 @@ const SignIn: React.FC = () => {
           </Form>
         </Content>
       </Container>
-    </>
+    </FormProvider>
   );
 };
 

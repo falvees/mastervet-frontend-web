@@ -13,6 +13,7 @@ const put = data => {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
+
 const getBetween = (dt_init, dt_end) => {
   console.log(`/bills-pay/${dt_init}/${dt_end}`);
   return http

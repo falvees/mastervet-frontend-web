@@ -72,7 +72,6 @@ const FormAnimalBreed: React.FC = () => {
 
   const useStyles = makeStyles({
     table: {
-      minWidth: 700,
       height: '100%',
     },
     paper: {

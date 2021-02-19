@@ -8,7 +8,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { IconBaseProps } from 'react-icons';
 import InputMask from 'react-input-mask';
 import { ButtonIcon, Container } from './styles';
@@ -38,14 +38,15 @@ const Input: React.FC<InputProps> = ({
   label,
   ...rest
 }) => {
-  const { setValue, getValues, register, control } = useFormContext();
+  const { getValues, register, watch, control } = useFormContext();
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-
+  // const isFilled = getValues(name) !== '';
   const HandleInputFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
+
   const HandleInputBlur = useCallback(() => {
     setIsFocused(false);
     setIsFilled(!!getValues(name));
@@ -53,42 +54,47 @@ const Input: React.FC<InputProps> = ({
 
   useEffect(() => {
     setIsFilled(!!getValues(name));
+    // watch(name, setIsFilled(!!getValues(name)));
   }, []);
+  console.log('input', getValues(name));
 
   return (
-    <Container
-      className="input-root"
-      colorPlaceholder={colorPlaceholder}
-      backgroundColor={backgroundColor}
-      isIcon={!!Icon}
-      isFilled={isFilled}
-      isFocused={isFocused}
-      onFocus={HandleInputFocus}
-      onBlur={HandleInputBlur}
-      label={!!label}
-    >
-      <fieldset>
-        <legend>
-          <span>{label}</span>
-        </legend>
-        {Icon && (
-          <ButtonIcon tabIndex="-1">
-            <Icon color={iconColor || '#bfbfbf'} />
-          </ButtonIcon>
-        )}
+    <Controller
+      control={control}
+      name={name}
+      render={props => (
+        <Container
+          className="input-root"
+          colorPlaceholder={colorPlaceholder}
+          backgroundColor={backgroundColor}
+          isIcon={!!Icon}
+          isFilled={!!props.value}
+          isFocused={isFocused}
+          onFocus={HandleInputFocus}
+          onBlur={HandleInputBlur}
+          label={!!label}
+        >
+          <fieldset>
+            <legend>
+              <span>{label}</span>
+            </legend>
+            {Icon && (
+              <ButtonIcon tabIndex="-1">
+                <Icon color={iconColor || '#bfbfbf'} />
+              </ButtonIcon>
+            )}
+            <InputMask
+              mask={mask}
+              {...rest}
+              placeholder={placeholder}
+              {...props}
+            />
 
-        <InputMask
-          mask={mask}
-          ref={register}
-          {...rest}
-          id={name}
-          name={name}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-        />
-        <label>{label}</label>
-      </fieldset>
-    </Container>
+            <label>{label}</label>
+          </fieldset>
+        </Container>
+      )}
+    />
   );
 };
 export default Input;

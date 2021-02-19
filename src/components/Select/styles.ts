@@ -16,7 +16,7 @@ export const Container = styled(Autocomplete)<SelectProps>`
     font: 400 16px Ubuntu, sans-serif;
   }
   & fieldset {
-    font-size: 20px !important;
+    font-size: 18px !important;
     border-radius: 10px;
     border-width: 2px;
     border-color: #bfbfbf !important;
@@ -26,7 +26,7 @@ export const Container = styled(Autocomplete)<SelectProps>`
     color: #bfbfbf;
   }
   & fieldset .PrivateNotchedOutline-legendLabelled-9 {
-    font-size: 12.5px !important;
+    font-size: 13px !important;
   }
   & input {
     font-size: 16px !important;

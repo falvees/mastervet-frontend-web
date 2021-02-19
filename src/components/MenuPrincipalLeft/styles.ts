@@ -12,6 +12,7 @@ export interface OptionMenuProps {
 }
 
 export const Container = styled(Grid)`
+  z-index: 2;
   display: flex;
   align-items: center;
   width: 150px;
@@ -93,7 +94,7 @@ export const OptionMenu = styled.nav<OptionMenuProps>`
     top: -15px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    width: 180px;
+    width: 220px;
     background-color: #fff;
     z-index: 10;
     -webkit-box-shadow: 8px 0px 8px 0px rgb(50 50 50 / 25%);
@@ -111,6 +112,7 @@ export const OptionMenu = styled.nav<OptionMenuProps>`
   }
   .submenu li {
     transition: padding-left 0.4s;
+    margin: 10px;
   }
   /* .submenu li:hover svg {
     color: #17a0ae;
@@ -121,7 +123,7 @@ export const OptionMenu = styled.nav<OptionMenuProps>`
   }
   .submenu li:hover svg,
   .submenu li:hover a {
-    font-weight: 500;
+    /* font-weight: 500; */
     color: #17a0ae;
   }
 
@@ -160,7 +162,7 @@ export const OptionMenu = styled.nav<OptionMenuProps>`
     /* border: 1px #38afda solid; */
     display: block;
     text-decoration: none;
-    font-size: 10pt;
+    font-size: 11pt;
     /* padding: 10px 5px; */
   }
   .title-menu:hover::before,

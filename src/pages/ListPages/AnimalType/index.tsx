@@ -13,7 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiSearch, FiEdit, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -60,7 +60,6 @@ const AnimalType: React.FC = () => {
 
   const useStyles = makeStyles({
     table: {
-      minWidth: 700,
       height: '100%',
     },
     paper: {
@@ -89,133 +88,135 @@ const AnimalType: React.FC = () => {
 
   const classes = useStyles();
   return (
-    <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
-      <MenuPrincipalLeft pages={['all']} />
-      <Navbar name="Listando Usuários" />
-      <Content>
-        <Hidden only={['xs', 'sm']}>
-          <Grid justify="center">
-            <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-              Listando Usuários
-            </p>
-          </Grid>
-        </Hidden>
-        <GridHeaderSearch container>
+    <FormProvider {...methods}>
+      <Container item sm={12} style={{ width: '100%', display: 'flex' }}>
+        <MenuPrincipalLeft pages={['all']} />
+        <Navbar name="Listando Usuários" />
+        <Content>
           <Hidden only={['xs', 'sm']}>
-            <Link to="/">
-              <FiArrowLeft />
-              Voltar
-            </Link>
+            <Grid justify="center">
+              <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
+                Listando Usuários
+              </p>
+            </Grid>
           </Hidden>
+          <GridHeaderSearch container>
+            <Hidden only={['xs', 'sm']}>
+              <Link to="/">
+                <FiArrowLeft />
+                Voltar
+              </Link>
+            </Hidden>
 
-          <Grid
-            item
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-            }}
+            <Grid
+              item
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                position: 'relative',
+              }}
+            >
+              <Input
+                style={{ flex: 1, color: '#fff' }}
+                name="search_user"
+                placeholder="Digite aqui..."
+                colorPlaceholder="#03818f"
+                backgroundColor="#17a0ae"
+              />
+              <IconButton className="button-search">
+                <FiSearch color="#17a0ae" />
+              </IconButton>
+            </Grid>
+            <Link to="/register_animal_type" className="add-user">
+              <Button background="primary" style={{ width: 180 }}>
+                Adicionar Tipo
+              </Button>
+            </Link>
+          </GridHeaderSearch>
+          <Paper
+            elevation={2}
+            style={{ width: '100%' }}
+            className={classes.paper}
           >
-            <Input
-              style={{ flex: 1, color: '#fff' }}
-              name="search_user"
-              placeholder="Digite aqui..."
-              colorPlaceholder="#03818f"
-              backgroundColor="#17a0ae"
-            />
-            <IconButton className="button-search">
-              <FiSearch color="#17a0ae" />
-            </IconButton>
-          </Grid>
-          <Link to="/register_animal_type" className="add-user">
-            <Button background="primary" style={{ width: 180 }}>
-              Adicionar Tipo
-            </Button>
-          </Link>
-        </GridHeaderSearch>
-        <Paper
-          elevation={2}
-          style={{ width: '100%' }}
-          className={classes.paper}
-        >
-          <TableContainer style={{ flex: 1 }}>
-            <Table className={classes.table} aria-label="customized table">
-              <TableHead>
-                <TableRow hover>
-                  <StyledTableCell width="10%">Id</StyledTableCell>
-                  <StyledTableCell width="50%">Descricao</StyledTableCell>
-                  <StyledTableCell align="center" width="40%">
-                    Ações
-                  </StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {isListAnimaType &&
-                  isListAnimaType.map(row => {
-                    // console.log(row.type_id);
-                    return (
-                      <StyledTableRow key={row.type_id}>
-                        <StyledTableCell component="th" scope="row">
-                          {row.type_id}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row.description}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          align="center"
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <ButtonUtil icon={FiSearch} background="primary" />
-                          <Link to="/users/1">
-                            <ButtonUtil icon={FiEdit} background="primary" />
-                          </Link>
-                          <ButtonUtil
-                            icon={FiTrash2}
-                            background="primary"
-                            onClick={() => {
-                              Swal.fire({
-                                title: 'Are you sure?',
-                                text:
-                                  'You will not be able to recover this imaginary file!',
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonText: 'Yes, delete it!',
-                                cancelButtonText: 'No, keep it',
-                              }).then(result => {
-                                if (result.value) {
-                                  Swal.fire(
-                                    'Deleted!',
-                                    'Your imaginary file has been deleted.',
-                                    'success',
-                                  );
-                                  // For more information about handling dismissals please visit
-                                  // https://sweetalert2.github.io/#handling-dismissals
-                                } else if (
-                                  result.dismiss === Swal.DismissReason.cancel
-                                ) {
-                                  Swal.fire(
-                                    'Cancelled',
-                                    'Your imaginary file is safe :)',
-                                    'error',
-                                  );
-                                }
-                              });
+            <TableContainer style={{ flex: 1 }}>
+              <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow hover>
+                    <StyledTableCell width="10%">Id</StyledTableCell>
+                    <StyledTableCell width="50%">Descricao</StyledTableCell>
+                    <StyledTableCell align="center" width="40%">
+                      Ações
+                    </StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {isListAnimaType &&
+                    isListAnimaType.map(row => {
+                      // console.log(row.type_id);
+                      return (
+                        <StyledTableRow key={row.type_id}>
+                          <StyledTableCell component="th" scope="row">
+                            {row.type_id}
+                          </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">
+                            {row.description}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="center"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
                             }}
-                          />
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
-      </Content>
-    </Container>
+                          >
+                            <ButtonUtil icon={FiSearch} background="primary" />
+                            <Link to="/users/1">
+                              <ButtonUtil icon={FiEdit} background="primary" />
+                            </Link>
+                            <ButtonUtil
+                              icon={FiTrash2}
+                              background="primary"
+                              onClick={() => {
+                                Swal.fire({
+                                  title: 'Are you sure?',
+                                  text:
+                                    'You will not be able to recover this imaginary file!',
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonText: 'Yes, delete it!',
+                                  cancelButtonText: 'No, keep it',
+                                }).then(result => {
+                                  if (result.value) {
+                                    Swal.fire(
+                                      'Deleted!',
+                                      'Your imaginary file has been deleted.',
+                                      'success',
+                                    );
+                                    // For more information about handling dismissals please visit
+                                    // https://sweetalert2.github.io/#handling-dismissals
+                                  } else if (
+                                    result.dismiss === Swal.DismissReason.cancel
+                                  ) {
+                                    Swal.fire(
+                                      'Cancelled',
+                                      'Your imaginary file is safe :)',
+                                      'error',
+                                    );
+                                  }
+                                });
+                              }}
+                            />
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Content>
+      </Container>
+    </FormProvider>
   );
 };
 
