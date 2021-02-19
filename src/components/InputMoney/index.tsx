@@ -95,7 +95,7 @@ const InputMoney: React.FC<InputProps> = ({
               format={currencyFormatter}
               thousandSeparator="."
               onValueChange={({ value }) => {
-                onChange((Number(value) / 100).toString());
+                onChange((Number(value) / 100).toFixed(2));
               }}
               {...props}
               defaultValue={defaultValue}
