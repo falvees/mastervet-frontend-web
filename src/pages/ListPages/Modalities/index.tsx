@@ -72,8 +72,8 @@ const Modalities: React.FC = () => {
   const listAnimalBreed = () => {
     ModalitiesApi.getAll()
       .then(result => {
-        setListModalities(result.response);
-        console.log(result.response);
+        setListModalities(result.data.response);
+        console.log(result);
       })
       .catch(e => {
         console.log(e);

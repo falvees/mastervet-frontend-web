@@ -16,41 +16,28 @@ import {
 } from '@material-ui/core/styles';
 import { Link, useParams } from 'react-router-dom';
 
-import React, { useEffect, useState } from 'react';
-import { AiOutlineUser } from 'react-icons/ai';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
 
 import Button from '../../../components/Button';
-import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 
-import Select from '../../../components/Select';
 import { Container, Content, GridHeaderSearch, Form } from './styles';
-import FinancialPay from '../../../services/FinancialPayItem';
+import FinancialPay, {
+  PropsFinancialPayItem,
+} from '../../../services/FinancialPayItem';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import Loading from '../../../components/Loading';
 import InputDate from '../../../components/InputDate';
 import ButtonUtil from '../../../components/ButtonUtil';
+import PeopleApi from '../../../services/PeopleApi';
 
 interface RouteParams {
   id: string;
 }
-interface arrayList {
-  pay_id: string;
-  description: string;
-  date_init: string;
-  amount: string;
-}
-interface financialList {
-  pay_item_id: string;
-  pay_id: { description: string; pay_id: string };
-  description: string;
-  expected_date: string;
-  expected_amount: string;
-  status: string;
-}
+
 const StyledTableCell = withStyles(() =>
   createStyles({
     head: {
@@ -87,8 +74,9 @@ const useStyles = makeStyles({
   },
 });
 const FormUsers: React.FC = () => {
-  const [isListAnimalBreed, setListAnimalBreed] = useState<arrayList[]>([]);
-  const [isListFinancial, setIsListFinancial] = useState<financialList[]>([]);
+  const [isListFinancial, setIsListFinancial] = useState<
+    PropsFinancialPayItem[]
+  >([]);
   const { id } = useParams<RouteParams>();
 
   const methods = useForm({
@@ -107,60 +95,51 @@ const FormUsers: React.FC = () => {
       }
     });
 
-    // if (!id) {
-    //   PeopleApi.create(data)
-    //     .then(response => {
-    //       console.log(response);
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // } else {
-    //   PeopleApi.put(data)
-    //     .then(response => {
-    //       console.log(response);
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // }
-  };
-
-  const listAnimalBreed = () => {
-    const array: financialList[] = [];
-    FinancialPay.getBetween(
-      methods.getValues('dt_inicio'),
-      methods.getValues('dt_end'),
-    )
-      .then(result => {
-        console.log(result.response);
-        result.response.forEach(item => {
-          array.push(item);
+    if (!id) {
+      PeopleApi.create(data)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
         });
+    } else {
+      PeopleApi.put(data)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+  const { getValues } = methods;
+  const listAnimalBreed = useCallback(() => {
+    const array: PropsFinancialPayItem[] = [];
+    setIsLoading(true);
+    let current = true;
+    FinancialPay.getBetween(getValues('dt_inicio'), getValues('dt_end'))
+      .then(result => {
+        if (current)
+          result.data.response.forEach(item => {
+            array.push(item);
+          });
         setIsListFinancial(array);
+        setIsLoading(false);
       })
       .catch(e => {
         console.log(e);
       });
-  };
+    return () => {
+      current = false;
+    };
+  }, [getValues]);
 
   useEffect(() => {
+    if (!id) return;
     listAnimalBreed();
-  }, []);
+  }, [id, listAnimalBreed, methods]);
 
-  const kindPeople = [
-    { value: '1', label: 'Física' },
-    { value: '2', label: 'Jurídica' },
-  ];
-  const genders = [
-    { value: 'M', label: 'Masculino' },
-    { value: 'F', label: 'Feminino' },
-  ];
-  const plans = [
-    { value: '1', label: 'Master Light' },
-    { value: '2', label: 'Master Gold' },
-    { value: '3', label: 'Master Premium ' },
-  ];
   const classes = useStyles();
   return (
     <FormProvider {...methods}>

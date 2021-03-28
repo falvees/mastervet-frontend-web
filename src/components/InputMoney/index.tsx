@@ -1,12 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import React, {
-  InputHTMLAttributes,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { InputHTMLAttributes, useCallback, useState } from 'react';
 import { IconBaseProps } from 'react-icons';
 import NumberFormat from 'react-number-format';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -31,28 +26,12 @@ const InputMoney: React.FC<InputProps> = ({
   name,
   icon: Icon,
   iconColor,
-  placeholder,
   colorPlaceholder,
   backgroundColor,
   label,
-  ...rest
 }) => {
-  const { setValue, getValues, register, control } = useFormContext();
+  const { control } = useFormContext();
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
-
-  const HandleInputFocus = useCallback(() => {
-    setIsFocused(true);
-  }, []);
-
-  const HandleInputBlur = useCallback(() => {
-    setIsFocused(false);
-    setIsFilled(!!getValues(name));
-  }, []);
-
-  // useEffect(() => {
-  //   setIsFilled(!!getValues(name));
-  // }, [getValues(name)]);
 
   const currencyFormatter = useCallback(value => {
     if (!Number(value)) return '';
@@ -75,8 +54,8 @@ const InputMoney: React.FC<InputProps> = ({
           isIcon={!!Icon}
           isFilled={!!props.value}
           isFocused={isFocused}
-          onFocus={HandleInputFocus}
-          onBlur={HandleInputBlur}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           label={!!label}
         >
           <fieldset>
@@ -95,7 +74,7 @@ const InputMoney: React.FC<InputProps> = ({
               format={currencyFormatter}
               thousandSeparator="."
               onValueChange={({ value }) => {
-                onChange((Number(value) / 100).toFixed(2));
+                onChange(value ? (Number(value) / 100).toFixed(2) : '');
               }}
               {...props}
               defaultValue={defaultValue}

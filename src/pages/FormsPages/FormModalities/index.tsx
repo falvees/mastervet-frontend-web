@@ -35,7 +35,6 @@ const FormAnimalType: React.FC = () => {
       .then(response => {
         console.log(response);
         if (response.status === 201) {
-          alert('Registro Gravado');
           window.location.href = '/modalidades';
         }
       })

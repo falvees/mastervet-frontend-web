@@ -1,9 +1,9 @@
 import { Grid } from '@material-ui/core';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -13,35 +13,32 @@ import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 
 import Select from '../../../components/Select';
 import { Container, Content, GridHeaderSearch, FormCustom } from './styles';
-import PeopleApi from '../../../services/PeopleApi';
+import PeopleApi, { PropsPeople } from '../../../services/PeopleApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import Loading from '../../../components/Loading';
 
-interface RouteParams {
-  id: string;
+interface PropsUser {
+  user: PropsPeople;
 }
 
 const FormUsers: React.FC = () => {
-  const { id } = useParams<RouteParams>();
+  // const { id } = useParams<RouteParams>();
+  const history = useHistory();
+  const [data, setData] = useState<PropsPeople[]>([]);
+  const [id, setId] = useState<number | null>(null);
 
   const methods = useForm({
-    shouldUnregister: false,
-    defaultValues: { gender: '', kind_people: '' },
+    defaultValues: data[0],
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const onSubmit = data => {
-    console.log(data);
+  const { reset, setValue } = methods;
 
-    Object.keys(data).forEach(key => {
-      if (typeof data[key] === 'object' && data[key] !== null) {
-        // eslint-disable-next-line no-param-reassign
-        data[key] = data[key].value;
-      }
-    });
+  const [isLoading, setIsLoading] = useState(false);
+  const onSubmit = async dataForm => {
+    console.log(dataForm);
 
     if (!id) {
-      PeopleApi.create(data)
+      await PeopleApi.create(data)
         .then(response => {
           console.log(response);
         })
@@ -49,7 +46,7 @@ const FormUsers: React.FC = () => {
           console.log(error);
         });
     } else {
-      PeopleApi.put(data)
+      await PeopleApi.put(data)
         .then(response => {
           console.log(response);
         })
@@ -58,23 +55,29 @@ const FormUsers: React.FC = () => {
         });
     }
   };
+
+  // useEffect(() => {
+  //   const dataHistory = (history?.location?.state as PropsUser)?.user;
+  //   // console.log(history);
+  //   if (dataHistory !== null) {
+  //     setId(dataHistory.people_id);
+  //   }
+
+  //   async function fetchUser(idUseer) {
+  //     setIsLoading(true);
+  //     const result = await PeopleApi.get(idUseer);
+  //     console.log(result.data.response[0]);
+  //     setData(result.data.response);
+
+  //     setIsLoading(false);
+  //   }
+  //   if (!id) return;
+  //   fetchUser(id);
+  // }, [history, history?.location?.state, id, reset]);
+
   useEffect(() => {
-    const listPeoples = () => {
-      setIsLoading(true);
-      PeopleApi.get(id)
-        .then(result => {
-          methods.reset(result.data.response[0]);
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 1000);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    };
-    if (id) {
-      listPeoples();
-    }
+    reset({ gender: 'M' });
+    // setValue('gender', 'M');
   }, []);
 
   const kindPeople = [
@@ -84,11 +87,6 @@ const FormUsers: React.FC = () => {
   const genders = [
     { value: 'M', label: 'Masculino' },
     { value: 'F', label: 'Feminino' },
-  ];
-  const plans = [
-    { value: '1', label: 'Master Light' },
-    { value: '2', label: 'Master Gold' },
-    { value: '3', label: 'Master Premium ' },
   ];
 
   return (
@@ -145,29 +143,17 @@ const FormUsers: React.FC = () => {
                   options={genders}
                   required={false}
                 />
-                {methods.errors.gender && (
-                  <p className="required-form">
-                    <span>* </span>
-                    Este campo é obrigatório.
-                  </p>
-                )}
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
                 <Input mask="99/99/9999" name="date_birth" label="Nascimento" />
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
-                <Select
+                {/* <Select
                   name="kind_people"
                   placeholder="Tipo Pessoa"
                   options={kindPeople}
                   required={false}
-                />
-                {methods.errors.kind_people && (
-                  <p className="required-form">
-                    <span>* </span>
-                    Este campo é obrigatório.
-                  </p>
-                )}
+                /> */}
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>

@@ -74,8 +74,7 @@ const AnimalType: React.FC = () => {
   const listAnimalType = () => {
     AnimalTypeApi.getAll()
       .then(result => {
-        setListAnimalType(result.response);
-        console.log(result.response);
+        setListAnimalType(result.data.response);
       })
       .catch(e => {
         console.log(e);

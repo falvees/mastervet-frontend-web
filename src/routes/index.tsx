@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, match } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import SingIn from '../pages/SignIn';
 import FormUsers from '../pages/FormsPages/FormUsers';
@@ -24,6 +24,8 @@ import FormFinancial from '../pages/ListPages/Financial';
 import FormBill from '../pages/FormsPages/FormBill';
 import Accreditations from '../pages/ListPages/Accreditations';
 import FormAccreditations from '../pages/FormsPages/FormAccreditations';
+import ProfilePet from '../pages/site/perfil';
+import profileCustomer from '../pages/site/perfilCustomer';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -31,13 +33,11 @@ const Routes: React.FC = () => (
     <Route path="/register_user" component={FormUsers} />
     <Route path="/register_financial" component={FormFinancial} />
     <Route path="/register_bill" component={FormBill} />
-    <Route path="/edit_user/:id" component={FormUsers} />
+    <Route path="/edit_user/" component={FormUsers} />
     <Route path="/register_animal_type" component={FormAnimalType} />
     <Route path="/register_animal_breed" component={FormAnimalBreed} />
     <Route path="/register_modalities" component={FormModalities} />
     <Route path="/register_accounts_category" component={FormBillsCategory} />
-    {/* <Route path="/padrao_add" component={PadraoAdd} />
-    <Route path="/padrao_list" component={PadraoList} /> */}
     <Route path="/users" component={People} />
     <Route path="/animaltype" component={AnimalType} />
     <Route path="/animalbreed" component={AnimalBreed} />
@@ -51,6 +51,8 @@ const Routes: React.FC = () => (
     <Route path="/procedures" component={PetProcedures} />
     <Route path="/accreditations" component={Accreditations} />
     <Route path="/edit_accreditation/:id" component={FormAccreditations} />
+    <Route path="/profilePet" component={ProfilePet} />
+    <Route path="/customer/:id" component={profileCustomer} />
   </Switch>
 );
 export default Routes;

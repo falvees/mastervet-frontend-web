@@ -72,8 +72,7 @@ const AnimalBreed: React.FC = () => {
   const listAnimalBreed = () => {
     AnimalBreedApi.getAll()
       .then(result => {
-        setListAnimalBreed(result.response);
-        console.log(result.response);
+        setListAnimalBreed(result.data.response);
       })
       .catch(e => {
         console.log(e);

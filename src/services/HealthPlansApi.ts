@@ -1,10 +1,18 @@
 import http from '../http-common';
+import { PropsApi } from './response';
 
-const getAll = () => {
-  return http.get('/health_plans').then(response => response.data);
+type PropsHealthPlans = {
+  plan_id: string;
+  description: string;
+  status: string;
 };
-const create = data => {
-  return http.post('/health_plans', data, {
+const getAll = (): Promise<PropsApi<PropsHealthPlans[]>> => {
+  return http.get('/health-plans').then(response => response);
+};
+const create = (
+  data: PropsHealthPlans[],
+): Promise<PropsApi<PropsHealthPlans[]>> => {
+  return http.post('/health-plans', data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };

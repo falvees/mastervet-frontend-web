@@ -84,7 +84,7 @@ export const Container = styled(TextField)<inputProps>`
   }
 
   ${props =>
-    (props.isFocused || props.isFilled) &&
+    props.isFilled &&
     css`
       & label,
       .MuiFormLabel-root {

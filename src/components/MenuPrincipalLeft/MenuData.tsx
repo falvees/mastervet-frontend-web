@@ -1,7 +1,5 @@
 import React from 'react';
 import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
 import { IconBaseProps } from 'react-icons/lib';
@@ -9,13 +7,13 @@ import client from '../../assets/profiles.png';
 import report from '../../assets/report.png';
 import risk from '../../assets/risk.png';
 
-interface SubNavProps {
+export interface SubNavProps {
   title: string;
-  path?: string;
+  path: string;
   icon?: React.ComponentType<IconBaseProps> | any;
   cName?: string;
 }
-interface SidebarProps {
+export interface SidebarProps {
   title: string;
   path: string;
   icon: string | any;

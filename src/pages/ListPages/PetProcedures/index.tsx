@@ -73,8 +73,8 @@ const PetProcedures: React.FC = () => {
   const listPetProcedures = () => {
     PetProceduresApi.getAll()
       .then(result => {
-        setListPetProcedures(result.response);
-        console.log(result.response);
+        setListPetProcedures(result.data.response);
+        console.log(result);
       })
       .catch(e => {
         console.log(e);

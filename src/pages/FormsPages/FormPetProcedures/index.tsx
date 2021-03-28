@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
 
 import { Form } from '@unform/web';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
@@ -45,7 +45,6 @@ const FormPetProcedure: React.FC = () => {
       .then(response => {
         console.log(response);
         if (response.status === 201) {
-          alert('Registro Gravado');
           window.location.href = '/procedures';
         }
       })
@@ -53,19 +52,39 @@ const FormPetProcedure: React.FC = () => {
         console.log(error);
       });
   };
+  const { reset } = methods;
 
-  const listModalities = () => {
+  // const listModalities = useCallback(() => {
+  //   const array: arrayList[] = [];
+  //   ModalitiesApi.getAll()
+  //     .then(result => {
+  //       console.log(result.data.response);
+  //       console.log(result);
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  //   setListModalities(array);
+  // }, []);
+
+  useEffect(() => {
     const array: arrayList[] = [];
+    if (!id) return undefined;
+    // setIsLoading(true);
+    let current = true;
     ModalitiesApi.getAll()
       .then(result => {
-        console.log(result.response);
+        console.log(result.data.response);
         console.log(result);
       })
       .catch(e => {
         console.log(e);
       });
-    setListModalities(array);
-  };
+    if (current) setListModalities(array);
+    return () => {
+      current = false;
+    };
+  }, [id, reset]);
 
   return (
     <FormProvider {...methods}>

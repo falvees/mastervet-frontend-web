@@ -1,7 +1,8 @@
+/* eslint-disable import/no-duplicates */
 import { Grid } from '@material-ui/core';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -10,7 +11,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 import Button from '../../../components/Button';
 import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
-import teste from '../../../assets/petPictures/perfildog.jpg';
+
 import Select from '../../../components/Select';
 import {
   Container,
@@ -21,7 +22,10 @@ import {
 } from './styles';
 import HealthPlansApi from '../../../services/HealthPlansApi';
 import SellerApi from '../../../services/SellerApi';
-import AccreditationsApi from '../../../services/AccreditattionsApi';
+import AccreditationsApi, {
+  PropsAccreditations,
+} from '../../../services/AccreditationsApi';
+// import { PropsAccreditations } from '../../../services/AccreditationsApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import Loading from '../../../components/Loading';
 import InputText from '../../../components/InputText';
@@ -37,50 +41,50 @@ interface arrayList {
 
 const FormAccreditations: React.FC = () => {
   const { id } = useParams<RouteParams>();
-
+  const history = useHistory();
+  const [data, setData] = useState<PropsAccreditations[]>([]);
   const methods = useForm({
-    shouldUnregister: false,
-    defaultValues: { gender: '', kind_people: '' },
+    // defaultValues: PropsAccreditations,
   });
-
-  const [isImgBanco, setIsImgBanco] = useState(false);
+  const { reset } = methods;
   const [isLoading, setIsLoading] = useState(false);
   const [isHealthPlans, setIsHealthPlans] = useState<arrayList[]>([]);
   const [isSeller, setIsSeller] = useState<arrayList[]>([]);
-  const onSubmit = data => {
-    console.log(data);
 
-    Object.keys(data).forEach(key => {
-      if (typeof data[key] === 'object' && data[key] !== null) {
-        // eslint-disable-next-line no-param-reassign
-        data[key] = data[key].value;
-      }
-    });
-    if (!id) {
-      AccreditationsApi.create(data)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+  const onSubmit = useCallback(async () => {
+    await AccreditationsApi.create(data);
+    history.push('/');
+    if (id) {
+      // UPDATE
     } else {
-      AccreditationsApi.put(data)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      // CREATE
     }
-  };
+
+    // if (!id) {
+
+    //     .then(response => {
+    //       console.log(response);
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // } else {
+    //   AccreditationsApi.put(data)
+    //     .then(response => {
+    //       console.log(response);
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    // }
+  }, []);
   const listHealthPlans = () => {
     const array: arrayList[] = [];
     HealthPlansApi.getAll()
       .then(result => {
-        result.response.forEach(item => {
+        result.data.response.forEach(item => {
           array.push({ value: item.plan_id, label: item.description });
-          console.log(item);
+          // console.log(item);
         });
         setIsHealthPlans(array);
       })
@@ -90,11 +94,11 @@ const FormAccreditations: React.FC = () => {
   };
   const listSeller = () => {
     const array: arrayList[] = [];
+
     SellerApi.getAll()
       .then(result => {
-        result.response.forEach(item => {
+        result.data.response.forEach(item => {
           array.push({ value: item.people_id, label: item.name });
-          console.log(item);
         });
         setIsSeller(array);
       })
@@ -102,24 +106,48 @@ const FormAccreditations: React.FC = () => {
         console.log(e);
       });
   };
+  const listAccreditations = useCallback(() => {
+    setIsLoading(true);
+    AccreditationsApi.get(id)
+      .then(result => {
+        console.log(result.data.response[0]);
+        reset(result.data.response[0]);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, [id, reset]);
+
   useEffect(() => {
-    const listAccreditations = () => {
-      setIsLoading(true);
-      AccreditationsApi.get(id)
-        .then(result => {
-          methods.reset(result.data.response[0]);
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 1000);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    };
-    listAccreditations();
-    listHealthPlans();
-    listSeller();
-  }, []);
+    // const dataHistory = (history?.location?.state as PropsAccreditations)?.book;
+    // if (![null, undefined].includes(book)) {
+    //   setData(dataHistory);
+    // }
+    async function fetchData() {
+      const result = await AccreditationsApi.get(id);
+      reset(result.data.response[0]);
+      console.log(result.data.response[0]);
+      // setData(result.data.response[0]);
+
+      // setIsLoading(false);
+    }
+    fetchData();
+    // listAccreditations();
+    // listHealthPlans();
+    // listSeller();
+  }, [id, listAccreditations, reset]);
+
+  // const deleteB = useCallback(
+  //   async (idDel: number) => {
+  //     await api.delete(`/books/${idDel}`);
+  //     const newData = data?.filter(book => book.id !== idDel);
+  //     setData(newData);
+  //   },
+  //   [data],
+  // );
 
   const durations = [
     { value: '6', label: '06 Mes' },
@@ -138,11 +166,7 @@ const FormAccreditations: React.FC = () => {
     { value: '2', label: '02' },
     { value: '3', label: '03' },
   ];
-
-  const images = [
-    { animal1: '../../../assets/petPictures/perfildog.jpg' },
-    { animal2: '../../../assets/petPictures/perfildog2.jpg' },
-  ];
+  console.log('test');
   return (
     <FormProvider {...methods}>
       <Loading isLoading={isLoading} full />
@@ -162,7 +186,6 @@ const FormAccreditations: React.FC = () => {
             </Link>
 
             <Navbar name={id ? 'Editar Cliente' : 'Criar Novo Cliente'} />
-
             <Grid
               className="title-header"
               container
@@ -212,7 +235,7 @@ const FormAccreditations: React.FC = () => {
               </Grid>
               <Grid item xs={4} sm={6} md={4}>
                 <Select
-                  name="plans"
+                  name="plan_id"
                   placeholder="Plano"
                   options={isHealthPlans}
                 />
@@ -240,7 +263,7 @@ const FormAccreditations: React.FC = () => {
               </Grid>
               <Grid item xs={4} sm={6} md={4}>
                 <Select
-                  name="pets_number"
+                  name="pets_numbers"
                   placeholder="Qtde de Animais"
                   options={petsnumber}
                 />
@@ -266,7 +289,7 @@ const FormAccreditations: React.FC = () => {
                   <Input name="breed" label="Raça" />
                   <Input name="weigth" label="Peso" />
                   <Input name="age" label="Idade" />
-                  <InputText name="caracter" label="Características" />
+                  <InputText name="pets[0].caracter" label="Características" />
                 </ContainerDog>
               </Grid>
               <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
@@ -282,7 +305,7 @@ const FormAccreditations: React.FC = () => {
                   <Input name="breed" label="Raça" />
                   <Input name="weigth" label="Peso" />
                   <Input name="age" label="Idade" />
-                  <InputText name="caracter" label="Características" />
+                  <InputText name="pets[1].caracter" label="Características" />
                 </ContainerDog>
               </Grid>
               <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
@@ -298,7 +321,7 @@ const FormAccreditations: React.FC = () => {
                   <Input name="breed" label="Raça" />
                   <Input name="weigth" label="Peso" />
                   <Input name="age" label="Idade" />
-                  <InputText name="caracter" label="Características" />
+                  <InputText name="a" label="Características" />
                 </ContainerDog>
               </Grid>
             </Grid>

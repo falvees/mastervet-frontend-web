@@ -1,7 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 
-import { Height } from '@material-ui/icons';
 import { Container, LoadingProps, Content } from './styles';
 import gifLoading from '../../assets/dog.gif';
 

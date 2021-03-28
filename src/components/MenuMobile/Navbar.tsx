@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { FaIcons } from 'react-icons/fa';
 import {
   Container,
   LogoNav,
@@ -13,7 +12,11 @@ import {
 import { MenuData } from '../MenuPrincipalLeft/MenuData';
 import SubMenu from './SubMenu';
 
-const Navbar = ({ name }) => {
+type PropsNavbar = {
+  name: string;
+};
+
+const Navbar: React.FC<PropsNavbar> = ({ name }) => {
   const [open, setOpen] = useState(false);
   return (
     <Container>
@@ -26,7 +29,7 @@ const Navbar = ({ name }) => {
 
         <SidebarNav open={open}>
           <SidebarWrap>
-            {MenuData.map((item, index) => {
+            {MenuData.map(item => {
               return <SubMenu item={item} key={item.title} />;
             })}
           </SidebarWrap>

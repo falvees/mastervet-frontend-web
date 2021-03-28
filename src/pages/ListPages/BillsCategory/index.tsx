@@ -73,8 +73,7 @@ const BillsCategory: React.FC = () => {
   const listBillsCategory = () => {
     BillsCategoryApi.getAll()
       .then(result => {
-        setListBillsCategory(result.response);
-        console.log(result.response);
+        setListBillsCategory(result.data.response);
       })
       .catch(e => {
         console.log(e);

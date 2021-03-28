@@ -112,12 +112,10 @@ const FormAnimalBreed: React.FC = () => {
         console.log(error);
       });
   };
-
   const listAnimalBreed = () => {
     AnimalBreedApi.getAll()
       .then(result => {
-        setListAnimalBreed(result.response);
-        console.log(result.response);
+        setListAnimalBreed(result.data.response);
       })
       .catch(e => {
         console.log(e);

@@ -1,13 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { TextField } from '@material-ui/core';
-import React, {
-  InputHTMLAttributes,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { InputHTMLAttributes, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { IconBaseProps } from 'react-icons';
 import InputMask from 'react-input-mask';
@@ -27,7 +21,6 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const Input: React.FC<InputProps> = ({
-  defaultValue,
   name,
   mask,
   icon: Icon,
@@ -38,26 +31,8 @@ const Input: React.FC<InputProps> = ({
   label,
   ...rest
 }) => {
-  const { getValues, register, watch, control } = useFormContext();
-
+  const { control } = useFormContext();
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
-  // const isFilled = getValues(name) !== '';
-  const HandleInputFocus = useCallback(() => {
-    setIsFocused(true);
-  }, []);
-
-  const HandleInputBlur = useCallback(() => {
-    setIsFocused(false);
-    setIsFilled(!!getValues(name));
-  }, []);
-
-  useEffect(() => {
-    setIsFilled(!!getValues(name));
-    // watch(name, setIsFilled(!!getValues(name)));
-  }, []);
-  console.log('input', getValues(name));
-
   return (
     <Controller
       control={control}
@@ -70,8 +45,8 @@ const Input: React.FC<InputProps> = ({
           isIcon={!!Icon}
           isFilled={!!props.value}
           isFocused={isFocused}
-          onFocus={HandleInputFocus}
-          onBlur={HandleInputBlur}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           label={!!label}
         >
           <fieldset>

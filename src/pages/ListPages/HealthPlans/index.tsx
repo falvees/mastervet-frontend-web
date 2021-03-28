@@ -73,8 +73,8 @@ const HealthPlans: React.FC = () => {
   const listHealthPlans = () => {
     HealthPlansApi.getAll()
       .then(result => {
-        setListHealthPlans(result.response);
-        console.log(result.response);
+        setListHealthPlans(result.data.response);
+        console.log(result);
       })
       .catch(e => {
         console.log(e);

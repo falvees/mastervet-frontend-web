@@ -19,7 +19,6 @@ import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
-import api from '../../../http-common';
 import Input from '../../../components/InputLabelPure';
 import BenefitsApi from '../../../services/BenefitsApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
@@ -73,8 +72,7 @@ const Benefits: React.FC = () => {
   const listBenefits = () => {
     BenefitsApi.getAll()
       .then(result => {
-        setListBenefits(result.response);
-        console.log(result.response);
+        setListBenefits(result.data.response);
       })
       .catch(e => {
         console.log(e);

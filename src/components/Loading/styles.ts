@@ -7,7 +7,8 @@ export interface LoadingProps {
   height?: string;
   full?: boolean;
 }
-export function createCSS() {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const createCSS = () => {
   let styles = '';
 
   for (let i = 1; i < 30; i += 1) {
@@ -20,7 +21,7 @@ export function createCSS() {
   return css`
     ${styles}
   `;
-}
+};
 export const Content = styled.div<LoadingProps>`
   display: flex;
   flex-direction: column;

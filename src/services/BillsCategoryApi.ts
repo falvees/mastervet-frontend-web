@@ -1,9 +1,17 @@
 import http from '../http-common';
+import { PropsApi } from './response';
 
-const getAll = () => {
-  return http.get('/bills-category').then(response => response.data);
+export type PropsBillsCategory = {
+  category_id: string;
+  kind: string;
+  description: string;
 };
-const create = data => {
+const getAll = (): Promise<PropsApi<PropsBillsCategory[]>> => {
+  return http.get('/bills-category').then(response => response);
+};
+const create = (
+  data: PropsBillsCategory[],
+): Promise<PropsApi<PropsBillsCategory[]>> => {
   return http.post('/bills-category', data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });

@@ -5,7 +5,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import Button from '../../../components/Button';
 import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
@@ -25,7 +25,7 @@ interface arrayList {
 }
 const FormAnimalBreed: React.FC = () => {
   const { id } = useParams<RouteParams>();
-
+  const navigation = useHistory();
   const methods = useForm({
     shouldUnregister: false,
   });
@@ -43,8 +43,7 @@ const FormAnimalBreed: React.FC = () => {
       .then(response => {
         console.log(response);
         if (response.status === 201) {
-          alert('Registro Gravado');
-          window.location.href = '/animalbreed';
+          navigation.push('/animalbreed');
         }
       })
       .catch(error => {
@@ -56,8 +55,8 @@ const FormAnimalBreed: React.FC = () => {
     const array: arrayList[] = [];
     AnimalTypeApi.getAll()
       .then(result => {
-        result.response.forEach(item => {
-          array.push({ value: item.breed_id, label: item.description });
+        result.data.response.forEach(item => {
+          array.push({ value: item.type_id, label: item.description });
         });
         setIsAnimalType(array);
       })

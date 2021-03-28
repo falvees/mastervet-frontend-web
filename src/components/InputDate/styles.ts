@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 
 interface SelectProps {
   isfilled?: boolean | string;
+  isFocused?: boolean;
+  isError?: boolean;
 }
 export const Container = styled(KeyboardDatePicker)<SelectProps>`
   & .MuiButtonBase-root {
@@ -45,7 +47,7 @@ export const Container = styled(KeyboardDatePicker)<SelectProps>`
     }
   }
   ${props =>
-    props.isfilled === 'true' &&
+    (props.isfilled === 'true' || props.isFocused === true) &&
     css`
       & fieldset {
         border-color: #17a0ae !important;
@@ -55,6 +57,18 @@ export const Container = styled(KeyboardDatePicker)<SelectProps>`
         color: #9d9d9c;
       }
     `}
+
+  ${props =>
+    props.isError === true &&
+    css`
+      & .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+        border-color: red !important;
+      }
+      & label {
+        color: red !important;
+      }
+    `}
+
 
   .MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'] {
     padding: 7px !important;

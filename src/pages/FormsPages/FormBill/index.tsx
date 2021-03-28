@@ -14,36 +14,19 @@ import {
   Theme,
   createStyles,
   makeStyles,
-  WithStyles,
 } from '@material-ui/core/styles';
-import InputMask from 'react-input-mask';
 
-import React, { useEffect, useState } from 'react';
-import { AiOutlineUser } from 'react-icons/ai';
+import React from 'react';
 
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link, useParams } from 'react-router-dom';
-
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import { Description } from '@material-ui/icons';
 import Button from '../../../components/Button';
 import Input from '../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 
 import Select from '../../../components/Select';
 import { Container, Content, GridHeaderSearch, Form } from './styles';
-import AnimalTypeApi from '../../../services/AnimalTypeApi';
-import AnimalBreedApi from '../../../services/AnimalBreedApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
 import InputDate from '../../../components/InputDate';
 import BillsPay from '../../../services/BillsPay';
@@ -53,20 +36,7 @@ import FinancialPayItem from '../../../services/FinancialPayItem';
 interface RouteParams {
   id: string;
 }
-interface arrayList {
-  breed_id: string;
-  breed_name: string;
-}
-interface financialList {
-  id: string;
-  conta: string;
-}
-interface billProps {
-  pay_id: string;
-  pay_item_id: string;
-  expected_amount: string;
-  expected_date: string;
-}
+
 const FormAnimalBreed: React.FC = () => {
   const StyledTableCell = withStyles(() =>
     createStyles({
@@ -121,18 +91,13 @@ const FormAnimalBreed: React.FC = () => {
     shouldUnregister: false,
   });
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control: methods.control,
-      name: 'status',
-    },
-  );
-
-  const [isListAnimalBreed, setListAnimalBreed] = useState<arrayList[]>([]);
-  const [isListFinancial, setIsListFinancial] = useState<financialList[]>([]);
-  const [isBill, setIsBill] = useState<billProps[]>([]);
+  const { fields } = useFieldArray({
+    control: methods.control,
+    name: 'status',
+  });
 
   const onSubmit = data => {
+    console.log(id);
     if (data.status.length !== 0) {
       console.log(data);
       FinancialPayItem.put(data.status)
@@ -152,7 +117,9 @@ const FormAnimalBreed: React.FC = () => {
       console.log(data);
       BillsPay.create(data)
         .then(response => {
+          console.log(response);
           if (response.status === 201) {
+            console.log(response.data.response[0]);
             methods.setValue(
               'status',
               response.data.response[0].financial_pay_itens,
@@ -165,24 +132,24 @@ const FormAnimalBreed: React.FC = () => {
     }
   };
 
-  const listAnimalBreed = () => {
-    // methods.setValue({ amount: 'asasas' });
-    // methods.setValue();
-    setTimeout(() => {
-      methods.reset({ amount: '100.15', description: 'aa' });
-    }, 2000);
-    // BillsPay.getAll()
-    //   .then(result => {
-    //     setValue('status', result.response[40].financial_pay_itens);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-  };
+  // const listAnimalBreed = useCallback(() => {
+  // methods.setValue({ amount: 'asasas' });
+  // methods.setValue();
+  // setTimeout(() => {
+  //   methods.reset({ amount: '100.15', description: 'aaaa' });
+  // }, 2000);
+  // BillsPay.getAll()
+  //   .then(result => {
+  //     setValue('status', result.response[40].financial_pay_itens);
+  //   })
+  //   .catch(e => {
+  //     console.log(e);
+  //   });
+  // }, [methods]);
 
-  useEffect(() => {
-    listAnimalBreed();
-  }, []);
+  // useEffect(() => {
+  //   listAnimalBreed();
+  // }, []);
 
   const repetitionType = [
     { value: '15', label: '15 Dias' },
@@ -244,7 +211,11 @@ const FormAnimalBreed: React.FC = () => {
                 <Input name="description" label="Descrição" />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
-                <InputDate name="date_init" label="Data da Compra" />
+                <InputDate
+                  name="date_init"
+                  label="Data da Compra"
+                  dateInitial="2021-08-29"
+                />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
                 <InputMoney

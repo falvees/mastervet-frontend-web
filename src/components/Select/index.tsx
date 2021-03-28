@@ -81,8 +81,9 @@ const Select: React.FC<SelectProps> = ({
   }, []);
 
   useEffect(() => {
-    Pos(getValues(name));
-  });
+    // Pos(getValues(name));
+    console.log(getValues(name));
+  }, []);
 
   return (
     <>

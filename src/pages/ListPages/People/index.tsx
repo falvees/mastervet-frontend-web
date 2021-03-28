@@ -16,11 +16,11 @@ import Paper from '@material-ui/core/Paper';
 import { Grid, Hidden, IconButton } from '@material-ui/core';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
-import peopleApi from '../../../services/PeopleApi';
+import peopleApi, { PropsPeople } from '../../../services/PeopleApi';
 
 import Input from '../../../components/InputLabelPure';
 import Navbar from '../../../components/MenuMobile/Navbar';
@@ -36,9 +36,10 @@ const People: React.FC = () => {
   const methods = useForm({
     shouldUnregister: false,
   });
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [isListUsers, setListUsers] = useState<arrayList[]>([]);
+  const [isListUsers, setListUsers] = useState<PropsPeople[]>([]);
   const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
@@ -80,7 +81,8 @@ const People: React.FC = () => {
     peopleApi
       .getAll()
       .then(result => {
-        setListUsers(result.response);
+        console.log(result);
+        setListUsers(result.data.response);
         setTimeout(() => {
           setIsLoading(false);
         }, 100);
@@ -94,8 +96,18 @@ const People: React.FC = () => {
   };
 
   useEffect(() => {
-    // listPeoples();
+    listPeoples();
   }, []);
+
+  const handleRedirectFormEdit = (user: PropsPeople) => {
+    console.log(user);
+    return history.push({
+      pathname: `edit_user`,
+      state: {
+        user,
+      },
+    });
+  };
 
   const classes = useStyles();
   return (
@@ -165,7 +177,6 @@ const People: React.FC = () => {
                 <TableBody>
                   {isListUsers &&
                     isListUsers.map(row => {
-                      console.log(row.people_id);
                       return (
                         <StyledTableRow key={row.people_id}>
                           <StyledTableCell component="th" scope="row">
@@ -192,9 +203,20 @@ const People: React.FC = () => {
                             }}
                           >
                             <ButtonUtil icon={FiSearch} background="primary" />
-                            <Link to={`/edit_user/${row.people_id}`}>
-                              <ButtonUtil icon={FiEdit} background="primary" />
-                            </Link>
+                            {/* <Link
+                              to={`/edit_user/${row.people_id}`}
+                              onClick={() => {
+                                handleRedirectFormEdit(isListUsers);
+                              }}
+                            > */}
+                            <ButtonUtil
+                              icon={FiEdit}
+                              background="primary"
+                              onClick={() => {
+                                handleRedirectFormEdit(row);
+                              }}
+                            />
+                            {/* </Link> */}
                             <ButtonUtil icon={FiTrash2} background="primary" />
                           </StyledTableCell>
                         </StyledTableRow>

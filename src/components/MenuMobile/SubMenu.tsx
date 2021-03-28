@@ -4,6 +4,7 @@ import { shade } from 'polished';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { SidebarProps } from '../MenuPrincipalLeft/MenuData';
 
 const SidebarLink = styled(Link)`
   &:first-child {
@@ -63,12 +64,14 @@ const DropdownLink = styled(Link)`
     cursor: pointer;
   }
 `;
+export interface PropsSubMenu<T> {
+  item: T;
+}
 
-const SubMenu = ({ item: data }) => {
+const SubMenu: React.FC<PropsSubMenu<SidebarProps>> = ({ item: data }) => {
   const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);
-
   return (
     <>
       <SidebarLink
@@ -88,7 +91,7 @@ const SubMenu = ({ item: data }) => {
         </div>
       </SidebarLink>
       {subnav &&
-        data.subNav.map((item, index) => {
+        data.subNav?.map(item => {
           return (
             <DropdownLink to={item.path}>
               {item.icon}

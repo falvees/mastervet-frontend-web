@@ -12,31 +12,24 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Grid, Hidden, IconButton } from '@material-ui/core';
+import { Grid, Hidden } from '@material-ui/core';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
-import Input from '../../../components/InputLabelPure';
 import ButtonUtil from '../../../components/ButtonUtil';
-import AccreditationsApi from '../../../services/AccreditattionsApi';
+import AccreditationsApi, {
+  PropsAccreditations,
+} from '../../../services/AccreditationsApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
-
-interface arrayList {
-  accreditation_id: string;
-  people_id: { people_id: string; name: string };
-  registration_date: string;
-  plan_id: { plan_id: string; description: string };
-  status: string;
-}
 
 const Acreditations: React.FC = () => {
   const methods = useForm();
-  const [isListAccreditations, setListAccreditations] = useState<arrayList[]>(
-    [],
-  );
+  const [isListAccreditations, setListAccreditations] = useState<
+    PropsAccreditations[]
+  >([]);
   const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
@@ -76,8 +69,8 @@ const Acreditations: React.FC = () => {
   const listAccreditations = () => {
     AccreditationsApi.getAll()
       .then(result => {
-        setListAccreditations(result.response);
-        console.log(result.response);
+        console.log(result);
+        setListAccreditations(result.data.response);
       })
       .catch(e => {
         console.log(e);
@@ -163,10 +156,10 @@ const Acreditations: React.FC = () => {
                             {row.accreditation_id}
                           </StyledTableCell>
                           <StyledTableCell component="th" scope="row">
-                            {row.people_id.name}
+                            {row.name}
                           </StyledTableCell>
                           <StyledTableCell component="th" scope="row">
-                            {row.plan_id.description}
+                            {row.plan_id}
                           </StyledTableCell>
                           <StyledTableCell component="th" scope="row">
                             {row.registration_date}
