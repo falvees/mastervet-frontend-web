@@ -15,7 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import { Grid, Hidden } from '@material-ui/core';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiEdit, FiSearch, FiTrash2 } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
@@ -26,6 +26,7 @@ import AccreditationsApi, {
 import Navbar from '../../../components/MenuMobile/Navbar';
 
 const Acreditations: React.FC = () => {
+  const history = useHistory();
   const methods = useForm();
   const [isListAccreditations, setListAccreditations] = useState<
     PropsAccreditations[]
@@ -81,6 +82,14 @@ const Acreditations: React.FC = () => {
     listAccreditations();
   }, []);
 
+  const handleRedirectFormEdit = (accre: PropsAccreditations) => {
+    return history.push({
+      pathname: `edit_accreditation`,
+      state: {
+        accre,
+      },
+    });
+  };
   const classes = useStyles();
   return (
     <FormProvider {...methods}>
@@ -176,11 +185,15 @@ const Acreditations: React.FC = () => {
                             }}
                           >
                             <ButtonUtil icon={FiSearch} background="primary" />
-                            <Link
-                              to={`/edit_accreditation/${row.accreditation_id}`}
-                            >
-                              <ButtonUtil icon={FiEdit} background="primary" />
-                            </Link>
+
+                            <ButtonUtil
+                              icon={FiEdit}
+                              background="primary"
+                              onClick={() => {
+                                handleRedirectFormEdit(row);
+                              }}
+                            />
+
                             <ButtonUtil icon={FiTrash2} background="primary" />
                           </StyledTableCell>
                         </StyledTableRow>

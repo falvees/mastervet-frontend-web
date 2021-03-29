@@ -2,28 +2,28 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import SingIn from '../pages/SignIn';
-import FormUsers from '../pages/FormsPages/FormUsers';
+import FormUsers from '../pages/ListPages/People/FormUsers';
 import People from '../pages/ListPages/People';
 // import PadraoAdd from '../pages/PadraoAdd';
 // import PadraoList from '../pages/PadraoList';
 import AnimalType from '../pages/ListPages/AnimalType';
-import FormAnimalType from '../pages/FormsPages/FormAnimalType';
-import FormAnimalBreed from '../pages/FormsPages/FormAnimalBreed';
-import FormModalities from '../pages/FormsPages/FormModalities';
+import FormAnimalType from '../pages/ListPages/AnimalType/FormAnimalType';
+import FormAnimalBreed from '../pages/ListPages/AnimalBreed/FormAnimalBreed';
+import FormModalities from '../pages/ListPages/Modalities/FormModalities';
 import AnimalBreed from '../pages/ListPages/AnimalBreed';
 import Modalities from '../pages/ListPages/Modalities';
 import BillsCategory from '../pages/ListPages/BillsCategory';
-import FormBillsCategory from '../pages/FormsPages/FormBillsCategory';
-import FormBenefits from '../pages/FormsPages/FormBenefits';
+import FormBillsCategory from '../pages/ListPages/BillsCategory/FormBillsCategory';
+import FormBenefits from '../pages/ListPages/Benefits/FormBenefits';
 import Benefits from '../pages/ListPages/Benefits';
-import FormPetProcedure from '../pages/FormsPages/FormPetProcedures';
+import FormPetProcedure from '../pages/ListPages/PetProcedures/FormPetProcedures';
 import HealthPlans from '../pages/ListPages/HealthPlans';
-import FormHealthPlans from '../pages/FormsPages/FormHealthPlans';
+import FormHealthPlans from '../pages/ListPages/HealthPlans/FormHealthPlans';
 import PetProcedures from '../pages/ListPages/PetProcedures';
 import FormFinancial from '../pages/ListPages/Financial';
 import FormBill from '../pages/FormsPages/FormBill';
 import Accreditations from '../pages/ListPages/Accreditations';
-import FormAccreditations from '../pages/FormsPages/FormAccreditations';
+import FormAccreditations from '../pages/ListPages/Accreditations/FormAccreditations';
 import ProfilePet from '../pages/site/perfil';
 import profileCustomer from '../pages/site/perfilCustomer';
 
@@ -50,7 +50,7 @@ const Routes: React.FC = () => (
     <Route path="/register_plans" component={FormHealthPlans} />
     <Route path="/procedures" component={PetProcedures} />
     <Route path="/accreditations" component={Accreditations} />
-    <Route path="/edit_accreditation/:id" component={FormAccreditations} />
+    <Route path="/edit_accreditation/" component={FormAccreditations} />
     <Route path="/profilePet" component={ProfilePet} />
     <Route path="/customer/:id" component={profileCustomer} />
   </Switch>

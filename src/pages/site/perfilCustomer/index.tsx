@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { FiChevronRight, FiCamera } from 'react-icons/fi';
 import {
   Container,
@@ -23,9 +22,6 @@ interface PreviewImage {
   file: File | null;
   imageUrl: string;
   image: string;
-}
-interface RouteParams {
-  id: number;
 }
 
 interface arrayPeoples {
@@ -53,7 +49,7 @@ interface arrayPets {
 }
 
 const ProfileCustomer: React.FC = () => {
-  const id = 6;
+  // const id = 6;
   const [isCustomer, setIsCustomers] = useState<arrayPeoples[]>([]);
   const [isBenefits, setIsBenefits] = useState<arrayBenefits[]>([]);
   const [isPets, setIsPets] = useState<arrayPets[]>([]);
@@ -85,17 +81,17 @@ const ProfileCustomer: React.FC = () => {
       .catch(e => {
         console.log(e);
       });
-  }, [id]);
+  }, []);
 
   const listPets = useCallback(() => {
-    // OwnerPetsApi.get(6)
-    //   .then(result => {
-    //     setIsPets(result.data.response);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-  }, [id]);
+    OwnerPetsApi.get('6')
+      .then(result => {
+        setIsPets(result.data.response);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
   const listPlansBenefits = useCallback(() => {
     PlansBenfitsApi.get(2)
       .then(result => {

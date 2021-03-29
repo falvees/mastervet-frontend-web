@@ -138,7 +138,7 @@ const FormUsers: React.FC = () => {
   useEffect(() => {
     if (!id) return;
     listAnimalBreed();
-  }, [id, listAnimalBreed, methods]);
+  }, [id, listAnimalBreed]);
 
   const classes = useStyles();
   return (

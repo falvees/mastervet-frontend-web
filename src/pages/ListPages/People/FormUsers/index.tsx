@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -7,35 +7,31 @@ import { useForm, FormProvider } from 'react-hook-form';
 
 import { FiArrowLeft } from 'react-icons/fi';
 
-import Button from '../../../components/Button';
-import Input from '../../../components/InputLabelPure';
-import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
+import Button from '../../../../components/Button';
+import Input from '../../../../components/InputLabelPure';
+import MenuPrincipalLeft from '../../../../components/MenuPrincipalLeft';
 
-import Select from '../../../components/Select';
+import Select from '../../../../components/Select';
 import { Container, Content, GridHeaderSearch, FormCustom } from './styles';
-import PeopleApi, { PropsPeople } from '../../../services/PeopleApi';
-import Navbar from '../../../components/MenuMobile/Navbar';
-import Loading from '../../../components/Loading';
+import PeopleApi, { PropsPeople } from '../../../../services/PeopleApi';
+import Navbar from '../../../../components/MenuMobile/Navbar';
+import Loading from '../../../../components/Loading';
 
-interface PropsUser {
+// Tipagem para o History
+interface PropsHistoryUser {
   user: PropsPeople;
 }
 
 const FormUsers: React.FC = () => {
-  // const { id } = useParams<RouteParams>();
-  const history = useHistory();
-  const [data, setData] = useState<PropsPeople[]>([]);
-  const [id, setId] = useState<number | null>(null);
+  const history = useHistory(); // Inicializa o History do react-router-dom
+  const [id, setId] = useState<number | null>(null); // Variavel de estado para armazenar o id caso seja Form de Editar
+  const methods = useForm(); // Inicializa o hook form e todas propriedades ficam dentro de methods
+  const { reset } = methods; // Desestruturaçao do reset de dentro do methods para nao ficar em loop
+  const [isLoading, setIsLoading] = useState(false); // Variavel de estado para o Loading da pagina
 
-  const methods = useForm({
-    defaultValues: data[0],
-  });
-
-  const { reset, setValue } = methods;
-
-  const [isLoading, setIsLoading] = useState(false);
-  const onSubmit = async dataForm => {
-    console.log(dataForm);
+  // Funçao do submit que envia os dados para api, diferenciando se é put ou post pelo id
+  const onSubmit = async data => {
+    console.log(data);
 
     if (!id) {
       await PeopleApi.create(data)
@@ -56,34 +52,32 @@ const FormUsers: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const dataHistory = (history?.location?.state as PropsUser)?.user;
-  //   // console.log(history);
-  //   if (dataHistory !== null) {
-  //     setId(dataHistory.people_id);
-  //   }
-
-  //   async function fetchUser(idUseer) {
-  //     setIsLoading(true);
-  //     const result = await PeopleApi.get(idUseer);
-  //     console.log(result.data.response[0]);
-  //     setData(result.data.response);
-
-  //     setIsLoading(false);
-  //   }
-  //   if (!id) return;
-  //   fetchUser(id);
-  // }, [history, history?.location?.state, id, reset]);
-
+  // Executa após a pagina ser carregada
   useEffect(() => {
-    reset({ gender: 'M' });
-    // setValue('gender', 'M');
-  }, []);
+    const dataHistory = (history?.location?.state as PropsHistoryUser)?.user; // Pega os valores do History enviado de outra pagina
+    console.log(dataHistory);
+
+    if (dataHistory !== null || dataHistory !== undefined) {
+      setId(dataHistory?.people_id); // Seta o ID
+    }
+
+    // Funçao assincrona esperando ser chamada caso aja id
+    async function fetchUser(idUser) {
+      setIsLoading(true); // Ativa o Loading
+      const result = await PeopleApi.get(idUser); // Chama api
+      reset(result.data.response[0]); // Adiciona os valores nos input trago pela api
+      setIsLoading(false); // Desativa o Loading
+    }
+
+    if (!id) return;
+    fetchUser(id);
+  }, [history, history?.location?.state, id, reset]);
 
   const kindPeople = [
     { value: '1', label: 'Física' },
     { value: '2', label: 'Jurídica' },
   ];
+
   const genders = [
     { value: 'M', label: 'Masculino' },
     { value: 'F', label: 'Feminino' },
@@ -148,12 +142,12 @@ const FormUsers: React.FC = () => {
                 <Input mask="99/99/9999" name="date_birth" label="Nascimento" />
               </Grid>
               <Grid item xs={4} sm={6} md={2}>
-                {/* <Select
+                <Select
                   name="kind_people"
                   placeholder="Tipo Pessoa"
                   options={kindPeople}
                   required={false}
-                /> */}
+                />
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>

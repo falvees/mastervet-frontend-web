@@ -1,23 +1,25 @@
 import { Grid } from '@material-ui/core';
 
+import { Form } from '@unform/web';
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 
 import { Link, useParams } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
-import Button from '../../../components/Button';
-import Input from '../../../components/InputLabelPure';
-import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
-import Select from '../../../components/Select';
-import { Container, Content, GridHeaderSearch, Form } from './styles';
-import BenefitsApi from '../../../services/BenefitsApi';
-import Navbar from '../../../components/MenuMobile/Navbar';
+import Button from '../../../../components/Button';
+import Input from '../../../../components/InputLabelPure';
+import MenuPrincipalLeft from '../../../../components/MenuPrincipalLeft';
+import Select from '../../../../components/Select';
+import { Container, Content, GridHeaderSearch } from './styles';
+import BillsCategoryApi from '../../../../services/BillsCategoryApi';
+import Navbar from '../../../../components/MenuMobile/Navbar';
 
 interface RouteParams {
   id: string;
 }
-const FormBenefits: React.FC = () => {
+
+const FormBillsCategory: React.FC = () => {
   const { id } = useParams<RouteParams>();
   const methods = useForm({
     shouldUnregister: false,
@@ -31,11 +33,11 @@ const FormBenefits: React.FC = () => {
       }
     });
     console.log(data);
-    BenefitsApi.create(data)
+    BillsCategoryApi.create(data)
       .then(response => {
         console.log(response);
         if (response.status === 201) {
-          window.location.href = '/benefits';
+          window.location.href = '/contas_categorias';
         }
       })
       .catch(error => {
@@ -44,8 +46,8 @@ const FormBenefits: React.FC = () => {
   };
 
   const Status = [
-    { value: '0', label: 'Ativo' },
-    { value: '1', label: 'Inativo' },
+    { value: 'P', label: 'Pagar' },
+    { value: 'R', label: 'Receber' },
   ];
 
   return (
@@ -65,7 +67,7 @@ const FormBenefits: React.FC = () => {
               Voltar
             </Link>
 
-            <Navbar name={id ? 'Editar Benefício' : 'Criar Novo Benefício'} />
+            <Navbar name={id ? 'Editar Cliente' : 'Criar Novo Cliente'} />
 
             <Grid
               className="title-header"
@@ -77,7 +79,7 @@ const FormBenefits: React.FC = () => {
               direction="column"
             >
               <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-                {id ? 'Editar Benefício' : 'Criar Novo Benefício'}
+                {id ? 'Editar Cliente' : 'Criar Novo Cliente'}
               </p>
               <hr
                 style={{
@@ -104,8 +106,8 @@ const FormBenefits: React.FC = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
                 <Select
-                  name="status"
-                  placeholder="Ativo/Inativo"
+                  name="kind"
+                  placeholder="Pagar/Receber"
                   options={Status}
                 />
               </Grid>
@@ -113,7 +115,7 @@ const FormBenefits: React.FC = () => {
             <Button
               type="submit"
               background="primary"
-              style={{ marginTop: 15, width: '100%' }}
+              style={{ marginLeft: 5, marginTop: 15, width: '97.5%' }}
             >
               {id ? 'Atualizar' : 'Cadastar'}
             </Button>
@@ -124,4 +126,4 @@ const FormBenefits: React.FC = () => {
   );
 };
 
-export default FormBenefits;
+export default FormBillsCategory;

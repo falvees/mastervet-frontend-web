@@ -23,16 +23,16 @@ import { useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link, useParams } from 'react-router-dom';
 
-import Button from '../../../components/Button';
-import Input from '../../../components/InputLabelPure';
-import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
+import Button from '../../../../components/Button';
+import Input from '../../../../components/InputLabelPure';
+import MenuPrincipalLeft from '../../../../components/MenuPrincipalLeft';
 
-import Select from '../../../components/Select';
+import Select from '../../../../components/Select';
 import { Container, Content, GridHeaderSearch, Form } from './styles';
-import AnimalTypeApi from '../../../services/AnimalTypeApi';
-import AnimalBreedApi from '../../../services/AnimalBreedApi';
-import Navbar from '../../../components/MenuMobile/Navbar';
-import InputDate from '../../../components/InputDate';
+import AnimalTypeApi from '../../../../services/AnimalTypeApi';
+import AnimalBreedApi from '../../../../services/AnimalBreedApi';
+import Navbar from '../../../../components/MenuMobile/Navbar';
+import InputDate from '../../../../components/InputDate';
 
 interface RouteParams {
   id: string;
@@ -45,6 +45,7 @@ interface financialList {
   id: string;
   conta: string;
 }
+
 const FormAnimalBreed: React.FC = () => {
   const StyledTableCell = withStyles(() =>
     createStyles({

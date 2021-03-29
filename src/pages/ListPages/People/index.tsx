@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   withStyles,
   Theme,
@@ -27,19 +27,16 @@ import Navbar from '../../../components/MenuMobile/Navbar';
 import ButtonUtil from '../../../components/ButtonUtil';
 import Loading from '../../../components/Loading';
 
-interface arrayList {
-  people_id: string;
-  name: string;
-}
-
 const People: React.FC = () => {
+  // Inicializa o hook form e todas propriedades ficam dentro de methods
   const methods = useForm({
     shouldUnregister: false,
   });
-  const history = useHistory();
-  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory(); // Inicializa o History do react-router-dom
+  const [isLoading, setIsLoading] = useState(false); // Variavel de estado para o Loading da pagina
 
   const [isListUsers, setListUsers] = useState<PropsPeople[]>([]);
+
   const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
@@ -76,9 +73,10 @@ const People: React.FC = () => {
     },
   });
 
-  const listPeoples = () => {
+  const listPeoples = useCallback(async () => {
     setIsLoading(true);
-    peopleApi
+    let current = true;
+    await peopleApi
       .getAll()
       .then(result => {
         console.log(result);
@@ -93,11 +91,14 @@ const People: React.FC = () => {
           setIsLoading(false);
         }, 700);
       });
-  };
+    return () => {
+      current = false;
+    };
+  }, []);
 
   useEffect(() => {
     listPeoples();
-  }, []);
+  }, [listPeoples]);
 
   const handleRedirectFormEdit = (user: PropsPeople) => {
     console.log(user);
@@ -203,12 +204,7 @@ const People: React.FC = () => {
                             }}
                           >
                             <ButtonUtil icon={FiSearch} background="primary" />
-                            {/* <Link
-                              to={`/edit_user/${row.people_id}`}
-                              onClick={() => {
-                                handleRedirectFormEdit(isListUsers);
-                              }}
-                            > */}
+
                             <ButtonUtil
                               icon={FiEdit}
                               background="primary"
@@ -216,7 +212,7 @@ const People: React.FC = () => {
                                 handleRedirectFormEdit(row);
                               }}
                             />
-                            {/* </Link> */}
+
                             <ButtonUtil icon={FiTrash2} background="primary" />
                           </StyledTableCell>
                         </StyledTableRow>

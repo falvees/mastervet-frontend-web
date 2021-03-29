@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import { Grid } from '@material-ui/core';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -8,11 +8,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { FiArrowLeft } from 'react-icons/fi';
 // import Image from 'material-ui-image';
-import Button from '../../../components/Button';
-import Input from '../../../components/InputLabelPure';
-import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
+import Button from '../../../../components/Button';
+import Input from '../../../../components/InputLabelPure';
+import MenuPrincipalLeft from '../../../../components/MenuPrincipalLeft';
 
-import Select from '../../../components/Select';
+import Select from '../../../../components/Select';
 import {
   Container,
   Content,
@@ -20,40 +20,39 @@ import {
   Form,
   ContainerDog,
 } from './styles';
-import HealthPlansApi from '../../../services/HealthPlansApi';
-import SellerApi from '../../../services/SellerApi';
+import HealthPlansApi from '../../../../services/HealthPlansApi';
+import SellerApi from '../../../../services/SellerApi';
 import AccreditationsApi, {
   PropsAccreditations,
-} from '../../../services/AccreditationsApi';
+} from '../../../../services/AccreditationsApi';
 // import { PropsAccreditations } from '../../../services/AccreditationsApi';
-import Navbar from '../../../components/MenuMobile/Navbar';
-import Loading from '../../../components/Loading';
-import InputText from '../../../components/InputText';
-import InputMoney from '../../../components/InputMoney';
+import Navbar from '../../../../components/MenuMobile/Navbar';
+import Loading from '../../../../components/Loading';
+import InputText from '../../../../components/InputText';
+import InputMoney from '../../../../components/InputMoney';
 
-interface RouteParams {
-  id: string;
-}
 interface arrayList {
   value: string;
   label: string;
 }
+interface PropsHistory {
+  accre: PropsAccreditations;
+}
 
 const FormAccreditations: React.FC = () => {
-  const { id } = useParams<RouteParams>();
+  const [id, setId] = useState<number>(0);
   const history = useHistory();
-  const [data, setData] = useState<PropsAccreditations[]>([]);
-  const methods = useForm({
-    // defaultValues: PropsAccreditations,
-  });
+  // const [dataAcc, setDataAcc] = useState<PropsAccreditations[]>([]);
+  const methods = useForm();
   const { reset } = methods;
   const [isLoading, setIsLoading] = useState(false);
   const [isHealthPlans, setIsHealthPlans] = useState<arrayList[]>([]);
   const [isSeller, setIsSeller] = useState<arrayList[]>([]);
 
-  const onSubmit = useCallback(async () => {
-    await AccreditationsApi.create(data);
-    history.push('/');
+  const onSubmit = useCallback(async data => {
+    console.log(data);
+    // await AccreditationsApi.create(data);
+    // history.push('/');
     if (id) {
       // UPDATE
     } else {
@@ -78,58 +77,59 @@ const FormAccreditations: React.FC = () => {
     //     });
     // }
   }, []);
-  const listHealthPlans = () => {
-    const array: arrayList[] = [];
-    HealthPlansApi.getAll()
-      .then(result => {
-        result.data.response.forEach(item => {
-          array.push({ value: item.plan_id, label: item.description });
-          // console.log(item);
-        });
-        setIsHealthPlans(array);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-  const listSeller = () => {
-    const array: arrayList[] = [];
+  // const listHealthPlans = () => {
+  //   const array: arrayList[] = [];
+  //   HealthPlansApi.getAll()
+  //     .then(result => {
+  //       result.data.response.forEach(item => {
+  //         array.push({ value: item.plan_id, label: item.description });
+  //         // console.log(item);
+  //       });
+  //       setIsHealthPlans(array);
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // };
+  // const listSeller = () => {
+  //   const array: arrayList[] = [];
 
-    SellerApi.getAll()
-      .then(result => {
-        result.data.response.forEach(item => {
-          array.push({ value: item.people_id, label: item.name });
-        });
-        setIsSeller(array);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-  const listAccreditations = useCallback(() => {
-    setIsLoading(true);
-    AccreditationsApi.get(id)
-      .then(result => {
-        console.log(result.data.response[0]);
-        reset(result.data.response[0]);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }, [id, reset]);
+  //   SellerApi.getAll()
+  //     .then(result => {
+  //       result.data.response.forEach(item => {
+  //         array.push({ value: item.people_id, label: item.name });
+  //       });
+  //       setIsSeller(array);
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // };
+  // const listAccreditations = useCallback(() => {
+  //   setIsLoading(true);
+  //   AccreditationsApi.get(id)
+  //     .then(result => {
+  //       console.log(result.data.response[0]);
+  //       reset(result.data.response[0]);
+  //       setTimeout(() => {
+  //         setIsLoading(false);
+  //       }, 1000);
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // }, [id, reset]);
 
   useEffect(() => {
-    // const dataHistory = (history?.location?.state as PropsAccreditations)?.book;
-    // if (![null, undefined].includes(book)) {
-    //   setData(dataHistory);
-    // }
+    const dataHistory = (history?.location?.state as PropsHistory)?.accre;
+    if (dataHistory.accreditation_id !== null) {
+      console.log(dataHistory);
+      setId(dataHistory.accreditation_id);
+    }
+
     async function fetchData() {
       const result = await AccreditationsApi.get(id);
       reset(result.data.response[0]);
-      console.log(result.data.response[0]);
       // setData(result.data.response[0]);
 
       // setIsLoading(false);
@@ -138,7 +138,16 @@ const FormAccreditations: React.FC = () => {
     // listAccreditations();
     // listHealthPlans();
     // listSeller();
-  }, [id, listAccreditations, reset]);
+  }, [history, id, reset]);
+
+  // useEffect(() => {
+  //   const dataHistory = (history?.location?.state as PropsHistory)?.accre;
+  //   console.log(history);
+  //   if (dataHistory !== null) {
+  //     // setId(dataHistory.people_id);
+  //   }
+
+  // }, [history, history?.location?.state, id, reset]);
 
   // const deleteB = useCallback(
   //   async (idDel: number) => {
@@ -166,7 +175,6 @@ const FormAccreditations: React.FC = () => {
     { value: '2', label: '02' },
     { value: '3', label: '03' },
   ];
-  console.log('test');
   return (
     <FormProvider {...methods}>
       <Loading isLoading={isLoading} full />

@@ -35,7 +35,7 @@ const put = (
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
-const get = (id: string): Promise<PropsApi<PropsAccreditations[]>> => {
+const get = (id: number): Promise<PropsApi<PropsAccreditations[]>> => {
   return http.get(`/accreditations/${id}`);
 };
 export default {

@@ -1,19 +1,17 @@
 import { Grid } from '@material-ui/core';
-
 import { Form } from '@unform/web';
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
-import Swal from 'sweetalert2';
-import Button from '../../../components/Button';
-import Input from '../../../components/InputLabelPure';
-import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
-
+import Button from '../../../../components/Button';
+import Input from '../../../../components/InputLabelPure';
+import MenuPrincipalLeft from '../../../../components/MenuPrincipalLeft';
+import Select from '../../../../components/Select';
 import { Container, Content, GridHeaderSearch } from './styles';
-import AnimalTypeApi from '../../../services/AnimalTypeApi';
-import Navbar from '../../../components/MenuMobile/Navbar';
+import ModalitiesApi from '../../../../services/ModalitiesApi';
+import Navbar from '../../../../components/MenuMobile/Navbar';
 
 interface RouteParams {
   id: string;
@@ -33,18 +31,22 @@ const FormAnimalType: React.FC = () => {
       }
     });
     console.log(data);
-    AnimalTypeApi.create(data)
+    ModalitiesApi.create(data)
       .then(response => {
         console.log(response);
         if (response.status === 201) {
-          Swal.fire('Registro Gravado!');
-          window.location.href = '/animaltype';
+          window.location.href = '/modalidades';
         }
       })
       .catch(error => {
         console.log(error);
       });
   };
+
+  const Status = [
+    { value: '0', label: 'Ativo' },
+    { value: '1', label: 'Inativo' },
+  ];
 
   return (
     <FormProvider {...methods}>
@@ -64,7 +66,11 @@ const FormAnimalType: React.FC = () => {
             </Link>
 
             <Navbar
-              name={id ? 'Editar Tipo Animal' : 'Criar Novo Tipo Animal'}
+              name={
+                id
+                  ? 'Editar Modalidade de Atendimento'
+                  : 'Criar Novo Modalidade de Atendimento'
+              }
             />
 
             <Grid
@@ -77,7 +83,9 @@ const FormAnimalType: React.FC = () => {
               direction="column"
             >
               <p style={{ fontWeight: 500, color: '#9d9d9c' }}>
-                {id ? 'Editar Tipo Animal' : 'Criar Novo Tipo Animal'}
+                {id
+                  ? 'Editar Modalidade de Atendimento'
+                  : 'Criar Novo Modalidade de Atendimento'}
               </p>
               <hr
                 style={{
@@ -89,7 +97,6 @@ const FormAnimalType: React.FC = () => {
               />
             </Grid>
           </GridHeaderSearch>
-
           <Form
             noValidate
             autoComplete="off"
@@ -103,11 +110,18 @@ const FormAnimalType: React.FC = () => {
                   icon={AiOutlineUser}
                 />
               </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <Select
+                  name="status"
+                  placeholder="Ativo/Inativo"
+                  options={Status}
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
               background="primary"
-              style={{ marginTop: 15, width: '98%' }}
+              style={{ marginLeft: 5, marginTop: 15, width: '97.5%' }}
             >
               {id ? 'Atualizar' : 'Cadastar'}
             </Button>

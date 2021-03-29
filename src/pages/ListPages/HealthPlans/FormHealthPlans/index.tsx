@@ -6,14 +6,14 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FiArrowLeft } from 'react-icons/fi';
-import Button from '../../../components/Button';
-import Input from '../../../components/InputLabelPure';
-import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
-import Select from '../../../components/Select';
+import Button from '../../../../components/Button';
+import Input from '../../../../components/InputLabelPure';
+import MenuPrincipalLeft from '../../../../components/MenuPrincipalLeft';
+import Select from '../../../../components/Select';
 import { Container, Content } from './styles';
-import HealthPlansApi from '../../../services/HealthPlansApi';
-import Navbar from '../../../components/MenuMobile/Navbar';
-import { GridHeaderSearch } from '../FormUsers/styles';
+import HealthPlansApi from '../../../../services/HealthPlansApi';
+import Navbar from '../../../../components/MenuMobile/Navbar';
+import { GridHeaderSearch } from '../../People/FormUsers/styles';
 
 interface RouteParams {
   id: string;

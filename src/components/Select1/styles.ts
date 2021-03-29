@@ -42,7 +42,7 @@ export const Container = styled(Autocomplete)<SelectProps>`
     }
   }
   ${props =>
-    props.isfilled === true &&
+    props.isfilled === 'true' &&
     css`
       & fieldset {
         border-color: #17a0ae !important;
