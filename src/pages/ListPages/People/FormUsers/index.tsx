@@ -24,7 +24,7 @@ interface PropsHistoryUser {
 
 const FormUsers: React.FC = () => {
   const history = useHistory(); // Inicializa o History do react-router-dom
-  const [id, setId] = useState<number | null>(null); // Variavel de estado para armazenar o id caso seja Form de Editar
+  const [id, setId] = useState<string | null>(null); // Variavel de estado para armazenar o id caso seja Form de Editar
   const methods = useForm(); // Inicializa o hook form e todas propriedades ficam dentro de methods
   const { reset } = methods; // Desestruturaçao do reset de dentro do methods para nao ficar em loop
   const [isLoading, setIsLoading] = useState(false); // Variavel de estado para o Loading da pagina

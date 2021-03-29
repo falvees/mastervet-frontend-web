@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { FiChevronRight, FiCamera } from 'react-icons/fi';
+import id from 'date-fns/esm/locale/id/index.js';
 import {
   Container,
   ContainerTopProfile,
@@ -74,7 +75,7 @@ const ProfileCustomer: React.FC = () => {
   };
 
   const listCustomer = useCallback(() => {
-    PeopleApi.get(6)
+    PeopleApi.get('6')
       .then(result => {
         setIsCustomers(result.data.response);
       })

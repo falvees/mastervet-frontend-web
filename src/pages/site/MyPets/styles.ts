@@ -1,6 +1,7 @@
 import { Button, Grid } from '@material-ui/core';
 import { shade } from 'polished';
 import styled from 'styled-components';
+import logo from '../../../assets/logo.png';
 
 export const ButtonLogin = styled(Button)`
   margin-top: 20px !important;
@@ -9,20 +10,48 @@ export const ButtonLogin = styled(Button)`
   width: 100%;
   height: 3em;
 `;
-export const ContainerDog = styled.div`
-  display: flex;
-  border: 2px solid #bfbfbf;
-  flex-direction: column;
-  border-radius: 10px;
+export const ContainerUser = styled(Grid)`
+  background-color: #fff;
   position: relative;
-  & .profile-dog {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    background-size: cover !important;
-    background-position: center center !important;
+  @media only screen and (max-width: 950px) {
+    margin-bottom: 50px;
   }
 `;
+export const Pets = styled(Grid)`
+  border: 1px solid rgb(255, 255, 255, 0.7);
+  border-radius: 10px;
+  height: 450px;
+  width: 200px;
+  z-index: 0;
+  position: relative;
+  background-color: #fff;
+`;
+export const LinkLogup = styled(Grid)`
+  margin-top: 20px;
+  display: inline-block;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  @media only screen and (max-width: 950px) {
+    display: block;
+  }
+`;
+
+export const TituloCadastro = styled(Grid)`
+  width: 200px;
+  text-align: center;
+  font-size: 18px;
+  color: #111;
+  justify-content: center;
+
+  margin-top: 50px;
+  left: auto;
+  right: auto;
+  border-left: 5px solid #ffcc29;
+  padding-left: 10px;
+`;
+
 export const Container = styled(Grid)`
   /* display: flex; */
   /* align-items: center; */
@@ -32,8 +61,14 @@ export const Container = styled(Grid)`
   overflow-x: hidden;
 `;
 export const GridHeaderSearch = styled(Grid)`
-  position: relative;
-  margin-bottom: 40px;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #17a0ae;
+  z-index: 1;
   & .button-search {
     height: 100%;
     position: absolute;
@@ -45,14 +80,15 @@ export const GridHeaderSearch = styled(Grid)`
   }
   div > .input-root {
     border-color: #17a0ae;
+    color: #111;
   }
-  > a:first-child {
+  a:first-child {
     position: absolute;
     text-decoration: none;
     left: 0;
     display: flex;
     align-items: center;
-    color: #9d9d9c;
+    color: #111;
     transition: color 0.2s;
     font-weight: 500;
     &:hover {
@@ -72,52 +108,40 @@ export const GridHeaderSearch = styled(Grid)`
     color: #9d9d9c;
     transition: color 0.2s;
     font-weight: 500;
-    width: 180px;
-
-    transition: all 0.2s;
-    & button {
-      margin: 20px;
-      height: 40px;
-    }
   }
-
   @media only screen and (max-width: 960px) {
-    & > .add-user {
-      width: 130px;
-    }
+    justify-content: space-between;
   }
-  @media only screen and (max-width: 700px) {
-    margin-bottom: 0;
-    .title-header,
-    > a:first-child {
-      display: none;
-    }
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
     & > .add-user {
-      & button {
-        width: 100%;
-      }
-      width: 100%;
       position: relative;
     }
   }
 `;
+export const inputsContainer = styled.input`
+  position: absolute;
+  top: 50px;
+`;
 export const Content = styled(Grid)`
   display: flex;
+  overflow-x: hidden;
   align-items: center;
   flex-direction: column;
   flex: 1;
   padding: 40px;
   width: 100%;
-
   @media only screen and (max-width: 700px) {
     padding: 60px 15px 15px 15px;
   }
 `;
-
-export const Form = styled.form`
-  text-align: center;
-  width: 100%;
-  @media only screen and (max-width: 700px) {
-    width: 100%;
-  }
+export const LogoNav = styled.div`
+  position: absolute;
+  left: 1.5%;
+  top: 13px;
+  width: 35px;
+  height: 35px;
+  background: url(${logo}) no-repeat center;
+  background-size: cover;
+  z-index: 100;
 `;

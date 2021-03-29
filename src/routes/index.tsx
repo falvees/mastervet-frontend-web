@@ -26,6 +26,11 @@ import Accreditations from '../pages/ListPages/Accreditations';
 import FormAccreditations from '../pages/ListPages/Accreditations/FormAccreditations';
 import ProfilePet from '../pages/site/perfil';
 import profileCustomer from '../pages/site/perfilCustomer';
+import UserLogin from '../pages/site/Login';
+import UserLogup from '../pages/site/Logup';
+import FirstAccess from '../pages/site/FirstAccess';
+import MyPets from '../pages/site/MyPets';
+import PaymentPlan from '../pages/site/Payment';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -53,6 +58,12 @@ const Routes: React.FC = () => (
     <Route path="/edit_accreditation/" component={FormAccreditations} />
     <Route path="/profilePet" component={ProfilePet} />
     <Route path="/customer/:id" component={profileCustomer} />
+
+    <Route path="/login/:id" component={UserLogin} />
+    <Route path="/logup" component={UserLogup} />
+    <Route path="/first_access" component={FirstAccess} />
+    <Route path="/my_pets" component={MyPets} />
+    <Route path="/payment_plan" component={PaymentPlan} />
   </Switch>
 );
 export default Routes;

@@ -20,20 +20,18 @@ import Button from '../../../components/Button';
 import MenuPrincipalLeft from '../../../components/MenuPrincipalLeft';
 import { Container, GridHeaderSearch, Content } from './styles';
 import Input from '../../../components/InputLabelPure';
-import HealthPlansApi from '../../../services/HealthPlansApi';
+import HealthPlansApi, {
+  PropsHealthPlans,
+} from '../../../services/HealthPlansApi';
 import Navbar from '../../../components/MenuMobile/Navbar';
-
-interface arrayList {
-  plan_id: string;
-  description: string;
-  status: string;
-}
 
 const HealthPlans: React.FC = () => {
   const methods = useForm({
     shouldUnregister: false,
   });
-  const [isListHealthPlans, setListHealthPlans] = useState<arrayList[]>([]);
+  const [isListHealthPlans, setListHealthPlans] = useState<PropsHealthPlans[]>(
+    [],
+  );
   const StyledTableCell = withStyles(() =>
     createStyles({
       head: {
@@ -73,8 +71,8 @@ const HealthPlans: React.FC = () => {
   const listHealthPlans = () => {
     HealthPlansApi.getAll()
       .then(result => {
-        setListHealthPlans(result.data.response);
         console.log(result);
+        setListHealthPlans(result.data.response);
       })
       .catch(e => {
         console.log(e);

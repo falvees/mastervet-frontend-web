@@ -2,7 +2,7 @@ import http from '../http-common';
 import { PropsApi } from './response';
 
 export type PropsPeople = {
-  people_id: number;
+  people_id: string;
   registration_date: string;
   category: string;
   name: string;
@@ -45,7 +45,7 @@ const put = (data: PropsPeople[]): Promise<PropsApi<PropsPeople[]>> => {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
-const get = (id: number): Promise<PropsApi<PropsPeople[]>> => {
+const get = (id: string): Promise<PropsApi<PropsPeople[]>> => {
   return http.get(`/client/${id}`);
 };
 export default {

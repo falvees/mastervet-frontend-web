@@ -290,7 +290,7 @@ const FormAccreditations: React.FC = () => {
                   <div
                     className="profile-dog"
                     style={{
-                      background: `no-repeat center/100% url(${process.env.PUBLIC_URL}/assets/perfildog.jpg)`,
+                      background: `url(${process.env.PUBLIC_URL}/assets/perfildog.jpg) no-repeat`,
                     }}
                   />
                   <Input name="named" label="Nome" />
@@ -300,7 +300,7 @@ const FormAccreditations: React.FC = () => {
                   <InputText name="pets[0].caracter" label="Características" />
                 </ContainerDog>
               </Grid>
-              <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
+              {/* <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
                 <ContainerDog>
                   <div
                     className="profile-dog"
@@ -315,8 +315,8 @@ const FormAccreditations: React.FC = () => {
                   <Input name="age" label="Idade" />
                   <InputText name="pets[1].caracter" label="Características" />
                 </ContainerDog>
-              </Grid>
-              <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
+              </Grid> */}
+              {/* <Grid item xs={4} sm={4} md={4} style={{ padding: 5 }}>
                 <ContainerDog>
                   <div
                     className="profile-dog"
@@ -331,7 +331,7 @@ const FormAccreditations: React.FC = () => {
                   <Input name="age" label="Idade" />
                   <InputText name="a" label="Características" />
                 </ContainerDog>
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
