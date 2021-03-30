@@ -195,25 +195,31 @@ const People: React.FC = () => {
                           <StyledTableCell align="center">
                             Ativado
                           </StyledTableCell>
-                          <StyledTableCell
-                            align="center"
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}
-                          >
-                            <ButtonUtil icon={FiSearch} background="primary" />
-
-                            <ButtonUtil
-                              icon={FiEdit}
-                              background="primary"
-                              onClick={() => {
-                                handleRedirectFormEdit(row);
+                          <StyledTableCell align="center">
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
                               }}
-                            />
+                            >
+                              <ButtonUtil
+                                icon={FiSearch}
+                                background="primary"
+                              />
 
-                            <ButtonUtil icon={FiTrash2} background="primary" />
+                              <ButtonUtil
+                                icon={FiEdit}
+                                background="primary"
+                                onClick={() => {
+                                  handleRedirectFormEdit(row);
+                                }}
+                              />
+                              <ButtonUtil
+                                icon={FiTrash2}
+                                background="primary"
+                              />
+                            </div>
                           </StyledTableCell>
                         </StyledTableRow>
                       );

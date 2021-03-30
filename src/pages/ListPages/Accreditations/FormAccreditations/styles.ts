@@ -11,18 +11,35 @@ export const ButtonLogin = styled(Button)`
 `;
 export const ContainerDog = styled.div`
   display: flex;
-  border: 2px solid #bfbfbf;
+  padding: 0px;
+  /* border: 2px solid #bfbfbf; */
   flex-direction: column;
   border-radius: 10px;
   position: relative;
+  align-items: center;
+  margin-top: 100px;
   & .profile-dog {
+    position: absolute;
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
+    border: 12px solid #fff;
     background-size: cover !important;
     background-position: center center !important;
+    transform: translateY(-50%);
   }
 `;
+export const ContainerDogDesc = styled.div`
+  background-color: #17a0ae;
+  padding: 80px 15px 15px;
+  border-radius: 15px;
+  width: 90%;
+
+  & .input-root {
+    margin: 15px 0;
+  }
+`;
+
 export const Container = styled(Grid)`
   /* display: flex; */
   /* align-items: center; */

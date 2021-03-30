@@ -18,6 +18,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   iconColor?: string;
   mask?: string;
   defaultValue?: string;
+  borderColor?: string;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -29,6 +30,7 @@ const Input: React.FC<InputProps> = ({
   colorPlaceholder,
   backgroundColor,
   label,
+  borderColor,
   ...rest
 }) => {
   const { control } = useFormContext();
@@ -44,6 +46,7 @@ const Input: React.FC<InputProps> = ({
           backgroundColor={backgroundColor}
           isIcon={!!Icon}
           isFilled={!!props.value}
+          borderColor={borderColor}
           isFocused={isFocused}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

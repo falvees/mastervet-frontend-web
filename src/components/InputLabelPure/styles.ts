@@ -1,6 +1,7 @@
 import { IconButton } from '@material-ui/core';
 import { TextFieldProps } from '@rmwc/textfield';
 import styled, { css } from 'styled-components';
+import { shade } from 'polished';
 
 type inputProps = TextFieldProps & {
   isFocused?: boolean;
@@ -9,28 +10,49 @@ type inputProps = TextFieldProps & {
   colorPlaceholder?: string;
   backgroundColor?: string;
   label?: boolean;
+  borderColor?: string;
   // isLoading?: Boolean;
 };
+
 export const Container = styled.div<inputProps>`
   position: relative;
   border-radius: 10px;
   /* border: 2px solid #bfbfbf; */
   margin: 5px;
   color: #bfbfbf;
+
+  ${props =>
+    props.borderColor &&
+    css`
+      color: ${props.borderColor};
+    `}
   display: flex;
   height: 46px;
   & fieldset {
     font-size: 16px;
+    border: 2px solid #bfbfbf;
+    ${props =>
+      props.borderColor &&
+      css`
+        border: 2px solid ${props.borderColor};
+      `}
     border-radius: 10px;
-    /* border-width: 2px;
-    border-color: #bfbfbf; */
     padding: 0;
     height: 46px;
-    border: 2px solid #bfbfbf;
     width: 100%;
     display: flex;
     &:hover {
       border-color: #17a0ae;
+      border-width: 3px;
+      ${props =>
+        props.borderColor &&
+        css`
+          border: 3px solid ${props.borderColor};
+        `}
+      & > .MuiButtonBase-root {
+        left: 1px;
+        top: -1px;
+      }
     }
     & legend {
       border: 0;
@@ -57,6 +79,11 @@ export const Container = styled.div<inputProps>`
     `}
   & input {
     color: #9d9d9c;
+    ${props =>
+      props.borderColor &&
+      css`
+        color: ${props.borderColor};
+      `}
     background: transparent;
     width: 100%;
     border: 0;
@@ -121,15 +148,27 @@ export const Container = styled.div<inputProps>`
         overflow: unset;
         text-overflow: unset;
         color: #9d9d9c;
+        ${props.borderColor &&
+        css`
+          color: ${props.borderColor};
+        `}
         top: -8px;
         left: 15px;
         transform: scale(0.8);
       }
       & svg {
         color: #17a0ae !important;
+        ${props.borderColor &&
+        css`
+          color: ${props.borderColor} !important;
+        `}
       }
       & fieldset {
         border-color: #17a0ae;
+        ${props.borderColor &&
+        css`
+          border-color: ${props.borderColor};
+        `}
         & legend {
           ${props.label &&
           css`
@@ -147,15 +186,27 @@ export const Container = styled.div<inputProps>`
         overflow: unset;
         text-overflow: unset;
         color: #9d9d9c;
+        ${props.borderColor &&
+        css`
+          color: ${props.borderColor};
+        `}
         top: -8px;
         left: 15px;
         transform: scale(0.8);
       }
       & svg {
         color: #17a0ae !important;
+        ${props.borderColor &&
+        css`
+          color: ${props.borderColor} !important;
+        `}
       }
       & fieldset {
         border-color: #17a0ae;
+        ${props.borderColor &&
+        css`
+          border-color: ${props.borderColor};
+        `}
         & legend {
           ${props.label &&
           css`

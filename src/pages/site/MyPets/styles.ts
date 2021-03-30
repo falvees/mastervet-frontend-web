@@ -145,3 +145,34 @@ export const LogoNav = styled.div`
   background-size: cover;
   z-index: 100;
 `;
+
+export const ContainerDog = styled.div`
+  display: flex;
+  padding: 0px;
+  /* border: 2px solid #bfbfbf; */
+  flex-direction: column;
+  border-radius: 10px;
+  position: relative;
+  align-items: center;
+  margin-top: 100px;
+  & .profile-dog {
+    position: absolute;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    border: 12px solid #fff;
+    background-size: cover !important;
+    background-position: center center !important;
+    transform: translateY(-50%);
+  }
+`;
+export const ContainerDogDesc = styled.div`
+  background-color: #17a0ae;
+  padding: 80px 15px 15px;
+  border-radius: 15px;
+  width: 90%;
+
+  & .input-root {
+    margin: 15px 0;
+  }
+`;

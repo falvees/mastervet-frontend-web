@@ -10,29 +10,59 @@ type inputProps = TextFieldProps & {
   colorPlaceholder?: string;
   backgroundColor?: string;
   label?: string;
+  borderColor?: string;
+  iconColor?: string;
+
   // isLoading?: Boolean;
 };
 export const Container = styled(TextField)<inputProps>`
   position: relative;
   border-radius: 10px;
-  margin: 5px !important;
+  margin: 5px;
   color: #bfbfbf !important;
   display: flex;
   min-height: 46px;
+  width: 100%;
+  box-sizing: content-box;
+  & fieldset > legend {
+    font-size: 0.8em;
+    /* padding: 0 5px; */
+  }
   &:hover {
     & fieldset {
       border-color: #17a0ae !important;
+      border-width: 3px;
+      ${props =>
+        props.borderColor &&
+        css`
+          border-color: ${props.borderColor} !important;
+        `}
+      & > .MuiButtonBase-root {
+        left: 1px;
+        top: -1px;
+      }
     }
   }
 
   .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
     border-color: #17a0ae !important;
+    ${props =>
+      props.borderColor &&
+      css`
+        border-color: ${props.borderColor} !important;
+      `}
     & .MuiFormLabel-root {
       color: #9d9d9c !important;
     }
   }
   .MuiFormLabel-root {
     color: #bfbfbf !important;
+    ${props =>
+      props.borderColor &&
+      css`
+        color: ${props.borderColor} !important;
+      `}
+
     font: 400 16px Ubuntu, sans-serif;
   }
 
@@ -45,15 +75,25 @@ export const Container = styled(TextField)<inputProps>`
     border-radius: 10px;
     /* border-width: 2px;
     border-color: #bfbfbf; */
-    padding: 7px;
+    padding: 9px;
     min-height: 46px;
     border: 2px solid #bfbfbf;
+    ${props =>
+      props.borderColor &&
+      css`
+        border: 2px solid ${props.borderColor};
+      `}
     width: 100%;
     display: flex;
   }
 
   & textarea {
     color: #9d9d9c !important;
+    ${props =>
+      props.borderColor &&
+      css`
+        color: ${props.borderColor} !important;
+      `}
   }
 
   ${props =>
@@ -80,7 +120,7 @@ export const Container = styled(TextField)<inputProps>`
     padding: 0 10px;
   }
   .MuiInputLabel-outlined.MuiInputLabel-shrink {
-    transform: translate(14px, -6px) scale(0.8) !important;
+    transform: translate(18px, -6px) scale(0.8) !important;
   }
 
   ${props =>
@@ -91,42 +131,29 @@ export const Container = styled(TextField)<inputProps>`
         overflow: unset !important;
         text-overflow: unset !important;
         color: #9d9d9c !important;
+        ${props.borderColor &&
+        css`
+          color: ${props.borderColor} !important;
+        `}
         transform: translate(14px, -6px) scale(0.8) !important;
       }
       & svg {
         color: #17a0ae !important;
+        ${props.iconColor &&
+        css`
+          color: ${props.iconColor} !important;
+        `}
       }
       & fieldset {
         border-color: #17a0ae;
+        ${props.borderColor &&
+        css`
+          border-color: ${props.borderColor};
+        `}
       }
     `}
 
-  /* ${props =>
-    props.isFilled &&
-    css`
-      & label,
-      .MuiFormLabel-root {
-        overflow: unset;
-        text-overflow: unset;
-        color: #9d9d9c !important;
-        transform: translate(14px, -6px) scale(0.8) !important;
-      }
-      & svg {
-        color: #17a0ae !important;
-      }
-      & fieldset {
-        border-color: #17a0ae;
-        & legend {
-          ${props.label &&
-          css`
-            padding: 0 7px;
-          `}
-          width: auto;
-        }
-      }
-    `} */
-
-    @media (max-width: 600px) {
+  @media (max-width: 600px) {
     & input {
       font-size: 13px;
     }
