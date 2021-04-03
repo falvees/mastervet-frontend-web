@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
+import { InputAdornment } from '@material-ui/core';
 import React, {
   InputHTMLAttributes,
   useCallback,
@@ -9,28 +10,34 @@ import React, {
 } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IconBaseProps } from 'react-icons';
+import { ButtonIcon } from '../InputLabelPure/styles';
 
 import { Container } from './styles';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
-  icon?: React.ComponentType<IconBaseProps>;
   id?: string;
   placeholder?: string;
   colorPlaceholder?: string;
-  backgroundColor?: string;
   label?: string;
-  iconColor?: string;
   defaultValue?: string;
+  icon?: React.ComponentType<IconBaseProps>;
+  iconColor?: string;
+  backgroundColor?: string;
+  borderColor?: string;
 };
 
 const InputText: React.FC<InputProps> = ({
-  defaultValue,
   name,
+  id,
   placeholder,
   colorPlaceholder,
-  backgroundColor,
   label,
+  defaultValue,
+  icon: Icon,
+  iconColor,
+  backgroundColor,
+  borderColor,
 }) => {
   const { getValues, register } = useFormContext();
 
@@ -46,17 +53,31 @@ const InputText: React.FC<InputProps> = ({
 
   return (
     <Container
-      backgroundColor={backgroundColor}
-      colorPlaceholder={colorPlaceholder}
       name={name}
+      id={id}
+      placeholder={placeholder}
+      colorPlaceholder={colorPlaceholder}
+      label={label}
+      defaultValue={defaultValue}
+      iconColor={iconColor}
+      backgroundColor={backgroundColor}
+      borderColor={borderColor}
       inputRef={register()}
       onBlur={HandleInputBlur}
       isFilled={isFilled}
-      label={label}
       multiline
-      defaultValue={defaultValue}
-      placeholder={placeholder}
       variant="outlined"
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            {Icon && (
+              <ButtonIcon tabIndex="-1">
+                <Icon color={iconColor || '#bfbfbf'} />
+              </ButtonIcon>
+            )}
+          </InputAdornment>
+        ),
+      }}
     />
   );
 };

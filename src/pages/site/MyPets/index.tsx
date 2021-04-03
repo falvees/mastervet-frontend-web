@@ -13,8 +13,17 @@ import { RiLock2Line } from 'react-icons/ri';
 
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
-import { Container, GridHeaderSearch, Content, Pets, LogoNav } from './styles';
+import {
+  Container,
+  GridHeaderSearch,
+  Content,
+  Pets,
+  LogoNav,
+  ContainerDog,
+  ContainerDogDesc,
+} from './styles';
 import Input from '../../../components/InputLabelPure';
+import InputText from '../../../components/InputText';
 
 const MyPets: React.FC = () => {
   const methods = useForm({
@@ -52,7 +61,133 @@ const MyPets: React.FC = () => {
               top: '100px',
             }}
           >
-            <Pets lg={3} md={3} sm={4} xs={12}>
+            <Grid item xs={12} sm={6} md={3} style={{ padding: 5 }}>
+              <ContainerDog>
+                <div
+                  className="profile-dog"
+                  style={{
+                    background: `url(${process.env.PUBLIC_URL}/assets/perfildog.jpg) no-repeat`,
+                  }}
+                />
+                <ContainerDogDesc>
+                  <Input
+                    name="name1"
+                    label="Nome"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                    icon={AiOutlineUser}
+                  />
+                  <Input
+                    name="breed"
+                    label="Raça"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <Input
+                    name="weigth"
+                    label="Peso"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <Input
+                    name="age"
+                    label="Idade"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <InputText
+                    name="pets[0].caracter"
+                    label="Características"
+                    borderColor="#fff"
+                  />
+                </ContainerDogDesc>
+              </ContainerDog>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3} style={{ padding: 5 }}>
+              <ContainerDog>
+                <div
+                  className="profile-dog"
+                  style={{
+                    background: `url(${process.env.PUBLIC_URL}/assets/perfildog.jpg) no-repeat`,
+                  }}
+                />
+                <ContainerDogDesc>
+                  <Input
+                    name="name2"
+                    label="Nome"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                    icon={AiOutlineUser}
+                  />
+                  <Input
+                    name="breed"
+                    label="Raça"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <Input
+                    name="weigth"
+                    label="Peso"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <Input
+                    name="age"
+                    label="Idade"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <InputText
+                    name="pets[1].caracter"
+                    label="Características"
+                    borderColor="#fff"
+                  />
+                </ContainerDogDesc>
+              </ContainerDog>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3} style={{ padding: 5 }}>
+              <ContainerDog>
+                <div
+                  className="profile-dog"
+                  style={{
+                    background: `url(${process.env.PUBLIC_URL}/assets/perfildog.jpg) no-repeat`,
+                  }}
+                />
+                <ContainerDogDesc>
+                  <Input
+                    name="name3"
+                    label="Nome"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                    icon={AiOutlineUser}
+                  />
+                  <Input
+                    name="breed"
+                    label="Raça"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <Input
+                    name="weigth"
+                    label="Peso"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <Input
+                    name="age"
+                    label="Idade"
+                    borderColor="#fff"
+                    iconColor="#fff"
+                  />
+                  <InputText
+                    name="pets[2].caracter"
+                    label="Características"
+                    borderColor="#fff"
+                  />
+                </ContainerDogDesc>
+              </ContainerDog>
+            </Grid>
+            <Pets lg={3} md={3} sm={3} xs={12}>
               <Grid
                 item
                 style={{
