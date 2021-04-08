@@ -125,7 +125,7 @@ const UserLogup: React.FC = () => {
               style={{ position: 'absolute', right: '10px', top: '10px' }}
             />
 
-            <Link to="/login">
+            <Link to={{ pathname: `../login/${id}` }}>
               <LinkLogup
                 style={{ position: 'absolute', left: '7%', top: '10px' }}
               >

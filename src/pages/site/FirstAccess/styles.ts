@@ -143,3 +143,25 @@ export const LogoNav = styled.div`
   background-size: cover;
   z-index: 100;
 `;
+export const ListaItens = styled.ul`
+  position: absolute;
+  display: flex;
+  /* top: 180px; */
+  left: 10px;
+  & > li {
+    list-style: none;
+    color: #fff;
+    font: 300 16px 'Ubuntu', sans-serif;
+    text-transform: none;
+    text-decoration: none;
+    line-height: 23px;
+  }
+  & > li::before {
+    content: '\2022';
+    color: #ffcc29;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+`;

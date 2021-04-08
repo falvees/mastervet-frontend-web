@@ -21,6 +21,7 @@ import {
   LogoNav,
   TituloCadastro,
   LinkLogup,
+  ListaItens,
 } from './styles';
 import Input from '../../../components/InputLabelPure';
 import HealthPlansApi, {
@@ -92,7 +93,7 @@ const UserLogin: React.FC = () => {
           >
             <ContainerUser
               lg={4}
-              md={4}
+              md={8}
               sm={8}
               xs={12}
               style={{ background: '#ffcc29' }}
@@ -109,34 +110,71 @@ const UserLogin: React.FC = () => {
               >
                 <div
                   style={{
-                    font: 'bold 27px Ubuntu',
+                    font: 'bold 40px Ubuntu',
                     color: '#000',
                     textTransform: 'uppercase',
-                    top: '20px',
+                    position: 'absolute',
+                    top: '30px',
+                    textShadow: '2px 2px 4px rgba(0,0,0,.3)',
                   }}
                 >
-                  {islistHealthPlans &&
+                  {/* {islistHealthPlans &&
                     islistHealthPlans.map(row => {
                       return <h2>{row.description}</h2>;
-                    })}
-                  {/* <c>Light</c> */}
+                    })} */}
+                  Plano Light
                 </div>
-                <div className="sifrao light">R$</div>
+                <div
+                  style={{ position: 'absolute', top: '120px', left: '35%' }}
+                >
+                  R$
+                </div>
                 <div
                   style={{
                     color: '#17a0ae',
-                    font: '700 60px Ubuntu',
+                    font: '700 80px Ubuntu',
                     position: 'absolute',
-                    top: '80px',
+                    top: '110px',
+                    textShadow: '2px 2px 4px rgba(0,0,0,.3)',
                   }}
                 >
                   69
                 </div>
-                <div style={{ position: 'absolute' }}>,90</div>
-                <div className="mes light">/mes</div>
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '120px',
+                    right: '34%',
+                    color: '#17a0ae',
+                  }}
+                >
+                  ,90
+                </div>
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '160px',
+                    right: '31%',
+                    color: '#000',
+                  }}
+                >
+                  /mes
+                </div>
+
+                <ListaItens
+                  style={{ position: 'absolute', top: '250px', left: '30%' }}
+                >
+                  <li>Consulta</li>
+                  <li>Consultas Emergenciais</li>
+                  <li>Exames Laboratoriais Simples</li>
+                  <li>Cirurgia Simples ou Castração</li>
+                  <li>Exames de Imagem</li>
+                  <li>Atendimento Ambulatorial</li>
+                  <li>Vacina (polivalente)</li>
+                </ListaItens>
               </Grid>
             </ContainerUser>
-            <ContainerUser lg={4} md={4} sm={8} xs={12}>
+            <ContainerUser lg={4} md={8} sm={8} xs={12}>
               <Grid
                 item
                 style={{
@@ -182,11 +220,11 @@ const UserLogin: React.FC = () => {
                   margin: '10px',
                 }}
               >
-                <Link to="/logup">
+                <Link to={{ pathname: `../logup/${id}` }}>
                   <LinkLogup>Registrar-se</LinkLogup>
                 </Link>
 
-                <Link to="/first_access">
+                <Link to={{ pathname: `../first_access/${id}` }}>
                   <LinkLogup>Primeiro Acesso</LinkLogup>
                 </Link>
               </Grid>

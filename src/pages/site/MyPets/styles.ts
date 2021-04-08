@@ -176,3 +176,45 @@ export const ContainerDogDesc = styled.div`
     margin: 15px 0;
   }
 `;
+export const ContainerInfoDesc = styled.div`
+  background-color: transparent;
+  padding: 15px 15px 15px 30px;
+  border-left: 1px solid gainsboro;
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+
+  & .input-root {
+    margin: 15px 0;
+  }
+`;
+
+export const InfoItem = styled.div`
+  width: 100%;
+  background-color: transparent;
+  padding: 15px 20px;
+  border: 1px solid gainsboro;
+  border-radius: 10px;
+  color: #000;
+  font: 600 17px 'Ubuntu';
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  margin: 5px;
+
+  & .input-root {
+    margin: 15px 0;
+  }
+  & Link {
+    @media only screen and (max-width: 600px) {
+      left: 0%;
+    }
+  }
+  & h1 {
+    font: 300 17px 'Ubuntu';
+    letter-spacing: -1px;
+    text-align: center;
+    margin-top: 5px;
+  }
+`;

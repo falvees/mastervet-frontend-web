@@ -60,8 +60,8 @@ const Routes: React.FC = () => (
     <Route path="/customer/:id" component={profileCustomer} />
 
     <Route path="/login/:id" component={UserLogin} />
-    <Route path="/logup" component={UserLogup} />
-    <Route path="/first_access" component={FirstAccess} />
+    <Route path="/logup/:id" component={UserLogup} />
+    <Route path="/first_access/:id" component={FirstAccess} />
     <Route path="/my_pets" component={MyPets} />
     <Route path="/payment_plan" component={PaymentPlan} />
   </Switch>

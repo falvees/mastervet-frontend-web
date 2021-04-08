@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid, IconButton } from '@material-ui/core';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoPersonCircle } from 'react-icons/io5';
+import { IoMdArrowRoundForward } from 'react-icons/io';
 import { AiOutlineUser, AiOutlineMail } from 'react-icons/ai';
 import { RiLock2Line } from 'react-icons/ri';
 
@@ -21,6 +22,8 @@ import {
   LogoNav,
   ContainerDog,
   ContainerDogDesc,
+  ContainerInfoDesc,
+  InfoItem,
 } from './styles';
 import Input from '../../../components/InputLabelPure';
 import InputText from '../../../components/InputText';
@@ -58,10 +61,10 @@ const MyPets: React.FC = () => {
               alignItems: 'center',
               position: 'relative',
               justifyContent: 'space-evenly',
-              top: '100px',
+              // top: '10px',
             }}
           >
-            <Grid item xs={12} sm={6} md={3} style={{ padding: 5 }}>
+            <Grid item lg={3} md={3} sm={6} xs={12}>
               <ContainerDog>
                 <div
                   className="profile-dog"
@@ -103,7 +106,7 @@ const MyPets: React.FC = () => {
                 </ContainerDogDesc>
               </ContainerDog>
             </Grid>
-            <Grid item xs={12} sm={6} md={3} style={{ padding: 5 }}>
+            <Grid item lg={3} md={3} sm={6} xs={12}>
               <ContainerDog>
                 <div
                   className="profile-dog"
@@ -145,7 +148,7 @@ const MyPets: React.FC = () => {
                 </ContainerDogDesc>
               </ContainerDog>
             </Grid>
-            <Grid item xs={12} sm={6} md={3} style={{ padding: 5 }}>
+            <Grid item lg={3} md={3} sm={6} xs={12}>
               <ContainerDog>
                 <div
                   className="profile-dog"
@@ -187,77 +190,53 @@ const MyPets: React.FC = () => {
                 </ContainerDogDesc>
               </ContainerDog>
             </Grid>
-            <Pets lg={3} md={3} sm={3} xs={12}>
-              <Grid
-                item
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  position: 'relative',
-                  justifyContent: 'space-evenly',
-                  flexDirection: 'column',
-                  border: '1px solid gainsboro',
-                  padding: '20px',
-                }}
-              >
-                <div
-                  style={{
-                    width: '100%',
-                    border: '1px solid gainsboro',
-                    padding: '20px 50px',
-                    borderRadius: '10px',
-                    textAlign: 'center',
-                    position: 'relative',
-                    top: '10px',
-                  }}
-                >
-                  <h2>Banho e Tosa</h2>
-                  12
-                </div>
-                <div
-                  style={{
-                    width: '100%',
-                    border: '1px solid gainsboro',
-                    padding: '20px 50px',
-                    borderRadius: '10px',
-                    textAlign: 'center',
-                    position: 'relative',
-                    top: '10px',
-                  }}
-                >
-                  <h2>Banho e Tosa</h2>
-                  12
-                </div>
-                <div
-                  style={{
-                    width: '100%',
-                    border: '1px solid gainsboro',
-                    padding: '20px 50px',
-                    borderRadius: '10px',
-                    textAlign: 'center',
-                    position: 'relative',
-                    top: '10px',
-                  }}
-                >
-                  <h2>Banho e Tosa</h2>
-                  12
-                </div>
-                <div
-                  style={{
-                    width: '100%',
-                    border: '1px solid gainsboro',
-                    padding: '20px 50px',
-                    borderRadius: '10px',
-                    textAlign: 'center',
-                    position: 'relative',
-                    top: '10px',
-                  }}
-                >
-                  <h2>Banho e Tosa</h2>
-                  12
-                </div>
-              </Grid>
-            </Pets>
+
+            <Grid item lg={3} md={3} sm={6} xs={12}>
+              <ContainerDog>
+                <ContainerInfoDesc>
+                  <InfoItem>
+                    Banho e Cuidado
+                    <h1>12</h1>
+                  </InfoItem>
+                  <InfoItem>
+                    Banho e Cuidado
+                    <h1>12</h1>
+                  </InfoItem>
+                  <InfoItem>
+                    Banho e Cuidado
+                    <h1>12</h1>
+                  </InfoItem>
+                  <InfoItem>
+                    Banho e Cuidado
+                    <h1>12</h1>
+                  </InfoItem>
+
+                  <Link
+                    style={{ width: '100%', position: 'relative', left: '6%' }}
+                    to="/payment_plan"
+                  >
+                    <Button
+                      background="primary"
+                      style={{
+                        marginTop: 30,
+                        width: '100%',
+                        backgroundColor: '#ffcc29',
+                        color: '#000',
+                      }}
+                    >
+                      Seguinte
+                      <IoMdArrowRoundForward
+                        style={{
+                          position: 'relative',
+                          top: '3px',
+                          left: '10px',
+                        }}
+                      />
+                    </Button>
+                  </Link>
+                </ContainerInfoDesc>
+              </ContainerDog>
+            </Grid>
           </Grid>
         </Content>
       </Container>
