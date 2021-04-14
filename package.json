@@ -10,6 +10,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/pickers": "^3.2.10",
     "@material/theme": "^9.0.0",
+    "@react-pdf/renderer": "^2.0.4",
     "@rmwc/textfield": "^6.1.4",
     "@rmwc/theme": "^6.1.4",
     "@testing-library/jest-dom": "^5.11.4",
