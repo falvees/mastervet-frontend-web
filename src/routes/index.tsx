@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import SingIn from '../pages/SignIn';
 import FormUsers from '../pages/ListPages/People/FormUsers';
 import People from '../pages/ListPages/People';
+import PDFUsers from '../pages/ListPages/People/PDF/Viewer';
 // import PadraoAdd from '../pages/PadraoAdd';
 // import PadraoList from '../pages/PadraoList';
 import AnimalType from '../pages/ListPages/AnimalType';
@@ -31,6 +32,8 @@ import UserLogup from '../pages/site/Logup';
 import FirstAccess from '../pages/site/FirstAccess';
 import MyPets from '../pages/site/MyPets';
 import PaymentPlan from '../pages/site/Payment';
+import RelatoriesFinancial from '../pages/ListPages/RelatoriesFinancial';
+import PDFViwer from '../pages/ListPages/RelatoriesFinancial/PdfDocument/PDFViewer';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -58,6 +61,9 @@ const Routes: React.FC = () => (
     <Route path="/edit_accreditation/" component={FormAccreditations} />
     <Route path="/profilePet" component={ProfilePet} />
     <Route path="/customer/:id" component={profileCustomer} />
+    <Route path="/relatories_financial" component={RelatoriesFinancial} />
+    <Route path="/viewer" exact component={PDFViwer} />
+    <Route path="/pdf_user" exact component={PDFUsers} />
 
     <Route path="/login/:id" component={UserLogin} />
     <Route path="/logup/:id" component={UserLogup} />
