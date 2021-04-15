@@ -8,6 +8,7 @@ import {
   Image,
 } from '@react-pdf/renderer';
 
+import { borderStyle } from 'polished';
 import formatCurrency from '../../../../utils/formatCurrency';
 
 const styles = StyleSheet.create({
@@ -21,14 +22,23 @@ const styles = StyleSheet.create({
   row: {
     display: 'flex',
     flexDirection: 'row',
-    marginRight: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginRight: 30,
     marginHorizontal: 30,
-    marginBottom: 5,
+    // marginBottom: 5,
+    borderBottom: 1,
+    borderStyle: 'solid',
   },
   collumn: {
     display: 'flex',
     flex: 1,
+    // width: '100%',
     justifyContent: 'center',
+    // alignItems: 'center',
+    padding: '0 10px',
+    // borderRight: 1,
+    borderStyle: 'solid',
   },
   logo: {
     position: 'absolute',
@@ -66,14 +76,78 @@ const styles = StyleSheet.create({
 });
 
 const dummyData = [
-  { id: '1', entrada: 20, saida: 15 },
-  { id: '2', entrada: 20, saida: 25 },
-  { id: '3', entrada: 30, saida: 15 },
-  { id: '4', entrada: 20, saida: 35 },
-  { id: '5', entrada: 50, saida: 15 },
-  { id: '6', entrada: 20, saida: 55 },
-  { id: '7', entrada: 40, saida: 15 },
-  { id: '8', entrada: 20, saida: 55 },
+  {
+    id: '1',
+    data: '15/04/2021',
+    cliente: 'Kênia Borges ',
+    plano: 'Light',
+    devido: 20,
+    pago: 15,
+    situacao: 'aberto',
+  },
+  {
+    id: '2',
+    data: '15/04/2021',
+    cliente: 'Felipe Fonseca Alves Ribeiro',
+    plano: 'Light',
+    devido: 20,
+    pago: 25,
+    situacao: 'aberto',
+  },
+  {
+    id: '3',
+    data: '15/04/2021',
+    cliente: 'Lucilton Vieira',
+    plano: 'Master',
+    devido: 30,
+    pago: 15,
+    situacao: 'aberto',
+  },
+  {
+    id: '4',
+    data: '15/04/2021',
+    cliente: 'Juliano Nogueira',
+    plano: 'Master',
+    devido: 20,
+    pago: 35,
+    situacao: 'aberto',
+  },
+  {
+    id: '5',
+    data: '15/04/2021',
+    cliente: 'Gustavo Pereira',
+    plano: 'Master',
+    devido: 50,
+    pago: 15,
+    situacao: 'aberto',
+  },
+  {
+    id: '6',
+    data: '15/04/2021',
+    cliente: 'Joao Silva Borges',
+    plano: 'Light',
+    devido: 20,
+    pago: 55,
+    situacao: 'aberto',
+  },
+  {
+    id: '7',
+    data: '15/04/2021',
+    cliente: 'Maria Helena Santana',
+    plano: 'Light',
+    devido: 40,
+    pago: 15,
+    situacao: 'aberto',
+  },
+  {
+    id: '8',
+    data: '15/04/2021',
+    cliente: 'Joaquim Santos Silva',
+    plano: 'Light',
+    devido: 20,
+    pago: 55,
+    situacao: 'aberto',
+  },
 ];
 
 const logo =
@@ -87,20 +161,26 @@ const PdfDocument = (): JSX.Element => {
           <Image style={styles.logoImage} source={logo} />
         </View>
         <View style={styles.header}>
-          <Text style={styles.title}>RELATÓRIO FINANCEIRO</Text>
+          <Text style={styles.title}>Movimentação Financeira</Text>
         </View>
         <View style={styles.row}>
           <View style={styles.collumn}>
-            <Text style={styles.subTitle}>ID</Text>
+            <Text style={styles.subTitle}>Data</Text>
           </View>
           <View style={styles.collumn}>
-            <Text style={styles.subTitle}>ENTRADA</Text>
+            <Text style={styles.subTitle}>Cliente</Text>
           </View>
           <View style={styles.collumn}>
-            <Text style={styles.subTitle}>SAÍDA</Text>
+            <Text style={styles.subTitle}>Plano</Text>
           </View>
           <View style={styles.collumn}>
-            <Text style={styles.subTitle}>SALDO</Text>
+            <Text style={styles.subTitle}>Vr Devido</Text>
+          </View>
+          <View style={styles.collumn}>
+            <Text style={styles.subTitle}>Vr Pago</Text>
+          </View>
+          <View style={styles.collumn}>
+            <Text style={styles.subTitle}>Situação</Text>
           </View>
         </View>
 
@@ -108,28 +188,33 @@ const PdfDocument = (): JSX.Element => {
           return (
             <View style={styles.row}>
               <View key={data.id} style={styles.collumn}>
-                <Text style={styles.description}>{data.id}</Text>
+                <Text style={styles.description}>{data.data}</Text>
+              </View>
+              <View key={data.id} style={styles.collumn}>
+                <Text style={styles.description}>{data.cliente}</Text>
+              </View>
+              <View key={data.id} style={styles.collumn}>
+                <Text style={styles.description}>{data.plano}</Text>
               </View>
               <View key={data.id} style={styles.collumn}>
                 <Text style={styles.description}>
-                  {formatCurrency.format(data.entrada)}
+                  {formatCurrency.format(data.devido)}
                 </Text>
               </View>
-              <View key={data.id} style={styles.collumn}>
-                <Text style={styles.description}>
-                  {formatCurrency.format(data.saida)}
-                </Text>
-              </View>
+
               <View key={data.id} style={styles.collumn}>
                 <Text
                   style={[
-                    data.entrada - data.saida < 0
+                    data.devido - data.pago < 0
                       ? styles.descriptionNegative
                       : styles.description,
                   ]}
                 >
-                  {formatCurrency.format(data.entrada - data.saida)}
+                  {formatCurrency.format(data.devido - data.pago)}
                 </Text>
+              </View>
+              <View key={data.id} style={styles.collumn}>
+                <Text style={styles.description}>{data.situacao}</Text>
               </View>
             </View>
           );

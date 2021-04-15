@@ -71,14 +71,78 @@ const RelatoriesFinancial: React.FC = () => {
   });
 
   const dummyData = [
-    { id: '1', entrada: 20, saida: 15 },
-    { id: '2', entrada: 20, saida: 25 },
-    { id: '3', entrada: 30, saida: 15 },
-    { id: '4', entrada: 20, saida: 35 },
-    { id: '5', entrada: 50, saida: 15 },
-    { id: '6', entrada: 20, saida: 55 },
-    { id: '7', entrada: 40, saida: 15 },
-    { id: '8', entrada: 20, saida: 55 },
+    {
+      id: '1',
+      data: '15/04/2021',
+      cliente: 'Kênia Borges ',
+      plano: 'Light',
+      devido: 20,
+      pago: 15,
+      situacao: 'aberto',
+    },
+    {
+      id: '2',
+      data: '15/04/2021',
+      cliente: 'Felipe Fonseca Alves Ribeiro',
+      plano: 'Light',
+      devido: 20,
+      pago: 25,
+      situacao: 'aberto',
+    },
+    {
+      id: '3',
+      data: '15/04/2021',
+      cliente: 'Lucilton Vieira',
+      plano: 'Master',
+      devido: 30,
+      pago: 15,
+      situacao: 'aberto',
+    },
+    {
+      id: '4',
+      data: '15/04/2021',
+      cliente: 'Juliano Nogueira',
+      plano: 'Master',
+      devido: 20,
+      pago: 35,
+      situacao: 'aberto',
+    },
+    {
+      id: '5',
+      data: '15/04/2021',
+      cliente: 'Gustavo Pereira',
+      plano: 'Master',
+      devido: 50,
+      pago: 15,
+      situacao: 'aberto',
+    },
+    {
+      id: '6',
+      data: '15/04/2021',
+      cliente: 'Joao Silva Borges',
+      plano: 'Light',
+      devido: 20,
+      pago: 55,
+      situacao: 'aberto',
+    },
+    {
+      id: '7',
+      data: '15/04/2021',
+      cliente: 'Maria Helena Santana',
+      plano: 'Light',
+      devido: 40,
+      pago: 15,
+      situacao: 'aberto',
+    },
+    {
+      id: '8',
+      data: '15/04/2021',
+      cliente: 'Joaquim Santos Silva',
+      plano: 'Light',
+      devido: 20,
+      pago: 55,
+      situacao: 'aberto',
+    },
   ];
 
   const classes = useStyles();
@@ -123,10 +187,16 @@ const RelatoriesFinancial: React.FC = () => {
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                   <TableRow hover>
-                    <StyledTableCell width="40%">ID</StyledTableCell>
-                    <StyledTableCell align="center">Entrada</StyledTableCell>
-                    <StyledTableCell align="center">Saída</StyledTableCell>
-                    <StyledTableCell align="center">Saldo</StyledTableCell>
+                    <StyledTableCell>Data</StyledTableCell>
+                    <StyledTableCell align="left" width="30%">
+                      Cliente
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Plano</StyledTableCell>
+                    <StyledTableCell align="center">
+                      Valor Devido
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Valor Pago</StyledTableCell>
+                    <StyledTableCell align="center">Situaçâo</StyledTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -135,16 +205,22 @@ const RelatoriesFinancial: React.FC = () => {
                       return (
                         <StyledTableRow key={row.id}>
                           <StyledTableCell component="th" scope="row">
-                            {row.id}
+                            {row.data}
+                          </StyledTableCell>
+                          <StyledTableCell align="left">
+                            {row.cliente}
                           </StyledTableCell>
                           <StyledTableCell align="center">
-                            {formatCurrency.format(row.entrada)}
+                            {row.plano}
                           </StyledTableCell>
                           <StyledTableCell align="center">
-                            {formatCurrency.format(row.saida)}
+                            {formatCurrency.format(row.devido)}
                           </StyledTableCell>
                           <StyledTableCell align="center">
-                            {formatCurrency.format(row.entrada - row.saida)}
+                            {formatCurrency.format(row.pago)}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            {row.situacao}
                           </StyledTableCell>
                           <StyledTableCell align="center">
                             <div
