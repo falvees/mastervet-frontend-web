@@ -20,6 +20,7 @@ export const Container = styled.div<inputProps>`
   /* border: 2px solid #bfbfbf; */
   margin: 5px;
   color: #bfbfbf;
+  flex: 1;
 
   ${props =>
     props.borderColor &&

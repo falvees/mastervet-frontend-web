@@ -6,9 +6,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowUpRight } from 'react-icons/fi';
 // import Image from 'material-ui-image';
 import { border } from 'polished';
+
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
 import Button from '../../../../components/Button';
 import Input from '../../../../components/InputLabelPure';
 import MenuPrincipalLeft from '../../../../components/MenuPrincipalLeft';
@@ -40,7 +48,18 @@ interface arrayList {
 interface PropsHistory {
   accre: PropsAccreditations;
 }
-
+const styles = theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
 const FormAccreditations: React.FC = () => {
   const [id, setId] = useState<number>(0);
   const history = useHistory();
@@ -177,6 +196,15 @@ const FormAccreditations: React.FC = () => {
     { value: '2', label: '02' },
     { value: '3', label: '03' },
   ];
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <FormProvider {...methods}>
       <Loading isLoading={isLoading} full />
@@ -194,7 +222,6 @@ const FormAccreditations: React.FC = () => {
               <FiArrowLeft />
               Voltar
             </Link>
-
             <Navbar name={id ? 'Editar Cliente' : 'Criar Novo Cliente'} />
             <Grid
               className="title-header"
@@ -309,15 +336,24 @@ const FormAccreditations: React.FC = () => {
                       borderColor="#fff"
                       iconColor="#fff"
                     />
-                    <Input
-                      name="weigth"
-                      label="Peso"
-                      borderColor="#fff"
-                      iconColor="#fff"
-                    />
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Input
+                        name="hair"
+                        label="Pelagem"
+                        borderColor="#fff"
+                        iconColor="#fff"
+                        style={{ display: 'flex', flex: 1, width: '100%' }}
+                      />
+                      <IconButton
+                        onClick={handleClickOpen}
+                        style={{ height: 32, width: 32, padding: 5 }}
+                      >
+                        <FiArrowUpRight color="#fff" />
+                      </IconButton>
+                    </div>
                     <Input
                       name="age"
-                      label="Idade"
+                      label="Nascimento"
                       borderColor="#fff"
                       iconColor="#fff"
                     />
@@ -351,15 +387,24 @@ const FormAccreditations: React.FC = () => {
                       borderColor="#fff"
                       iconColor="#fff"
                     />
-                    <Input
-                      name="weigth"
-                      label="Peso"
-                      borderColor="#fff"
-                      iconColor="#fff"
-                    />
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Input
+                        name="hair"
+                        label="Pelagem"
+                        borderColor="#fff"
+                        iconColor="#fff"
+                        style={{ display: 'flex', flex: 1, width: '100%' }}
+                      />
+                      <IconButton
+                        onClick={handleClickOpen}
+                        style={{ height: 32, width: 32, padding: 5 }}
+                      >
+                        <FiArrowUpRight color="#fff" />
+                      </IconButton>
+                    </div>
                     <Input
                       name="age"
-                      label="Idade"
+                      label="Nascimento"
                       borderColor="#fff"
                       iconColor="#fff"
                     />
@@ -381,8 +426,8 @@ const FormAccreditations: React.FC = () => {
                   />
                   <ContainerDogDesc>
                     <Input
-                      name="name3"
-                      label="Características"
+                      name="name"
+                      label="Nome"
                       borderColor="#fff"
                       iconColor="#fff"
                       icon={AiOutlineUser}
@@ -393,21 +438,30 @@ const FormAccreditations: React.FC = () => {
                       borderColor="#fff"
                       iconColor="#fff"
                     />
-                    <Input
-                      name="weigth"
-                      label="Peso"
-                      borderColor="#fff"
-                      iconColor="#fff"
-                    />
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Input
+                        name="hair"
+                        label="Pelagem"
+                        borderColor="#fff"
+                        iconColor="#fff"
+                        style={{ display: 'flex', flex: 1, width: '100%' }}
+                      />
+                      <IconButton
+                        onClick={handleClickOpen}
+                        style={{ height: 32, width: 32, padding: 5 }}
+                      >
+                        <FiArrowUpRight color="#fff" />
+                      </IconButton>
+                    </div>
                     <Input
                       name="age"
-                      label="Idade"
+                      label="Nascimento"
                       borderColor="#fff"
                       iconColor="#fff"
                     />
                     <InputText
                       name="pets[2].caracter"
-                      label="nome"
+                      label="Características"
                       borderColor="#fff"
                     />
                   </ContainerDogDesc>
@@ -424,6 +478,33 @@ const FormAccreditations: React.FC = () => {
           </Form>
         </Content>
       </Container>
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <MuiDialogTitle disableTypography>
+          <Typography variant="h6" style={{ marginRight: 50 }}>
+            Adicionar Pelagem
+          </Typography>
+
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            style={{ position: 'absolute', right: 20, top: 10 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </MuiDialogTitle>
+        <MuiDialogContent dividers>
+          <Input name="pelagem" label="Nova Pelagem" />
+        </MuiDialogContent>
+        <MuiDialogActions>
+          <Button onClick={handleClose} background="primary">
+            Save changes
+          </Button>
+        </MuiDialogActions>
+      </Dialog>
     </FormProvider>
   );
 };
