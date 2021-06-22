@@ -6,6 +6,7 @@ import { FiLock } from 'react-icons/fi';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useHistory } from 'react-router-dom';
 import Input from '../../components/InputLabelPure';
 import Button from '../../components/Button';
 import { Background, Container, Content } from './styles';
@@ -13,6 +14,8 @@ import { Background, Container, Content } from './styles';
 import pata from '../../assets/pata.png';
 
 const SignIn: React.FC = () => {
+  const history = useHistory();
+
   const schema = yup.object().shape({
     user: yup.string().required('Required').email(),
     password: yup.string().required('Required').min(6),
@@ -25,7 +28,7 @@ const SignIn: React.FC = () => {
   });
 
   const onSubmit = data => {
-    console.log(data);
+    history.push('/users');
   };
   console.log(methods.errors);
   return (
